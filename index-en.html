@@ -1,0 +1,1145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Portfolio of Viktor Willmann — Senior WordPress Developer. 12+ years of experience, international projects: USA, Germany, UK. Web development, AI automation, SEO.">
+    <meta name="keywords" content="Viktor Willmann, WordPress developer, web design, SEO, AI automation, developer portfolio, fullstack developer">
+    <meta name="author" content="Viktor Willmann">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://vitwill.github.io/index-en.html">
+    
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://vitwill.github.io/index-en.html">
+    <meta property="og:title" content="Viktor Willmann — Senior WordPress Developer">
+    <meta property="og:description" content="12+ years of experience. International projects: from luxury weddings to legal practice. Web development, AI automation, SEO.">
+    <meta property="og:image" content="https://vitwill.github.io/images/hero-1.jpg">
+    <meta property="og:locale" content="en_US">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://vitwill.github.io/index-en.html">
+    <meta name="twitter:title" content="Viktor Willmann — Senior WordPress Developer">
+    <meta name="twitter:description" content="12+ years of experience. International projects: from luxury weddings to legal practice.">
+    <meta name="twitter:image" content="https://vitwill.github.io/images/hero-1.jpg">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="512x512" href="images/favicon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="images/favicon.png">
+    
+    <title>Viktor Willmann — Senior WordPress Developer | Portfolio</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --color-dark: #0f1419;
+            --color-dark-blue: #1a1f2e;
+            --color-white: #ffffff;
+            --color-cream: #f5f1eb;
+            --color-gold: #b8935a;
+            --color-gray: #666666;
+            --font-serif: 'Cormorant Garamond', serif;
+            --font-sans: 'Inter', sans-serif;
+            --transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        
+        body {
+            font-family: var(--font-sans);
+            font-weight: 300;
+            line-height: 1.6;
+            color: var(--color-dark);
+            background-color: var(--color-white);
+            overflow-x: hidden;
+        }
+
+        .container { max-width: 1400px; margin: 0 auto; padding: 0 60px; }
+
+        /* ========================================
+           SIDE NAVIGATION (RIGHT)
+           ======================================== */
+        .side-nav {
+            position: fixed;
+            right: 30px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .side-nav-item {
+            width: 40px;
+            height: 4px;
+            background: rgba(15, 20, 25, 0.2);
+            border-radius: 2px;
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .side-nav-item:hover {
+            background: rgba(15, 20, 25, 0.5);
+            transform: scaleX(1.2);
+        }
+
+        .side-nav-item.active {
+            background: var(--color-dark);
+            width: 48px;
+        }
+
+        .side-nav-item::before {
+            content: attr(data-label);
+            position: absolute;
+            right: 55px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 11px;
+            font-weight: 500;
+            color: var(--color-dark);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            white-space: nowrap;
+            opacity: 0;
+            transition: var(--transition);
+            pointer-events: none;
+        }
+
+        .side-nav-item:hover::before {
+            opacity: 1;
+            right: 60px;
+        }
+
+        /* ========================================
+           HEADER
+           ======================================== */
+        .site-header {
+            position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;
+            background-color: transparent; padding: 30px 0; transition: var(--transition);
+        }
+        .site-header.scrolled {
+            background-color: rgba(15, 20, 25, 0.75);
+            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); padding: 18px 0;
+        }
+        .site-header .container { display: flex; justify-content: space-between; align-items: center; }
+        .logo {
+            font-family: var(--font-serif); font-size: 26px; font-weight: 600;
+            color: var(--color-white); text-decoration: none; letter-spacing: 0.5px;
+        }
+        .main-nav ul { list-style: none; display: flex; gap: 40px; align-items: center; }
+        .main-nav a {
+            color: var(--color-white); text-decoration: none; font-size: 12px;
+            font-weight: 400; text-transform: uppercase; letter-spacing: 1.5px; transition: var(--transition);
+        }
+        .main-nav a:hover { opacity: 0.7; }
+        .lang-switcher a {
+            display: inline-block; padding: 6px 14px; border: 1px solid rgba(255,255,255,0.4);
+            border-radius: 4px; font-size: 11px; font-weight: 500; transition: var(--transition);
+        }
+        .lang-switcher a:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.7); }
+
+        /* Hamburger menu */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            z-index: 1001;
+            background: none;
+            border: none;
+            padding: 5px;
+        }
+        .hamburger span {
+            display: block;
+            width: 28px;
+            height: 2px;
+            background: var(--color-white);
+            transition: var(--transition);
+        }
+        .hamburger.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+        .hamburger.active span:nth-child(2) { opacity: 0; }
+        .hamburger.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+        /* Mobile menu */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 100%;
+            height: 100vh;
+            background: rgba(15, 20, 25, 0.98);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            z-index: 999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: right 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        .mobile-menu.active { right: 0; }
+        .mobile-menu ul { list-style: none; text-align: center; }
+        .mobile-menu li { margin: 25px 0; }
+        .mobile-menu a {
+            color: var(--color-white);
+            text-decoration: none;
+            font-family: var(--font-serif);
+            font-size: 32px;
+            font-weight: 400;
+            letter-spacing: 2px;
+            transition: var(--transition);
+        }
+        .mobile-menu a:hover { color: var(--color-gold); }
+        .mobile-menu .lang-switcher { margin-top: 40px; }
+        .mobile-menu .lang-switcher a {
+            font-family: var(--font-sans);
+            font-size: 14px;
+            padding: 10px 20px;
+            border: 1px solid rgba(255,255,255,0.4);
+            border-radius: 4px;
+        }
+
+        /* ========================================
+           HERO SLIDER
+           ======================================== */
+        .hero {
+            position: relative; width: 100%; height: 100vh; overflow: hidden;
+            background-color: var(--color-dark-blue);
+        }
+        .hero-slide {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            opacity: 0; transition: opacity 1.5s ease-in-out;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .hero-slide.active { opacity: 1; }
+        .hero-slide img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; }
+        .hero-slide-overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(15, 20, 25, 0.6);
+        }
+        .hero-content {
+            position: relative; z-index: 2; text-align: center; color: var(--color-white);
+            max-width: 900px; padding: 0 20px;
+        }
+        .hero-content h1 {
+            font-family: var(--font-serif); font-size: 80px; font-weight: 400;
+            line-height: 1.1; margin-bottom: 25px; letter-spacing: -1px;
+        }
+        .hero-content .subtitle {
+            font-size: 14px; font-weight: 400; color: var(--color-gold);
+            letter-spacing: 4px; text-transform: uppercase;
+        }
+        
+        .scroll-down {
+            position: absolute; bottom: 50px; left: 50%; transform: translateX(-50%);
+            z-index: 3; display: flex; flex-direction: column; align-items: center;
+            text-decoration: none; color: var(--color-white); animation: bounce 2s infinite;
+        }
+        .scroll-circle {
+            width: 50px; height: 50px; border: 1px solid rgba(255,255,255,0.4);
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            margin-bottom: 15px; transition: var(--transition);
+        }
+        .scroll-down:hover .scroll-circle { border-color: rgba(255,255,255,0.7); background: rgba(255,255,255,0.1); }
+        .scroll-arrow { width: 1px; height: 16px; background: rgba(255,255,255,0.7); position: relative; }
+        .scroll-arrow::after {
+            content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
+            width: 7px; height: 7px; border-right: 1px solid rgba(255,255,255,0.7);
+            border-bottom: 1px solid rgba(255,255,255,0.7); transform: translateX(-50%) rotate(45deg);
+        }
+        .scroll-down p { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: rgba(255,255,255,0.6); margin: 0; }
+        .scroll-down:hover p { color: rgba(255,255,255,0.9); }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+            40% { transform: translateX(-50%) translateY(-10px); }
+            60% { transform: translateX(-50%) translateY(-5px); }
+        }
+
+        /* ========================================
+           COMMON SECTION STYLES
+           ======================================== */
+        .section-label {
+            font-size: 12px; font-weight: 500; color: var(--color-gold);
+            letter-spacing: 3px; text-transform: uppercase; margin-bottom: 20px; text-align: center;
+        }
+        .section-title {
+            font-family: var(--font-serif); font-size: 48px; font-weight: 400;
+            text-align: center; margin-bottom: 15px; color: var(--color-dark);
+        }
+        .section-subtitle {
+            font-size: 16px; color: var(--color-gray); text-align: center;
+            max-width: 700px; margin: 0 auto 60px;
+        }
+
+        /* ========================================
+           ABOUT
+           ======================================== */
+        .about { padding: 140px 0; background-color: var(--color-cream); }
+        .about-grid { display: grid; grid-template-columns: 1fr 1.3fr; gap: 80px; align-items: center; }
+        .about-image {
+            position: relative; overflow: hidden; border-radius: 4px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+        }
+        .about-image img { width: 100%; height: auto; display: block; transition: transform 0.8s ease; }
+        .about-image:hover img { transform: scale(1.03); }
+        .about-label {
+            font-size: 12px; font-weight: 500; color: var(--color-gold);
+            letter-spacing: 3px; text-transform: uppercase; margin-bottom: 20px;
+        }
+        .about-content h2 {
+            font-family: var(--font-serif); font-size: 48px; font-weight: 400;
+            line-height: 1.2; margin-bottom: 15px; color: var(--color-dark);
+        }
+        .about-role {
+            font-size: 13px; font-weight: 500; color: var(--color-gold);
+            letter-spacing: 2px; text-transform: uppercase; margin-bottom: 30px;
+        }
+        .about-text { font-size: 16px; line-height: 1.8; color: var(--color-gray); margin-bottom: 20px; }
+        .about-buttons { display: flex; gap: 20px; margin-top: 40px; flex-wrap: wrap; }
+        
+        .btn {
+            display: inline-block; padding: 16px 36px; font-size: 12px; font-weight: 500;
+            text-transform: uppercase; letter-spacing: 2px; text-decoration: none;
+            transition: var(--transition); cursor: pointer; border: none;
+        }
+        .btn-dark { background: var(--color-dark); color: var(--color-white); }
+        .btn-dark:hover { background: var(--color-dark-blue); transform: translateY(-2px); }
+        .btn-outline { background: transparent; color: var(--color-dark); border: 1px solid var(--color-dark); }
+        .btn-outline:hover { background: var(--color-dark); color: var(--color-white); }
+
+        /* ========================================
+           PORTFOLIO
+           ======================================== */
+        .portfolio { padding: 140px 0; background-color: var(--color-white); }
+        .portfolio-grid {
+            display: grid; grid-template-columns: repeat(2, 1fr); gap: 60px;
+        }
+        .portfolio-item {
+            background: var(--color-cream); border-radius: 8px; overflow: hidden;
+            transition: var(--transition);
+        }
+        .portfolio-item:hover {
+            transform: translateY(-8px); box-shadow: 0 20px 60px rgba(0,0,0,0.12);
+        }
+        .portfolio-image {
+            width: 100%; height: 300px; overflow: hidden; background: var(--color-cream);
+        }
+        .portfolio-image img {
+            width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s ease;
+        }
+        .portfolio-item:hover .portfolio-image img { transform: scale(1.05); }
+        .portfolio-content { padding: 40px; }
+        .portfolio-category {
+            font-size: 12px; font-weight: 500; color: var(--color-gold);
+            letter-spacing: 2px; text-transform: uppercase; margin-bottom: 15px;
+        }
+        .portfolio-content h3 {
+            font-family: var(--font-serif); font-size: 28px; font-weight: 600;
+            margin-bottom: 15px; color: var(--color-dark);
+        }
+        .portfolio-desc {
+            font-size: 15px; line-height: 1.7; color: var(--color-gray); margin-bottom: 25px;
+        }
+        .portfolio-link {
+            display: inline-block; font-size: 12px; font-weight: 600; color: var(--color-dark);
+            text-decoration: none; text-transform: uppercase; letter-spacing: 1.5px;
+            border-bottom: 1px solid var(--color-dark); padding-bottom: 4px; transition: var(--transition);
+        }
+        .portfolio-link:hover { color: var(--color-gold); border-color: var(--color-gold); }
+
+        /* ========================================
+           AI PROJECTS
+           ======================================== */
+        .ai-projects { padding: 140px 0; background-color: var(--color-cream); }
+        .ai-grid {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px;
+        }
+        .ai-item {
+            background: var(--color-white); padding: 50px 40px; border-radius: 8px;
+            transition: var(--transition);
+        }
+        .ai-item:hover {
+            transform: translateY(-5px); box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+        }
+        .ai-icon {
+            width: 60px; height: 60px; background: var(--color-dark); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; margin-bottom: 25px;
+            font-size: 24px; color: var(--color-white);
+        }
+        .ai-item h3 {
+            font-family: var(--font-serif); font-size: 24px; font-weight: 600;
+            margin-bottom: 15px; color: var(--color-dark);
+        }
+        .ai-item p {
+            font-size: 15px; line-height: 1.7; color: var(--color-gray); margin-bottom: 25px;
+        }
+        .ai-link {
+            display: inline-block; font-size: 12px; font-weight: 600; color: var(--color-dark);
+            text-decoration: none; text-transform: uppercase; letter-spacing: 1.5px;
+            border-bottom: 1px solid var(--color-dark); padding-bottom: 4px; transition: var(--transition);
+        }
+        .ai-link:hover { color: var(--color-gold); border-color: var(--color-gold); }
+
+        /* ========================================
+           SERVICES
+           ======================================== */
+        .services { padding: 140px 0; background-color: var(--color-white); }
+        .services-grid {
+            display: grid; grid-template-columns: repeat(2, 1fr); gap: 40px;
+        }
+        .service-card {
+            background: var(--color-cream); padding: 50px 40px; border-radius: 4px; transition: var(--transition);
+        }
+        .service-card:hover {
+            transform: translateY(-5px); box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+        }
+        .service-card h3 {
+            font-family: var(--font-serif); font-size: 24px; font-weight: 600;
+            margin-bottom: 20px; color: var(--color-dark);
+        }
+        .service-card p {
+            font-size: 15px; line-height: 1.7; color: var(--color-gray);
+        }
+        
+        .pricing-info {
+            max-width: 700px;
+            margin: 60px auto 0;
+            padding: 40px;
+            background: var(--color-cream);
+            border-left: 3px solid var(--color-gold);
+            border-radius: 4px;
+            text-align: center;
+        }
+        .pricing-info p {
+            font-size: 16px;
+            line-height: 1.8;
+            color: var(--color-gray);
+            font-style: italic;
+        }
+
+        /* ========================================
+           CONTACT
+           ======================================== */
+        .contact { padding: 140px 0; background-color: var(--color-cream); }
+        .contact-form { max-width: 700px; margin: 0 auto; }
+        .form-group { margin-bottom: 30px; }
+        .form-group label {
+            display: block; font-size: 12px; font-weight: 500; color: var(--color-gray);
+            text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 10px;
+        }
+        .form-group input, .form-group textarea, .form-group select {
+            width: 100%; padding: 16px 20px; font-family: var(--font-sans); font-size: 16px;
+            color: var(--color-dark); background: var(--color-white); border: 1px solid transparent;
+            border-radius: 4px; transition: var(--transition);
+            appearance: none;
+            -webkit-appearance: none;
+        }
+        .form-group select {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23666' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 20px center;
+            cursor: pointer;
+        }
+        .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
+            outline: none; border-color: var(--color-gold);
+        }
+        .form-group textarea { min-height: 180px; resize: vertical; }
+        
+        .task-other-text {
+            margin-top: 15px;
+            display: none;
+        }
+        .task-other-text.visible {
+            display: block;
+        }
+        
+        .form-submit { text-align: center; }
+        .form-submit .btn { padding: 18px 60px; font-size: 13px; }
+        
+        .form-message {
+            text-align: center; margin-top: 30px; padding: 20px; font-size: 16px; font-weight: 500;
+            border-radius: 8px; opacity: 0; transform: translateY(-10px); transition: all 0.5s ease; display: none;
+        }
+        .form-message.visible { opacity: 1; transform: translateY(0); display: block; }
+        .form-message.success { color: #28a745; background: rgba(40, 167, 69, 0.1); border: 1px solid rgba(40, 167, 69, 0.3); }
+        .form-message.error { color: #dc3545; background: rgba(220, 53, 69, 0.1); border: 1px solid rgba(220, 53, 69, 0.3); }
+
+        /* ========================================
+           FOOTER
+           ======================================== */
+        .site-footer {
+            background-color: var(--color-dark); color: rgba(255,255,255,0.6);
+            text-align: center; padding: 40px 0; font-size: 13px;
+        }
+
+        /* ========================================
+           MODAL
+           ======================================== */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(15, 20, 25, 0.85); backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px); z-index: 2000;
+            display: flex; align-items: center; justify-content: center;
+            opacity: 0; visibility: hidden; transition: var(--transition);
+        }
+        .modal-overlay.active { opacity: 1; visibility: visible; }
+        .modal {
+            background: var(--color-white); max-width: 800px; width: 90%;
+            max-height: 85vh; overflow-y: auto; border-radius: 8px; padding: 60px;
+            position: relative; transform: translateY(30px); transition: transform 0.5s ease;
+        }
+        .modal-overlay.active .modal { transform: translateY(0); }
+        .modal-close {
+            position: absolute; top: 25px; right: 25px; width: 40px; height: 40px;
+            background: transparent; border: 1px solid var(--color-dark); border-radius: 50%;
+            cursor: pointer; font-size: 20px; color: var(--color-dark);
+            display: flex; align-items: center; justify-content: center; transition: var(--transition);
+        }
+        .modal-close:hover { background: var(--color-dark); color: var(--color-white); }
+        .modal-label {
+            font-size: 12px; font-weight: 500; color: var(--color-gold);
+            letter-spacing: 3px; text-transform: uppercase; margin-bottom: 20px;
+        }
+        .modal h2 { font-family: var(--font-serif); font-size: 42px; font-weight: 400; margin-bottom: 10px; color: var(--color-dark); }
+        .modal-role {
+            font-size: 13px; font-weight: 500; color: var(--color-gold);
+            letter-spacing: 2px; text-transform: uppercase; margin-bottom: 35px;
+        }
+        .modal-text { font-size: 16px; line-height: 1.9; color: var(--color-gray); margin-bottom: 20px; }
+        .modal-text strong { color: var(--color-dark); font-weight: 500; }
+        .modal-divider { width: 60px; height: 1px; background: var(--color-gold); margin: 30px 0; }
+        .modal-section-title {
+            font-family: var(--font-serif); font-size: 22px; font-weight: 600;
+            color: var(--color-dark); margin: 30px 0 15px;
+        }
+        .modal-list { list-style: none; padding: 0; margin: 15px 0; }
+        .modal-list li {
+            position: relative; padding-left: 20px; margin-bottom: 10px;
+            font-size: 15px; line-height: 1.7; color: var(--color-gray);
+        }
+        .modal-list li::before { content: '•'; position: absolute; left: 0; color: var(--color-gold); font-weight: bold; }
+        .skills-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin: 20px 0; }
+        .skill-category { background: var(--color-cream); padding: 20px; border-radius: 4px; }
+        .skill-category h4 {
+            font-size: 13px; font-weight: 600; color: var(--color-dark);
+            text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px;
+        }
+        .skill-category p { font-size: 14px; color: var(--color-gray); line-height: 1.6; }
+        .modal-contact { display: flex; gap: 15px; margin-top: 35px; flex-wrap: wrap; }
+
+        /* ========================================
+           RESPONSIVE
+           ======================================== */
+        @media (max-width: 1024px) {
+            .container { padding: 0 40px; }
+            .hero-content h1 { font-size: 60px; }
+            .about-grid { grid-template-columns: 1fr; gap: 50px; }
+            .about-content h2 { font-size: 40px; }
+            .section-title { font-size: 40px; }
+            .portfolio-grid, .services-grid { grid-template-columns: 1fr; gap: 30px; }
+            .ai-grid { grid-template-columns: 1fr; }
+            .modal { padding: 40px; }
+            .modal h2 { font-size: 36px; }
+            .skills-grid { grid-template-columns: 1fr; }
+            .side-nav { display: none; }
+        }
+        @media (max-width: 768px) {
+            .container { padding: 0 25px; }
+            .main-nav { display: none; }
+            .hamburger { display: flex; }
+            .hero-content h1 { font-size: 42px; }
+            .hero-content .subtitle { font-size: 12px; letter-spacing: 2px; }
+            .about { padding: 80px 0; }
+            .about-content h2 { font-size: 32px; }
+            .about-role { font-size: 11px; }
+            .about-buttons { flex-direction: column; }
+            .btn { text-align: center; }
+            .portfolio, .ai-projects, .services, .contact { padding: 80px 0; }
+            .section-title { font-size: 32px; }
+            .modal { padding: 30px 25px; }
+            .modal h2 { font-size: 28px; }
+            .scroll-circle { width: 45px; height: 45px; }
+            .scroll-down p { font-size: 10px; }
+            .pricing-info { padding: 30px 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- SIDE NAVIGATION -->
+    <nav class="side-nav" id="side-nav">
+        <div class="side-nav-item active" data-target="hero" data-label="Home"></div>
+        <div class="side-nav-item" data-target="about" data-label="About"></div>
+        <div class="side-nav-item" data-target="portfolio" data-label="Portfolio"></div>
+        <div class="side-nav-item" data-target="ai" data-label="AI Projects"></div>
+        <div class="side-nav-item" data-target="services" data-label="Services"></div>
+        <div class="side-nav-item" data-target="contact" data-label="Contact"></div>
+    </nav>
+
+    <!-- HEADER -->
+    <header class="site-header" id="main-header">
+        <div class="container">
+            <a href="#" class="logo">Viktor Willmann</a>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="#hero">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#portfolio">Portfolio</a></li>
+                    <li><a href="#ai">AI Projects</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                    <li class="lang-switcher"><a href="index.html">RU</a></li>
+                </ul>
+            </nav>
+            <button class="hamburger" id="hamburger" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- MOBILE MENU -->
+    <div class="mobile-menu" id="mobile-menu">
+        <ul>
+            <li><a href="#hero" class="mobile-link">Home</a></li>
+            <li><a href="#about" class="mobile-link">About</a></li>
+            <li><a href="#portfolio" class="mobile-link">Portfolio</a></li>
+            <li><a href="#ai" class="mobile-link">AI Projects</a></li>
+            <li><a href="#services" class="mobile-link">Services</a></li>
+            <li><a href="#contact" class="mobile-link">Contact</a></li>
+            <li class="lang-switcher"><a href="index.html">RU</a></li>
+        </ul>
+    </div>
+
+    <!-- HERO -->
+    <section id="hero" class="hero">
+        <div class="hero-slide active">
+            <img src="images/hero-1.jpg" alt="Viktor Willmann">
+            <div class="hero-slide-overlay"></div>
+            <div class="hero-content">
+                <h1>Viktor Willmann</h1>
+                <p class="subtitle">Web Design • Development • Automation • AI</p>
+            </div>
+        </div>
+        <div class="hero-slide">
+            <img src="images/hero-2.jpg" alt="Slide 2">
+            <div class="hero-slide-overlay"></div>
+            <div class="hero-content">
+                <h1>12+ Years of Experience</h1>
+                <p class="subtitle">USA • Germany • UK • Italy • Hong Kong • Australia</p>
+            </div>
+        </div>
+        <div class="hero-slide">
+            <img src="images/hero-3.jpg" alt="Slide 3">
+            <div class="hero-slide-overlay"></div>
+            <div class="hero-content">
+                <h1>Quality Over Quantity</h1>
+                <p class="subtitle">Practical Experience • Real Business Value</p>
+            </div>
+        </div>
+        
+        <a href="#about" class="scroll-down">
+            <div class="scroll-circle"><span class="scroll-arrow"></span></div>
+            <p>Scroll Down</p>
+        </a>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about" class="about">
+        <div class="container">
+            <div class="about-grid">
+                <div class="about-image">
+                    <img src="images/about-photo.jpg" alt="Viktor Willmann">
+                </div>
+                <div class="about-content">
+                    <p class="about-label">About Me</p>
+                    <h2>Viktor Willmann</h2>
+                    <p class="about-role">Fullstack Developer • AI Integration Specialist</p>
+                    <p class="about-text">
+                        I specialize in web development, user interface design, and business process automation using modern technologies and artificial intelligence.
+                    </p>
+                    <p class="about-text">
+                        My goal is to create not just a beautiful visual shell, but functional tools that help businesses grow, attract clients, and save resources through automation.
+                    </p>
+                    <div class="about-buttons">
+                        <a href="#contact" class="btn btn-dark">Get in Touch</a>
+                        <button class="btn btn-outline" id="open-modal">Learn More</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PORTFOLIO -->
+    <section id="portfolio" class="portfolio">
+        <div class="container">
+            <p class="section-label">Portfolio</p>
+            <h2 class="section-title">Completed Projects</h2>
+            <p class="section-subtitle">A curated selection of 6 completed projects: luxury weddings, organic products, travel blogs, legal services. Different niches — one approach: deep business understanding and attention to detail.</p>
+            
+            <div class="portfolio-grid">
+                <article class="portfolio-item">
+                    <div class="portfolio-image">
+                        <img src="images/project1-thumb.jpg" alt="Get Full Care">
+                    </div>
+                    <div class="portfolio-content">
+                        <p class="portfolio-category">Elderly Care Agency / USA</p>
+                        <h3>Get Full Care</h3>
+                        <p class="portfolio-desc">WordPress + Elementor. A modern website with a clear service structure, CRM integration, and user-friendly navigation to attract families seeking qualified care.</p>
+                        <a href="project1-getfullcare.html" class="portfolio-link">Learn More →</a>
+                    </div>
+                </article>
+
+                <article class="portfolio-item">
+                    <div class="portfolio-image">
+                        <img src="images/project2-thumb.jpg" alt="Bio Planète">
+                    </div>
+                    <div class="portfolio-content">
+                        <p class="portfolio-category">Organic Oils / Germany</p>
+                        <h3>Bio Planète</h3>
+                        <p class="portfolio-desc">Multilingual website with an online store (70+ products), educational portal, and interactive quiz. 40-year history of a European pioneer in organic oils.</p>
+                        <a href="project2-bioplanete.html" class="portfolio-link">Learn More →</a>
+                    </div>
+                </article>
+
+                <article class="portfolio-item">
+                    <div class="portfolio-image">
+                        <img src="images/project3-thumb.jpg" alt="Pocketful of Dreams">
+                    </div>
+                    <div class="portfolio-content">
+                        <p class="portfolio-category">Luxury Wedding Planning / UK</p>
+                        <h3>Pocketful of Dreams</h3>
+                        <p class="portfolio-desc">Elegant minimalist website for a studio featured in Vogue and Tatler. 15+ years of experience, organizing multi-day weddings in private estates across England and Europe.</p>
+                        <a href="project3-pocketful.html" class="portfolio-link">Learn More →</a>
+                    </div>
+                </article>
+
+                <article class="portfolio-item">
+                    <div class="portfolio-image">
+                        <img src="images/project4-thumb.jpg" alt="The Blonde Abroad">
+                    </div>
+                    <div class="portfolio-content">
+                        <p class="portfolio-category">Travel Blog / USA</p>
+                        <h3>The Blonde Abroad</h3>
+                        <p class="portfolio-desc">Multi-functional blog website with a million-strong audience. Clear content categorization, integration with Instagram, YouTube, Pinterest. SEO optimization for high search rankings.</p>
+                        <a href="project4-blondeabroad.html" class="portfolio-link">Learn More →</a>
+                    </div>
+                </article>
+
+                <article class="portfolio-item">
+                    <div class="portfolio-image">
+                        <img src="images/project5-thumb.jpg" alt="Silver Circle">
+                    </div>
+                    <div class="portfolio-content">
+                        <p class="portfolio-category">Social Portal / USA</p>
+                        <h3>Silver Circle</h3>
+                        <p class="portfolio-desc">WordPress. A social portal for the senior generation with a custom structure for "Events" and "Care Services" sections. Responsive design and fast loading.</p>
+                        <a href="project5-serebryanyikrug.html" class="portfolio-link">Learn More →</a>
+                    </div>
+                </article>
+
+                <article class="portfolio-item">
+                    <div class="portfolio-image">
+                        <img src="images/project6-thumb.jpg" alt="Kanzlei Vees & Guardiera">
+                    </div>
+                    <div class="portfolio-content">
+                        <p class="portfolio-category">Law Firm / Germany</p>
+                        <h3>Kanzlei Vees & Guardiera</h3>
+                        <p class="portfolio-desc">Law firm website with an expert structure (6 areas of law), Google Maps integration, and GDPR compliance. Personalized approach and fixed consultation fee.</p>
+                        <a href="project6-kanzlei.html" class="portfolio-link">Learn More →</a>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- AI PROJECTS -->
+    <section id="ai" class="ai-projects">
+        <div class="container">
+            <p class="section-label">AI Projects</p>
+            <h2 class="section-title">Automation & Artificial Intelligence</h2>
+            <p class="section-subtitle">Python scripts and AI solutions for business process automation</p>
+            
+            <div class="ai-grid">
+                <div class="ai-item">
+                    <div class="ai-icon">🤖</div>
+                    <h3>SmartParser</h3>
+                    <p>Automated data collection from websites with export to structured Excel tables. Saving hours of manual work.</p>
+                    <a href="https://github.com/Vitwill/smart-parser" class="ai-link" target="_blank">GitHub →</a>
+                </div>
+
+                <div class="ai-item">
+                    <div class="ai-icon"></div>
+                    <h3>WB SEO Generator</h3>
+                    <p>AI-powered SEO description generation for Wildberries and Ozon. Mass creation of optimized product cards.</p>
+                    <a href="https://github.com/Vitwill/wb-seo-generator" class="ai-link" target="_blank">GitHub →</a>
+                </div>
+
+                <div class="ai-item">
+                    <div class="ai-icon">📱</div>
+                    <h3>TG Content Planner</h3>
+                    <p>Automated content planning for Telegram channels with RSS parsing and AI generation. Scheduling publications weeks in advance.</p>
+                    <a href="https://github.com/Vitwill/tg-content-planner" class="ai-link" target="_blank">GitHub →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section id="services" class="services">
+        <div class="container">
+            <p class="section-label">Services</p>
+            <h2 class="section-title">How I Can Help</h2>
+            <p class="section-subtitle">4 key areas of work for your business</p>
+            
+            <div class="services-grid">
+                <div class="service-card">
+                    <h3>Turnkey Website Development</h3>
+                    <p>Development of landing pages, corporate websites, and online stores from scratch — from design to launch. Full cycle: UI/UX design, coding, programming, SEO optimization.</p>
+                </div>
+                
+                <div class="service-card">
+                    <h3>Refinement & Optimization</h3>
+                    <p>Speeding up loading, fixing errors, adding new functionality to existing websites. Working with WordPress, custom themes, and plugins.</p>
+                </div>
+                
+                <div class="service-card">
+                    <h3>Automation & AI</h3>
+                    <p>Implementation of chatbots, AI integrations, and business process automation to save time and resources. Python scripts, API integrations, Telegram bots.</p>
+                </div>
+                
+                <div class="service-card">
+                    <h3>Consulting & Support</h3>
+                    <p>Technical consultations for your project and subscription-based maintenance — monitoring, updates, bug fixes, and website development.</p>
+                </div>
+            </div>
+
+            <div class="pricing-info">
+                <p>Project cost is discussed individually after reviewing the task. Contact me — and I'll prepare a commercial proposal within 24 hours.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <p class="section-label">Contact</p>
+            <h2 class="section-title">Let's Discuss Your Project</h2>
+            
+            <form class="contact-form" id="contact-form">
+                <div class="form-group">
+                    <label for="name">Your Name</label>
+                    <input type="text" id="name" name="name" required placeholder="John Smith">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required placeholder="john@example.com">
+                </div>
+                <div class="form-group">
+                    <label for="telegram">Telegram (optional)</label>
+                    <input type="text" id="telegram" name="telegram" placeholder="@username">
+                </div>
+                
+                <div class="form-group">
+                    <label for="task-type">Task Type (optional)</label>
+                    <select id="task-type" name="task_type">
+                        <option value="">— Select task type —</option>
+                        <option value="New website development">New website development</option>
+                        <option value="Existing website refinement">Existing website refinement</option>
+                        <option value="Automation / AI integration">Automation / AI integration</option>
+                        <option value="Consulting">Consulting</option>
+                        <option value="Other">Other</option>
+                    </select>
+                    <input type="text" id="task-other-text" name="task_other" class="task-other-text" placeholder="Please specify...">
+                </div>
+
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" required placeholder="Tell us about your project..."></textarea>
+                </div>
+                <div class="form-submit">
+                    <button type="submit" class="btn btn-dark">Send Message</button>
+                </div>
+                <div class="form-message" id="form-message"></div>
+            </form>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="site-footer">
+        <div class="container">
+            <p>&copy; 2026 Viktor Willmann. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- MODAL -->
+    <div class="modal-overlay" id="modal-overlay">
+        <div class="modal">
+            <button class="modal-close" id="modal-close">&times;</button>
+            
+            <p class="modal-label">Information</p>
+            <h2>Viktor Willmann</h2>
+            <p class="modal-role">Senior WordPress Developer Full-Stack & SEO</p>
+            
+            <div class="modal-divider"></div>
+            
+            <p class="modal-text"><strong>Experience:</strong> 12+ years of commercial development</p>
+            <p class="modal-text"><strong>Project Geography:</strong> USA, Germany, Italy, Hong Kong, Australia, Saudi Arabia, Russia</p>
+            <p class="modal-text">100% of experience on the international market. I develop turnkey websites: from UI/UX design to custom PHP development, API integrations, and deep SEO optimization.</p>
+
+            <h3 class="modal-section-title">Key Skills</h3>
+            <div class="skills-grid">
+                <div class="skill-category"><h4>CMS & Builders</h4><p>WordPress, Elementor, WPBakery, Divi</p></div>
+                <div class="skill-category"><h4>Frontend</h4><p>HTML5, CSS3, JS (ES6+), UI/UX</p></div>
+                <div class="skill-category"><h4>Backend & DB</h4><p>PHP, MySQL, REST API, Webhooks</p></div>
+                <div class="skill-category"><h4>SEO & Speed</h4><p>Yoast, RankMath, Core Web Vitals</p></div>
+            </div>
+
+            <h3 class="modal-section-title">Main Areas of Work</h3>
+            <p class="modal-text"><strong>Turnkey Website Development:</strong><br>Landing pages, corporate portals, online stores (WooCommerce), and web services with thoughtful UI/UX and conversion scenarios.</p>
+            <p class="modal-text"><strong>Complex Refinement & Customization:</strong><br>Writing custom plugins and functionality in PHP, integration with external APIs (payment systems, CRM, electronic signatures, Telegram bots).</p>
+            <p class="modal-text"><strong>SEO & Speed Optimization:</strong><br>Full technical and basic SEO preparation (meta tags, microdata, structure), loading optimization for Google PageSpeed and Core Web Vitals.</p>
+
+            <h3 class="modal-section-title">International Experience</h3>
+            <p class="modal-text">Many years of experience working with clients worldwide allows me to implement the highest standards of coding, security requirements, accessibility standards, and localization of products for different language markets.</p>
+
+            <h3 class="modal-section-title">Advantages of Working With Me</h3>
+            <ul class="modal-list">
+                <li><strong>Guaranteed Delivery:</strong> 100% project completion in strict accordance with the technical specification.</li>
+                <li><strong>Transparency:</strong> Regular reports and constant communication at all stages of work.</li>
+                <li><strong>Code Quality:</strong> Clean and maintainable code for easy scaling.</li>
+            </ul>
+
+            <div class="modal-divider"></div>
+            <p class="modal-text">I'll be glad to discuss how my experience and skills can be useful for your project.</p>
+            
+            <div class="modal-contact">
+                <a href="#contact" class="btn btn-dark" id="modal-contact-btn">Get in Touch</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- SCRIPTS -->
+    <script>
+        // Dynamic header
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('main-header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Hero slider
+        const heroSlides = document.querySelectorAll('.hero-slide');
+        let currentSlide = 0;
+        let slideInterval;
+
+        function updateSlider() {
+            heroSlides.forEach(slide => slide.classList.remove('active'));
+            heroSlides[currentSlide].classList.add('active');
+        }
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % heroSlides.length;
+            updateSlider();
+        }
+        function startInterval() {
+            slideInterval = setInterval(nextSlide, 6000);
+        }
+        startInterval();
+
+        // Modal
+        const modalOverlay = document.getElementById('modal-overlay');
+        const openModalBtn = document.getElementById('open-modal');
+        const closeModalBtn = document.getElementById('modal-close');
+        const modalContactBtn = document.getElementById('modal-contact-btn');
+
+        openModalBtn.addEventListener('click', () => {
+            modalOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+        closeModalBtn.addEventListener('click', () => {
+            modalOverlay.classList.remove('active');
+            document.body.style.overflow = '';
+        });
+        modalContactBtn.addEventListener('click', () => {
+            modalOverlay.classList.remove('active');
+            document.body.style.overflow = '';
+            document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
+        });
+        modalOverlay.addEventListener('click', (e) => {
+            if (e.target === modalOverlay) {
+                modalOverlay.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modalOverlay.classList.contains('active')) {
+                modalOverlay.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
+
+        // Side navigation
+        const sections = document.querySelectorAll('section');
+        const sideNavItems = document.querySelectorAll('.side-nav-item');
+
+        sideNavItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const targetId = item.getAttribute('data-target');
+                const targetSection = document.getElementById(targetId);
+                if (targetSection) {
+                    targetSection.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (window.scrollY >= (sectionTop - 300)) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            sideNavItems.forEach(item => {
+                item.classList.remove('active');
+                if (item.getAttribute('data-target') === current) {
+                    item.classList.add('active');
+                }
+            });
+        });
+
+        // Mobile menu
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            mobileMenu.classList.toggle('active');
+            document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+        });
+
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                mobileMenu.classList.remove('active');
+                document.body.style.overflow = '';
+            });
+        });
+
+        // Show/hide "Other" field
+        const taskTypeSelect = document.getElementById('task-type');
+        const taskOtherText = document.getElementById('task-other-text');
+
+        taskTypeSelect.addEventListener('change', () => {
+            if (taskTypeSelect.value === 'Other') {
+                taskOtherText.classList.add('visible');
+                taskOtherText.focus();
+            } else {
+                taskOtherText.classList.remove('visible');
+                taskOtherText.value = '';
+            }
+        });
+
+        // Form submission to Telegram
+        const contactForm = document.getElementById('contact-form');
+        const formMessage = document.getElementById('form-message');
+
+        const TELEGRAM_BOT_TOKEN = '8910011485:AAGXcXW6W4nDBrRif1oXznDQV_aGDSkqC4w';
+        const TELEGRAM_CHAT_ID = '729352434';
+
+        contactForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const submitBtn = contactForm.querySelector('button[type="submit"]');
+            const originalBtnText = submitBtn.textContent;
+            submitBtn.textContent = 'Sending...';
+            submitBtn.disabled = true;
+
+            const formData = new FormData(contactForm);
+            const name = formData.get('name');
+            const email = formData.get('email');
+            const telegram = formData.get('telegram');
+            const message = formData.get('message');
+            const taskType = formData.get('task_type');
+            const taskOther = formData.get('task_other');
+
+            let taskTypesText = 'Not specified';
+            if (taskType) {
+                if (taskType === 'Other' && taskOther && taskOther.trim()) {
+                    taskTypesText = `Other: ${taskOther.trim()}`;
+                } else {
+                    taskTypesText = taskType;
+                }
+            }
+
+            const text = `
+📨 <b>New inquiry from portfolio website!</b>
+
+👤 <b>Name:</b> ${name}
+📧 <b>Email:</b> ${email}
+💬 <b>Telegram:</b> ${telegram || 'Not specified'}
+📋 <b>Task Type:</b> ${taskTypesText}
+
+📝 <b>Message:</b>
+${message}
+            `.trim();
+
+            try {
+                const response = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        chat_id: TELEGRAM_CHAT_ID,
+                        text: text,
+                        parse_mode: 'HTML'
+                    })
+                });
+
+                if (response.ok) {
+                    formMessage.textContent = '✅ Thank you! Your message has been sent successfully. I will get back to you shortly.';
+                    formMessage.className = 'form-message success visible';
+                    contactForm.reset();
+                    taskOtherText.classList.remove('visible');
+
+                    setTimeout(() => {
+                        formMessage.className = 'form-message';
+                        setTimeout(() => {
+                            formMessage.textContent = '';
+                        }, 500);
+                    }, 6000);
+
+                } else {
+                    throw new Error('Sending error');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                formMessage.textContent = '❌ An error occurred while sending. Please contact me directly via Telegram.';
+                formMessage.className = 'form-message error visible';
+            } finally {
+                submitBtn.textContent = originalBtnText;
+                submitBtn.disabled = false;
+            }
+        });
+    </script>
+</body>
+</html>

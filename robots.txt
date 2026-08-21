@@ -1,0 +1,11 @@
+# robots.txt for Viktor Willmann Portfolio
+# https://vitwill.github.io/
+
+User-agent: *
+Allow: /
+
+# Запрет индексации служебных файлов (если будут)
+Disallow: /images/
+
+# Sitemap
+Sitemap: https://vitwill.github.io/sitemap.xml
