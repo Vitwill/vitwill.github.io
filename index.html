@@ -13,7 +13,7 @@
     <!-- Canonical URL -->
     <link rel="canonical" href="https://vitwill.github.io/">
     
-    <!-- Open Graph (Facebook, LinkedIn, Telegram) -->
+    <!-- Open Graph -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://vitwill.github.io/">
     <meta property="og:title" content="Viktor Willmann — Senior WordPress Developer">
@@ -394,14 +394,84 @@
         .ai-link:hover { color: var(--color-gold); border-color: var(--color-gold); }
 
         /* ========================================
+           ПРОГРАММЫ (SOFTWARE)
+           ======================================== */
+        .software { padding: 140px 0; background-color: var(--color-white); }
+        .software-grid {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px;
+        }
+        .software-item {
+            background: var(--color-cream); padding: 50px 40px; border-radius: 8px;
+            transition: var(--transition);
+        }
+        .software-item:hover {
+            transform: translateY(-5px); box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+        }
+        .software-preview {
+            width: 100%;
+            height: 200px;
+            overflow: hidden;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            background: var(--color-white);
+        }
+        .software-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        .software-item:hover .software-preview img {
+            transform: scale(1.05);
+        }
+        .software-icon {
+            width: 60px; height: 60px; background: var(--color-dark); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; margin-bottom: 25px;
+            font-size: 24px; color: var(--color-white);
+        }
+        .software-item h3 {
+            font-family: var(--font-serif); font-size: 24px; font-weight: 600;
+            margin-bottom: 10px; color: var(--color-dark);
+        }
+        .software-category {
+            font-size: 12px; font-weight: 500; color: var(--color-gold);
+            letter-spacing: 1px; text-transform: uppercase; margin-bottom: 20px;
+        }
+        .software-desc {
+            font-size: 15px; line-height: 1.7; color: var(--color-gray); margin-bottom: 25px;
+        }
+        .software-tech {
+            display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px;
+        }
+        .software-tech span {
+            padding: 6px 12px; background: var(--color-white); border-radius: 4px;
+            font-size: 11px; font-weight: 500; color: var(--color-dark);
+        }
+        .software-link {
+            display: inline-block;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--color-dark);
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-bottom: 1px solid var(--color-gold);
+            padding-bottom: 2px;
+            transition: var(--transition);
+        }
+        .software-link:hover {
+            color: var(--color-gold);
+        }
+
+        /* ========================================
            УСЛУГИ
            ======================================== */
-        .services { padding: 140px 0; background-color: var(--color-white); }
+        .services { padding: 140px 0; background-color: var(--color-cream); }
         .services-grid {
             display: grid; grid-template-columns: repeat(2, 1fr); gap: 40px;
         }
         .service-card {
-            background: var(--color-cream); padding: 50px 40px; border-radius: 4px; transition: var(--transition);
+            background: var(--color-white); padding: 50px 40px; border-radius: 4px; transition: var(--transition);
         }
         .service-card:hover {
             transform: translateY(-5px); box-shadow: 0 20px 60px rgba(0,0,0,0.1);
@@ -418,7 +488,7 @@
             max-width: 700px;
             margin: 60px auto 0;
             padding: 40px;
-            background: var(--color-cream);
+            background: var(--color-white);
             border-left: 3px solid var(--color-gold);
             border-radius: 4px;
             text-align: center;
@@ -550,7 +620,7 @@
             .about-content h2 { font-size: 40px; }
             .section-title { font-size: 40px; }
             .portfolio-grid, .services-grid { grid-template-columns: 1fr; gap: 30px; }
-            .ai-grid { grid-template-columns: 1fr; }
+            .ai-grid, .software-grid { grid-template-columns: 1fr; }
             .modal { padding: 40px; }
             .modal h2 { font-size: 36px; }
             .skills-grid { grid-template-columns: 1fr; }
@@ -567,7 +637,7 @@
             .about-role { font-size: 11px; }
             .about-buttons { flex-direction: column; }
             .btn { text-align: center; }
-            .portfolio, .ai-projects, .services, .contact { padding: 80px 0; }
+            .portfolio, .ai-projects, .software, .services, .contact { padding: 80px 0; }
             .section-title { font-size: 32px; }
             .modal { padding: 30px 25px; }
             .modal h2 { font-size: 28px; }
@@ -585,6 +655,7 @@
         <div class="side-nav-item" data-target="about" data-label="Обо мне"></div>
         <div class="side-nav-item" data-target="portfolio" data-label="Портфолио"></div>
         <div class="side-nav-item" data-target="ai" data-label="AI-проекты"></div>
+        <div class="side-nav-item" data-target="software" data-label="Программы"></div>
         <div class="side-nav-item" data-target="services" data-label="Услуги"></div>
         <div class="side-nav-item" data-target="contact" data-label="Контакты"></div>
     </nav>
@@ -599,6 +670,7 @@
                     <li><a href="#about">Обо мне</a></li>
                     <li><a href="#portfolio">Портфолио</a></li>
                     <li><a href="#ai">AI-проекты</a></li>
+                    <li><a href="#software">Программы</a></li>
                     <li><a href="#services">Услуги</a></li>
                     <li><a href="#contact">Контакты</a></li>
                     <li class="lang-switcher"><a href="index-en.html">EN</a></li>
@@ -619,6 +691,7 @@
             <li><a href="#about" class="mobile-link">Обо мне</a></li>
             <li><a href="#portfolio" class="mobile-link">Портфолио</a></li>
             <li><a href="#ai" class="mobile-link">AI-проекты</a></li>
+            <li><a href="#software" class="mobile-link">Программы</a></li>
             <li><a href="#services" class="mobile-link">Услуги</a></li>
             <li><a href="#contact" class="mobile-link">Контакты</a></li>
             <li class="lang-switcher"><a href="index-en.html">EN</a></li>
@@ -754,12 +827,12 @@
 
                 <article class="portfolio-item">
                     <div class="portfolio-image">
-                        <img src="images/project6-thumb.jpg" alt="Kanzlei Vees & Guardiera">
+                        <img src="images/project6-thumb.jpg" alt="Kanzlei Vees">
                     </div>
                     <div class="portfolio-content">
                         <p class="portfolio-category">Юридическая канцелярия / Германия</p>
-                        <h3>Kanzlei Vees & Guardiera</h3>
-                        <p class="portfolio-desc">Сайт юридической канцелярии с экспертной структурой (6 направлений права), интеграцией Google Maps и GDPR-соответствием. Персонализированный подход и фиксированная стоимость консультации.</p>
+                        <h3>Kanzlei Vees</h3>
+                        <p class="portfolio-desc">Сайт юридической канцелярии с экспертной структурой, интеграцией Google Maps и GDPR-соответствием. Персонализированный подход и фиксированная стоимость консультации.</p>
                         <a href="project6-kanzlei.html" class="portfolio-link">Подробнее →</a>
                     </div>
                 </article>
@@ -783,17 +856,82 @@
                 </div>
 
                 <div class="ai-item">
-                    <div class="ai-icon">🧠</div>
+                    <div class="ai-icon"></div>
                     <h3>WB SEO Generator</h3>
                     <p>Генерация SEO-описаний для Wildberries и Ozon с помощью AI-моделей. Массовое создание оптимизированных карточек товаров.</p>
                     <a href="https://github.com/Vitwill/wb-seo-generator" class="ai-link" target="_blank">GitHub →</a>
                 </div>
 
                 <div class="ai-item">
-                    <div class="ai-icon"></div>
+                    <div class="ai-icon">📱</div>
                     <h3>TG Content Planner</h3>
                     <p>Автоматический контент-план для Telegram-каналов с парсингом RSS и AI-генерацией. Планирование публикаций на недели вперёд.</p>
                     <a href="https://github.com/Vitwill/tg-content-planner" class="ai-link" target="_blank">GitHub →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ПРОГРАММЫ -->
+    <section id="software" class="software">
+        <div class="container">
+            <p class="section-label">Программы</p>
+            <h2 class="section-title">Разработанные приложения</h2>
+            <p class="section-subtitle">Три полноценных приложения: от персонального органайзера до CRM-системы и аналитического инструмента</p>
+            
+            <div class="software-grid">
+                <!-- DashBook -->
+                <div class="software-item">
+                    <div class="software-preview">
+                        <img src="images/software-dashbook-thumb.jpg" alt="DashBook" loading="lazy">
+                    </div>
+                    <div class="software-icon">📖</div>
+                    <h3>DashBook</h3>
+                    <p class="software-category">Персональный органайзер с AI-ассистентом</p>
+                    <p class="software-desc">Веб-приложение для управления задачами, проектами и личным дневником. Интеграция AI-помощника с голосовым вводом, мультиязычность, 4 темы оформления.</p>
+                    <div class="software-tech">
+                        <span>React</span>
+                        <span>TypeScript</span>
+                        <span>Tailwind CSS</span>
+                        <span>AI Integration</span>
+                    </div>
+                    <a href="#" class="software-link" onclick="alert('Демо по запросу'); return false;">Смотреть скриншоты →</a>
+                </div>
+
+                <!-- FB Leads -->
+                <div class="software-item">
+                    <div class="software-preview">
+                        <img src="images/software-fb-leads-thumb.jpg" alt="FB Leads" loading="lazy">
+                    </div>
+                    <div class="software-icon">🎯</div>
+                    <h3>FB Leads</h3>
+                    <p class="software-category">CRM-система для управления лидами</p>
+                    <p class="software-desc">Автоматизация сбора, валидации и скоринга заявок из Meta Ads, Google Sheets, Excel. VIP-скоринг, дедупликация, аналитика конверсии.</p>
+                    <div class="software-tech">
+                        <span>React</span>
+                        <span>TypeScript</span>
+                        <span>Tailwind CSS</span>
+                        <span>Meta API</span>
+                    </div>
+                    <a href="#" class="software-link" onclick="alert('Демо по запросу'); return false;">Смотреть скриншоты →</a>
+                </div>
+
+                <!-- YouTube Analyzer -->
+                <div class="software-item">
+                    <div class="software-preview">
+                        <img src="images/software-youtube-analyzer-thumb.jpg" alt="YouTube Analyzer" loading="lazy">
+                    </div>
+                    <div class="software-icon">📊</div>
+                    <h3>YouTube Analyzer</h3>
+                    <p class="software-category">Аналитический инструмент для YouTube</p>
+                    <p class="software-desc">Поиск и анализ YouTube-каналов по нишам и регионам. Оценка доходности, частоты публикаций, конкурентный анализ. Экспорт в Excel.</p>
+                    <div class="software-tech">
+                        <span>React</span>
+                        <span>TypeScript</span>
+                        <span>YouTube API</span>
+                        <span>Electron</span>
+                    </div>
+                    <a href="#" class="software-link" onclick="alert('Демо по запросу'); return false;">Смотреть скриншоты →</a>
                 </div>
             </div>
         </div>
