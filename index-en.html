@@ -394,14 +394,84 @@
         .ai-link:hover { color: var(--color-gold); border-color: var(--color-gold); }
 
         /* ========================================
+           SOFTWARE
+           ======================================== */
+        .software { padding: 140px 0; background-color: var(--color-white); }
+        .software-grid {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px;
+        }
+        .software-item {
+            background: var(--color-cream); padding: 50px 40px; border-radius: 8px;
+            transition: var(--transition);
+        }
+        .software-item:hover {
+            transform: translateY(-5px); box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+        }
+        .software-preview {
+            width: 100%;
+            height: 200px;
+            overflow: hidden;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            background: var(--color-white);
+        }
+        .software-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        .software-item:hover .software-preview img {
+            transform: scale(1.05);
+        }
+        .software-icon {
+            width: 60px; height: 60px; background: var(--color-dark); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; margin-bottom: 25px;
+            font-size: 24px; color: var(--color-white);
+        }
+        .software-item h3 {
+            font-family: var(--font-serif); font-size: 24px; font-weight: 600;
+            margin-bottom: 10px; color: var(--color-dark);
+        }
+        .software-category {
+            font-size: 12px; font-weight: 500; color: var(--color-gold);
+            letter-spacing: 1px; text-transform: uppercase; margin-bottom: 20px;
+        }
+        .software-desc {
+            font-size: 15px; line-height: 1.7; color: var(--color-gray); margin-bottom: 25px;
+        }
+        .software-tech {
+            display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px;
+        }
+        .software-tech span {
+            padding: 6px 12px; background: var(--color-white); border-radius: 4px;
+            font-size: 11px; font-weight: 500; color: var(--color-dark);
+        }
+        .software-link {
+            display: inline-block;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--color-dark);
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-bottom: 1px solid var(--color-gold);
+            padding-bottom: 2px;
+            transition: var(--transition);
+        }
+        .software-link:hover {
+            color: var(--color-gold);
+        }
+
+        /* ========================================
            SERVICES
            ======================================== */
-        .services { padding: 140px 0; background-color: var(--color-white); }
+        .services { padding: 140px 0; background-color: var(--color-cream); }
         .services-grid {
             display: grid; grid-template-columns: repeat(2, 1fr); gap: 40px;
         }
         .service-card {
-            background: var(--color-cream); padding: 50px 40px; border-radius: 4px; transition: var(--transition);
+            background: var(--color-white); padding: 50px 40px; border-radius: 4px; transition: var(--transition);
         }
         .service-card:hover {
             transform: translateY(-5px); box-shadow: 0 20px 60px rgba(0,0,0,0.1);
@@ -418,7 +488,7 @@
             max-width: 700px;
             margin: 60px auto 0;
             padding: 40px;
-            background: var(--color-cream);
+            background: var(--color-white);
             border-left: 3px solid var(--color-gold);
             border-radius: 4px;
             text-align: center;
@@ -550,7 +620,7 @@
             .about-content h2 { font-size: 40px; }
             .section-title { font-size: 40px; }
             .portfolio-grid, .services-grid { grid-template-columns: 1fr; gap: 30px; }
-            .ai-grid { grid-template-columns: 1fr; }
+            .ai-grid, .software-grid { grid-template-columns: 1fr; }
             .modal { padding: 40px; }
             .modal h2 { font-size: 36px; }
             .skills-grid { grid-template-columns: 1fr; }
@@ -567,7 +637,7 @@
             .about-role { font-size: 11px; }
             .about-buttons { flex-direction: column; }
             .btn { text-align: center; }
-            .portfolio, .ai-projects, .services, .contact { padding: 80px 0; }
+            .portfolio, .ai-projects, .software, .services, .contact { padding: 80px 0; }
             .section-title { font-size: 32px; }
             .modal { padding: 30px 25px; }
             .modal h2 { font-size: 28px; }
@@ -585,6 +655,7 @@
         <div class="side-nav-item" data-target="about" data-label="About"></div>
         <div class="side-nav-item" data-target="portfolio" data-label="Portfolio"></div>
         <div class="side-nav-item" data-target="ai" data-label="AI Projects"></div>
+        <div class="side-nav-item" data-target="software" data-label="Software"></div>
         <div class="side-nav-item" data-target="services" data-label="Services"></div>
         <div class="side-nav-item" data-target="contact" data-label="Contact"></div>
     </nav>
@@ -599,6 +670,7 @@
                     <li><a href="#about">About</a></li>
                     <li><a href="#portfolio">Portfolio</a></li>
                     <li><a href="#ai">AI Projects</a></li>
+                    <li><a href="#software">Software</a></li>
                     <li><a href="#services">Services</a></li>
                     <li><a href="#contact">Contact</a></li>
                     <li class="lang-switcher"><a href="index.html">RU</a></li>
@@ -619,6 +691,7 @@
             <li><a href="#about" class="mobile-link">About</a></li>
             <li><a href="#portfolio" class="mobile-link">Portfolio</a></li>
             <li><a href="#ai" class="mobile-link">AI Projects</a></li>
+            <li><a href="#software" class="mobile-link">Software</a></li>
             <li><a href="#services" class="mobile-link">Services</a></li>
             <li><a href="#contact" class="mobile-link">Contact</a></li>
             <li class="lang-switcher"><a href="index.html">RU</a></li>
@@ -776,7 +849,7 @@
             
             <div class="ai-grid">
                 <div class="ai-item">
-                    <div class="ai-icon">🤖</div>
+                    <div class="ai-icon"></div>
                     <h3>SmartParser</h3>
                     <p>Automated data collection from websites with export to structured Excel tables. Saving hours of manual work.</p>
                     <a href="https://github.com/Vitwill/smart-parser" class="ai-link" target="_blank">GitHub →</a>
@@ -794,6 +867,71 @@
                     <h3>TG Content Planner</h3>
                     <p>Automated content planning for Telegram channels with RSS parsing and AI generation. Scheduling publications weeks in advance.</p>
                     <a href="https://github.com/Vitwill/tg-content-planner" class="ai-link" target="_blank">GitHub →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SOFTWARE -->
+    <section id="software" class="software">
+        <div class="container">
+            <p class="section-label">Software</p>
+            <h2 class="section-title">Developed Applications</h2>
+            <p class="section-subtitle">Applications: from personal organizer to CRM system and analytics tools</p>
+            
+            <div class="software-grid">
+                <!-- DashBook -->
+                <div class="software-item">
+                    <div class="software-preview">
+                        <img src="images/software-dashbook-thumb.jpg" alt="DashBook" loading="lazy">
+                    </div>
+                    <div class="software-icon">📖</div>
+                    <h3>DashBook</h3>
+                    <p class="software-category">Personal Organizer with AI Assistant</p>
+                    <p class="software-desc">Web application for managing tasks, projects, and personal diary. AI assistant integration with voice input, multilingual support, 4 design themes.</p>
+                    <div class="software-tech">
+                        <span>React</span>
+                        <span>TypeScript</span>
+                        <span>Tailwind CSS</span>
+                        <span>AI Integration</span>
+                    </div>
+                    <a href="#" class="software-link" onclick="alert('Demo on request'); return false;">Learn More →</a>
+                </div>
+
+                <!-- FB Leads -->
+                <div class="software-item">
+                    <div class="software-preview">
+                        <img src="images/software-fb-leads-thumb.jpg" alt="FB Leads" loading="lazy">
+                    </div>
+                    <div class="software-icon"></div>
+                    <h3>FB Leads</h3>
+                    <p class="software-category">CRM System for Lead Management</p>
+                    <p class="software-desc">Automation of lead collection, validation, and scoring from Meta Ads, Google Sheets, Excel. VIP scoring, deduplication, conversion analytics.</p>
+                    <div class="software-tech">
+                        <span>React</span>
+                        <span>TypeScript</span>
+                        <span>Tailwind CSS</span>
+                        <span>Meta API</span>
+                    </div>
+                    <a href="#" class="software-link" onclick="alert('Demo on request'); return false;">Learn More →</a>
+                </div>
+
+                <!-- YouTube Analyzer -->
+                <div class="software-item">
+                    <div class="software-preview">
+                        <img src="images/software-youtube-analyzer-thumb.jpg" alt="YouTube Analyzer" loading="lazy">
+                    </div>
+                    <div class="software-icon">📊</div>
+                    <h3>YouTube Analyzer</h3>
+                    <p class="software-category">Analytics Tool for YouTube</p>
+                    <p class="software-desc">Search and analysis of YouTube channels by niches and regions. Revenue estimation, posting frequency, competitive analysis. Data export to Excel.</p>
+                    <div class="software-tech">
+                        <span>React</span>
+                        <span>TypeScript</span>
+                        <span>YouTube API</span>
+                        <span>Electron</span>
+                    </div>
+                    <a href="#" class="software-link" onclick="alert('Demo on request'); return false;">Learn More →</a>
                 </div>
             </div>
         </div>
@@ -1093,14 +1231,14 @@
             }
 
             const text = `
-📨 <b>New inquiry from portfolio website!</b>
+ <b>New inquiry from portfolio website!</b>
 
- <b>Name:</b> ${name}
- <b>Email:</b> ${email}
+👤 <b>Name:</b> ${name}
+📧 <b>Email:</b> ${email}
 💬 <b>Telegram:</b> ${telegram || 'Not specified'}
 📋 <b>Task Type:</b> ${taskTypesText}
 
- <b>Message:</b>
+📝 <b>Message:</b>
 ${message}
             `.trim();
 
