@@ -409,25 +409,29 @@
             border-radius: 2px;
             background: linear-gradient(135deg, #E8DCC4 0%, #D4A870 55%, #B8722E 100%);
         }
-        .featured-visual::before {
-            content: "";
-            position: absolute; inset: 0;
-            background:
-                radial-gradient(ellipse at 30% 35%, rgba(193,68,14,.35), transparent 62%),
-                radial-gradient(ellipse at 75% 75%, rgba(232,168,124,.25), transparent 55%);
+        .featured-visual img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 1;
+            transition: transform 1.2s var(--ease);
         }
+        .featured-visual:hover img { transform: scale(1.03); }
         .featured-visual::after {
             content: "";
             position: absolute; inset: 0;
             background:
-                linear-gradient(180deg, transparent 40%, rgba(232,220,200,.75) 100%),
-                repeating-linear-gradient(90deg, rgba(14,14,14,.02) 0 1px, transparent 1px 3px);
+                linear-gradient(180deg, rgba(14,14,14,.05) 0%, transparent 30%, rgba(14,14,14,.72) 100%);
+            z-index: 2;
+            pointer-events: none;
         }
         .featured-visual-inner {
             position: absolute; inset: 0;
             display: flex; align-items: flex-end;
             padding: 40px;
-            z-index: 2;
+            z-index: 3;
         }
         .featured-visual-title {
             font-family: var(--f-serif);
@@ -435,10 +439,11 @@
             font-size: clamp(32px, 4vw, 62px);
             line-height: 1;
             letter-spacing: -.02em;
-            color: var(--ink);
+            color: var(--paper);
+            text-shadow: 0 2px 20px rgba(14,14,14,.35);
         }
         .featured-visual-tag {
-            position: absolute; top: 24px; left: 24px; z-index: 3;
+            position: absolute; top: 24px; left: 24px; z-index: 4;
             font-family: var(--f-mono);
             font-size: 10px;
             letter-spacing: .16em;
@@ -448,7 +453,7 @@
             border: 1px solid rgba(14,14,14,.3);
             border-radius: 2px;
             backdrop-filter: blur(8px);
-            background: rgba(245,242,236,.8);
+            background: rgba(245,242,236,.85);
         }
         .featured-meta-list { margin-bottom: 36px; }
         .featured-meta-row {
@@ -1427,6 +1432,7 @@
 
             <div class="featured-body">
                 <div class="featured-visual">
+                    <img src="images/project3-thumb.jpg" alt="Pocketful of Dreams — сайт студии люксовых свадеб">
                     <span class="featured-visual-tag">Великобритания · Люкс</span>
                     <div class="featured-visual-inner">
                         <div class="featured-visual-title">Pocketful<br>of Dreams</div>
