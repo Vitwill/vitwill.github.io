@@ -1,11 +1,41 @@
-# robots.txt for Viktor Willmann Portfolio
-# https://vitwill.github.io/
+# ============================================================
+# robots.txt — vitwill.github.io
+# Viktor Willmann — Portfolio & Software
+# ============================================================
+
+# Все основные поисковые роботы — индексируйте всё, кроме указанного ниже
 
 User-agent: *
 Allow: /
 
-# Запрет индексации служебных файлов (если будут)
-Disallow: /images/
+# Служебные и неиндексируемые пути
+Disallow: /404.html
+Disallow: /*.json$
+Disallow: /assets/
 
-# Sitemap
+# Не индексировать картинки отдельно — они уже в контексте страниц
+User-agent: *
+Disallow: /*.jpg$
+Disallow: /*.png$
+
+# Специфичные для соцсетей боты — пусть работают без ограничений,
+# чтобы OG-превью и Twitter Card корректно подтягивали картинки
+
+User-agent: Twitterbot
+Allow: /
+
+User-agent: facebookexternalhit
+Allow: /
+
+User-agent: LinkedInBot
+Allow: /
+
+User-agent: TelegramBot
+Allow: /
+
+User-agent: Slackbot
+Allow: /
+
+# Карта сайта — обязательна, помогает поисковикам сразу найти все URL
+
 Sitemap: https://vitwill.github.io/sitemap.xml
