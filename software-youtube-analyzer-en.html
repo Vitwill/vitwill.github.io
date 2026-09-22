@@ -3,528 +3,1030 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="YouTube Analyzer — tool for searching and analyzing YouTube channels worldwide. Revenue estimation, competitive analysis, multilingual search.">
-    <title>YouTube Analyzer — Viktor Willmann Portfolio</title>
-    
+
+    <meta name="description" content="YouTube Analyzer Pro — a tool for search, competitive analysis, and profitability estimation of YouTube channels. YouTube Data API v3, React, Electron. Built by Viktor Willmann.">
+    <meta name="keywords" content="YouTube Analyzer, YouTube Data API, YouTube analytics, React, TypeScript, Electron, Viktor Willmann">
+    <meta name="author" content="Viktor Willmann">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://vitwill.github.io/software-youtube-analyzer-en.html">
+    <link rel="alternate" hreflang="ru" href="https://vitwill.github.io/software-youtube-analyzer.html">
+    <link rel="alternate" hreflang="en" href="https://vitwill.github.io/software-youtube-analyzer-en.html">
+
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://vitwill.github.io/software-youtube-analyzer-en.html">
+    <meta property="og:title" content="YouTube Analyzer Pro — competitive analysis of YouTube channels">
+    <meta property="og:description" content="Search, analysis, and profitability estimation of channels by niche and region. YouTube Data API v3.">
+    <meta property="og:image" content="https://vitwill.github.io/images/software-youtube-analyzer-thumb.jpg">
+
     <link rel="icon" type="image/png" sizes="512x512" href="images/favicon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="images/favicon.png">
     <link rel="icon" type="image/png" sizes="16x16" href="images/favicon.png">
     <link rel="apple-touch-icon" sizes="180x180" href="images/favicon.png">
-    
+
+    <title>YouTube Analyzer — YouTube Channel Analytics | Viktor Willmann</title>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
     <style>
         :root {
-            --color-dark: #0f1419;
-            --color-dark-blue: #1a1f2e;
-            --color-white: #ffffff;
-            --color-cream: #f5f1eb;
-            --color-gold: #b8935a;
-            --color-gray: #666666;
-            --font-serif: 'Cormorant Garamond', serif;
-            --font-sans: 'Inter', sans-serif;
-            --transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            --paper: #F5F2EC;
+            --paper-2: #EFEBE3;
+            --ink: #0E0E0E;
+            --muted: rgba(14, 14, 14, .68);
+            --muted-2: rgba(14, 14, 14, .45);
+            --line: rgba(14, 14, 14, .14);
+            --line-strong: rgba(14, 14, 14, .22);
+            --accent: #C1440E;
+            --accent-soft: #E8A87C;
+
+            --f-display: 'Inter Tight', sans-serif;
+            --f-text: 'Inter', sans-serif;
+            --f-serif: 'Instrument Serif', serif;
+            --f-mono: 'JetBrains Mono', monospace;
+
+            --ease: cubic-bezier(0.22, 1, 0.36, 1);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
-        
         body {
-            font-family: var(--font-sans);
-            font-weight: 300;
+            font-family: var(--f-text);
+            font-weight: 400;
+            font-size: 15px;
             line-height: 1.6;
-            color: var(--color-dark);
-            background-color: var(--color-white);
+            color: var(--ink);
+            background: var(--paper);
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+        img { max-width: 100%; display: block; }
+        a { color: inherit; }
+        ::selection { background: var(--ink); color: var(--paper); }
+
+        .container { max-width: 1440px; margin: 0 auto; padding: 0 40px; }
+
+        .eyebrow {
+            font-family: var(--f-mono);
+            font-size: 11px;
+            letter-spacing: .18em;
+            text-transform: uppercase;
+            color: var(--accent);
+            display: inline-flex;
+            align-items: center;
+            gap: 14px;
+        }
+        .eyebrow::before {
+            content: "";
+            display: inline-block;
+            width: 32px;
+            height: 1px;
+            background: var(--accent);
         }
 
-        .container { max-width: 1400px; margin: 0 auto; padding: 0 60px; }
-
+        /* HEADER */
         .site-header {
-            position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;
-            background-color: transparent; padding: 30px 0; transition: var(--transition);
+            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+            background: rgba(245, 242, 236, .85);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border-bottom: 1px solid var(--line);
+            transition: padding .3s var(--ease);
         }
-        .site-header.scrolled {
-            background-color: rgba(15, 20, 25, 0.75);
-            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); padding: 18px 0;
+        .site-header .container {
+            display: flex; justify-content: space-between; align-items: center;
+            padding-top: 20px; padding-bottom: 20px;
+            transition: padding .3s var(--ease);
         }
-        .site-header .container { display: flex; justify-content: space-between; align-items: center; }
+        .site-header.scrolled .container { padding-top: 14px; padding-bottom: 14px; }
+
         .logo {
-            font-family: var(--font-serif); font-size: 26px; font-weight: 600;
-            color: var(--color-white); text-decoration: none;
+            font-family: var(--f-display);
+            font-size: 17px; font-weight: 600;
+            letter-spacing: -.02em;
+            text-decoration: none;
+            color: var(--ink);
         }
-        .main-nav ul { list-style: none; display: flex; gap: 40px; align-items: center; }
+        .logo em {
+            font-family: var(--f-serif);
+            font-style: italic; font-weight: 400;
+            color: var(--accent);
+        }
+        .main-nav ul { list-style: none; display: flex; gap: 30px; align-items: center; }
         .main-nav a {
-            color: var(--color-white); text-decoration: none; font-size: 12px;
-            font-weight: 400; text-transform: uppercase; letter-spacing: 1.5px;
+            text-decoration: none; color: var(--muted);
+            font-size: 13px; letter-spacing: .01em;
+            transition: color .2s;
         }
-        .main-nav a:hover { opacity: 0.7; }
+        .main-nav a:hover { color: var(--ink); }
         .lang-switcher a {
-            display: inline-block; padding: 6px 14px; border: 1px solid rgba(255,255,255,0.4);
-            border-radius: 4px; font-size: 11px; font-weight: 500;
+            border: 1px solid var(--line-strong);
+            padding: 6px 12px;
+            font-family: var(--f-mono);
+            font-size: 11px;
+            letter-spacing: .1em;
+            border-radius: 2px;
+            color: var(--ink);
+        }
+        .lang-switcher a:hover {
+            background: rgba(14,14,14,.05);
+            border-color: rgba(14,14,14,.45);
+        }
+        .hamburger {
+            display: none; flex-direction: column; gap: 5px;
+            cursor: pointer; z-index: 1001;
+            background: none; border: none; padding: 5px;
+        }
+        .hamburger span {
+            display: block; width: 26px; height: 2px;
+            background: var(--ink); transition: all .35s var(--ease);
         }
 
-        .project-hero {
-            padding: 180px 0 100px;
-            background: linear-gradient(135deg, var(--color-dark-blue) 0%, var(--color-dark) 100%);
-            color: var(--color-white);
-            text-align: center;
+        /* BREADCRUMBS */
+        .breadcrumbs-wrap {
+            padding: 130px 0 0;
+            background: var(--paper);
         }
-        .project-hero-content { max-width: 800px; margin: 0 auto; }
-        .project-category-label {
-            font-size: 12px; font-weight: 500; color: var(--color-gold);
-            letter-spacing: 3px; text-transform: uppercase; margin-bottom: 20px;
+        .breadcrumbs {
+            font-family: var(--f-mono);
+            font-size: 11px;
+            letter-spacing: .14em;
+            text-transform: uppercase;
+            color: var(--muted);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
         }
-        .project-hero h1 {
-            font-family: var(--font-serif); font-size: 64px; font-weight: 400;
-            margin-bottom: 20px; line-height: 1.1;
+        .breadcrumbs a {
+            text-decoration: none;
+            color: var(--muted);
+            transition: color .2s;
         }
-        .project-subtitle {
-            font-size: 18px; color: rgba(255,255,255,0.8); font-weight: 300;
-        }
+        .breadcrumbs a:hover { color: var(--ink); }
+        .breadcrumbs .sep { opacity: .5; }
+        .breadcrumbs .current { color: var(--ink); }
 
-        .project-section { padding: 100px 0; }
-        .project-section.alt-bg { background-color: var(--color-cream); }
-        
-        .section-title {
-            font-family: var(--font-serif); font-size: 36px; font-weight: 400;
-            margin-bottom: 40px; color: var(--color-dark);
+        /* HERO */
+        .product-hero {
+            padding: 40px 0 80px;
+            background: var(--paper);
+            border-bottom: 1px solid var(--line);
         }
-
-        .project-overview {
+        .product-hero-grid {
             display: grid;
-            grid-template-columns: 1fr 1.5fr;
+            grid-template-columns: 1.5fr 1fr;
             gap: 80px;
-            align-items: start;
+            align-items: end;
         }
-        .project-info h3 {
-            font-size: 12px; font-weight: 500; color: var(--color-gold);
-            text-transform: uppercase; letter-spacing: 2px; margin-bottom: 10px;
+        .product-hero-left { max-width: 780px; }
+        .product-title {
+            font-family: var(--f-display);
+            font-size: clamp(44px, 6.5vw, 108px);
+            font-weight: 600;
+            line-height: .9;
+            letter-spacing: -.055em;
+            margin: 24px 0 28px;
         }
-        .project-info p {
-            font-size: 16px; line-height: 1.8; color: var(--color-gray); margin-bottom: 30px;
+        .product-title em {
+            font-family: var(--f-serif);
+            font-style: italic;
+            font-weight: 400;
+            color: var(--accent);
         }
-        .project-details {
-            display: flex; flex-direction: column; gap: 20px; margin-top: 40px;
-        }
-        .detail-item {
-            display: flex; flex-direction: column; gap: 8px;
-        }
-        .detail-item strong {
-            font-size: 12px; text-transform: uppercase; letter-spacing: 1px;
-            color: var(--color-gray);
-        }
-        .detail-item span {
-            font-size: 16px; color: var(--color-dark);
+        .product-subtitle {
+            font-family: var(--f-serif);
+            font-size: clamp(18px, 1.6vw, 24px);
+            font-style: italic;
+            line-height: 1.4;
+            color: var(--ink);
+            max-width: 620px;
         }
 
-        .screenshots-gallery {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 30px;
-            margin-top: 60px;
+        .product-hero-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
         }
-        .screenshot-item {
-            border-radius: 8px;
+        .meta-list { display: flex; flex-direction: column; }
+        .meta-row {
+            display: flex; justify-content: space-between; gap: 20px;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--line);
+            font-size: 14px;
+        }
+        .meta-row:first-child { border-top: 1px solid var(--line); }
+        .meta-row span:first-child {
+            font-family: var(--f-mono);
+            font-size: 10px;
+            letter-spacing: .16em;
+            text-transform: uppercase;
+            color: var(--muted);
+            padding-top: 2px;
+        }
+        .meta-row span:last-child { text-align: right; color: var(--ink); }
+
+        .product-cta-btn {
+            display: inline-flex; align-items: center; gap: 14px;
+            font-family: var(--f-mono);
+            font-size: 12px;
+            letter-spacing: .16em;
+            text-transform: uppercase;
+            text-decoration: none;
+            color: var(--paper);
+            background: var(--ink);
+            border: 1px solid var(--ink);
+            padding: 16px 28px;
+            border-radius: 2px;
+            transition: all .3s var(--ease);
+            align-self: flex-start;
+        }
+        .product-cta-btn:hover {
+            background: var(--accent);
+            border-color: var(--accent);
+            gap: 20px;
+        }
+
+        /* COVER */
+        .product-cover {
+            padding: 80px 0;
+            background: var(--paper);
+            border-bottom: 1px solid var(--line);
+        }
+        .product-cover-image {
+            position: relative;
+            width: 100%;
             overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            transition: var(--transition);
-            background: var(--color-white);
+            border-radius: 2px;
+            background: var(--paper-2);
+            border: 1px solid var(--line);
         }
-        .screenshot-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 50px rgba(0,0,0,0.15);
-        }
-        .screenshot-item img {
+        .product-cover-image img {
             width: 100%;
             height: auto;
             display: block;
         }
-
-        .features-list {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 40px;
-        }
-        .feature-item {
-            background: var(--color-white);
-            padding: 30px;
-            border-radius: 8px;
-            border-left: 3px solid var(--color-gold);
-        }
-        .feature-item h3 {
-            font-family: var(--font-serif);
-            font-size: 22px;
-            margin-bottom: 15px;
-            color: var(--color-dark);
-        }
-        .feature-item p {
-            font-size: 15px;
-            line-height: 1.7;
-            color: var(--color-gray);
-        }
-        .feature-item ul {
-            list-style: none;
-            padding: 0;
-            margin-top: 15px;
-        }
-        .feature-item ul li {
-            position: relative;
-            padding-left: 20px;
-            margin-bottom: 8px;
-            font-size: 14px;
-            color: var(--color-gray);
-        }
-        .feature-item ul li::before {
-            content: '•';
-            position: absolute;
-            left: 0;
-            color: var(--color-gold);
-            font-weight: bold;
+        .product-cover-caption {
+            margin-top: 18px;
+            font-family: var(--f-mono);
+            font-size: 10px;
+            letter-spacing: .14em;
+            text-transform: uppercase;
+            color: var(--muted);
         }
 
-        .highlights-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 30px;
-            margin-top: 40px;
-        }
-        .highlight-item {
-            text-align: center;
-            padding: 30px 20px;
-            background: var(--color-white);
-            border-radius: 8px;
-            transition: var(--transition);
-        }
-        .highlight-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-        }
-        .highlight-icon {
-            font-size: 36px;
-            margin-bottom: 15px;
-        }
-        .highlight-item h4 {
-            font-family: var(--font-serif);
-            font-size: 18px;
-            margin-bottom: 10px;
-            color: var(--color-dark);
-        }
-        .highlight-item p {
-            font-size: 14px;
-            color: var(--color-gray);
-            line-height: 1.6;
-        }
-
-        .tech-tags {
-            display: flex; flex-wrap: wrap; gap: 15px;
-        }
-        .tech-tag {
-            padding: 10px 20px; background: var(--color-cream);
-            border: 1px solid rgba(0,0,0,0.1); border-radius: 4px;
-            font-size: 14px; font-weight: 500;
-        }
-
-        .deployment-options {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 30px;
-            margin-top: 40px;
-        }
-        .deployment-item {
-            background: var(--color-white);
-            padding: 30px;
-            border-radius: 8px;
-            text-align: center;
-        }
-        .deployment-item h4 {
-            font-family: var(--font-serif);
-            font-size: 20px;
-            margin-bottom: 10px;
-            color: var(--color-dark);
-        }
-        .deployment-item p {
-            font-size: 14px;
-            color: var(--color-gray);
-        }
-
-        .project-cta {
+        /* SECTIONS */
+        .case-section {
             padding: 100px 0;
-            background: var(--color-dark);
-            color: var(--color-white);
-            text-align: center;
+            border-bottom: 1px solid var(--line);
         }
-        .project-cta h2 {
-            font-family: var(--font-serif); font-size: 36px;
+        .case-section.alt { background: var(--paper-2); }
+
+        .case-grid {
+            display: grid;
+            grid-template-columns: 260px 1fr;
+            gap: 80px;
+            align-items: start;
+        }
+        .case-label {
+            position: sticky;
+            top: 100px;
+        }
+        .case-label .count {
+            font-family: var(--f-mono);
+            font-size: 11px;
+            letter-spacing: .18em;
+            color: var(--muted-2);
+            margin-bottom: 16px;
+        }
+        .case-label h2 {
+            font-family: var(--f-display);
+            font-size: 22px;
+            font-weight: 500;
+            letter-spacing: -.02em;
+            line-height: 1.2;
+            margin-top: 14px;
+        }
+
+        .case-body p {
+            font-size: 17px;
+            line-height: 1.75;
+            color: var(--muted);
+            margin-bottom: 20px;
+            max-width: 760px;
+        }
+        .case-body p.lead {
+            font-family: var(--f-serif);
+            font-size: clamp(22px, 2.4vw, 32px);
+            font-style: italic;
+            line-height: 1.4;
+            color: var(--ink);
+            max-width: 780px;
             margin-bottom: 40px;
         }
-        .btn-large {
-            display: inline-block; padding: 20px 50px;
-            background: var(--color-white); color: var(--color-dark);
-            text-decoration: none; font-size: 14px; font-weight: 600;
-            text-transform: uppercase; letter-spacing: 2px;
-            transition: var(--transition);
+        .case-body p strong {
+            color: var(--ink);
+            font-weight: 500;
         }
-        .btn-large:hover {
-            background: var(--color-cream);
-            transform: translateY(-2px);
-        }
-        .back-link {
-            display: block; margin-top: 30px;
-            color: rgba(255,255,255,0.7); text-decoration: none;
-            font-size: 14px; transition: var(--transition);
-        }
-        .back-link:hover { color: var(--color-white); }
 
+        /* Features list */
+        .feature-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+        .feature-item {
+            display: grid;
+            grid-template-columns: 60px 1fr;
+            gap: 32px;
+            padding: 36px 0;
+            border-bottom: 1px solid var(--line);
+            align-items: start;
+        }
+        .feature-item:first-child { border-top: 1px solid var(--line); }
+        .feature-item .num {
+            font-family: var(--f-mono);
+            font-size: 11px;
+            letter-spacing: .16em;
+            color: var(--muted-2);
+            padding-top: 6px;
+        }
+        .feature-item h3 {
+            font-family: var(--f-display);
+            font-size: clamp(20px, 2vw, 26px);
+            font-weight: 500;
+            letter-spacing: -.025em;
+            line-height: 1.2;
+            margin-bottom: 12px;
+        }
+        .feature-item h3 em {
+            font-family: var(--f-serif);
+            font-style: italic;
+            font-weight: 400;
+            color: var(--accent);
+        }
+        .feature-item p {
+            font-size: 16px;
+            line-height: 1.7;
+            color: var(--muted);
+            max-width: 700px;
+        }
+        .feature-item p strong {
+            color: var(--ink);
+            font-weight: 500;
+        }
+
+        /* Niches list */
+        .niches-list {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0;
+            margin-top: 32px;
+            border-top: 1px solid var(--line-strong);
+            border-left: 1px solid var(--line-strong);
+        }
+        .niche-item {
+            padding: 16px 18px;
+            border-right: 1px solid var(--line-strong);
+            border-bottom: 1px solid var(--line-strong);
+            display: flex;
+            align-items: baseline;
+            gap: 12px;
+            font-size: 14px;
+            line-height: 1.4;
+            transition: background .3s var(--ease);
+        }
+        .niche-item:hover { background: rgba(14,14,14,.03); }
+        .niche-item .niche-num {
+            font-family: var(--f-mono);
+            font-size: 10px;
+            letter-spacing: .14em;
+            color: var(--muted-2);
+            flex-shrink: 0;
+        }
+        .niche-item .niche-name {
+            color: var(--ink);
+        }
+
+        /* Deploy list */
+        .deploy-list {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0;
+            border-top: 1px solid var(--line-strong);
+            border-left: 1px solid var(--line-strong);
+            margin-top: 8px;
+        }
+        .deploy-cell {
+            padding: 32px 26px 36px;
+            border-right: 1px solid var(--line-strong);
+            border-bottom: 1px solid var(--line-strong);
+            transition: background .3s var(--ease);
+        }
+        .deploy-cell:hover { background: rgba(14,14,14,.03); }
+        .deploy-num {
+            font-family: var(--f-mono);
+            font-size: 11px;
+            letter-spacing: .16em;
+            color: var(--muted-2);
+            margin-bottom: 14px;
+        }
+        .deploy-cell h3 {
+            font-family: var(--f-display);
+            font-size: 19px;
+            font-weight: 500;
+            letter-spacing: -.02em;
+            line-height: 1.25;
+            margin-bottom: 12px;
+        }
+        .deploy-cell h3 em {
+            font-family: var(--f-serif);
+            font-style: italic;
+            font-weight: 400;
+            color: var(--accent);
+        }
+        .deploy-cell p {
+            font-size: 14px;
+            line-height: 1.65;
+            color: var(--muted);
+        }
+        .deploy-cell p strong {
+            color: var(--ink);
+            font-weight: 500;
+        }
+
+        /* Color palette */
+        .palette-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 20px;
+        }
+        .palette-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 16px 10px 10px;
+            border: 1px solid var(--line-strong);
+            border-radius: 2px;
+            background: var(--paper);
+            font-family: var(--f-mono);
+            font-size: 11px;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            color: var(--ink);
+        }
+        .palette-swatch {
+            width: 18px;
+            height: 18px;
+            border-radius: 2px;
+            flex-shrink: 0;
+        }
+        .case-section.alt .palette-chip { background: var(--paper); }
+
+        /* Interface structure list */
+        .interface-list {
+            list-style: none;
+            padding: 0;
+            max-width: 760px;
+            margin-top: 20px;
+        }
+        .interface-list li {
+            position: relative;
+            padding-left: 24px;
+            margin-bottom: 14px;
+            font-size: 16px;
+            line-height: 1.7;
+            color: var(--muted);
+        }
+        .interface-list li::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 12px;
+            width: 12px;
+            height: 1px;
+            background: var(--accent);
+        }
+        .interface-list li strong {
+            color: var(--ink);
+            font-weight: 500;
+        }
+
+        /* Tech */
+        .tech-tags {
+            display: flex; flex-wrap: wrap; gap: 8px;
+            margin-top: 8px;
+        }
+        .tech-tag {
+            padding: 8px 16px;
+            background: var(--paper);
+            border: 1px solid var(--line-strong);
+            border-radius: 2px;
+            font-family: var(--f-mono);
+            font-size: 11px;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            color: var(--ink);
+        }
+        .case-section.alt .tech-tag { background: var(--paper); }
+
+        /* Product nav */
+        .case-nav { border-bottom: 1px solid var(--line); }
+        .case-nav-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+        }
+        .case-nav-item {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            padding: 56px 40px;
+            text-decoration: none;
+            color: inherit;
+            transition: background .35s var(--ease), padding .35s var(--ease);
+        }
+        .case-nav-item.prev {
+            border-right: 1px solid var(--line);
+            align-items: flex-start;
+            text-align: left;
+        }
+        .case-nav-item.next {
+            align-items: flex-end;
+            text-align: right;
+        }
+        .case-nav-item:hover { background: var(--ink); color: var(--paper); }
+        .case-nav-item:hover .case-nav-dir { color: var(--accent-soft); }
+        .case-nav-dir {
+            font-family: var(--f-mono);
+            font-size: 11px;
+            letter-spacing: .16em;
+            text-transform: uppercase;
+            color: var(--muted);
+            transition: color .3s;
+        }
+        .case-nav-title {
+            font-family: var(--f-display);
+            font-size: clamp(24px, 3vw, 42px);
+            font-weight: 500;
+            letter-spacing: -.03em;
+            line-height: 1.1;
+        }
+        .case-nav-title em {
+            font-family: var(--f-serif);
+            font-style: italic;
+            font-weight: 400;
+        }
+
+        /* CTA */
+        .case-cta {
+            padding: 100px 0;
+            background: var(--paper-2);
+            border-bottom: 1px solid var(--line);
+        }
+        .case-cta-inner {
+            display: grid;
+            grid-template-columns: 1.4fr 1fr;
+            gap: 60px;
+            align-items: end;
+        }
+        .case-cta h2 {
+            font-family: var(--f-display);
+            font-size: clamp(34px, 5vw, 72px);
+            font-weight: 500;
+            letter-spacing: -.04em;
+            line-height: 1;
+            margin-top: 20px;
+        }
+        .case-cta h2 em {
+            font-family: var(--f-serif);
+            font-style: italic;
+            font-weight: 400;
+            color: var(--accent);
+        }
+        .case-cta-actions {
+            display: flex; flex-direction: column; gap: 16px;
+            align-items: flex-start;
+        }
+
+        .btn {
+            display: inline-flex; align-items: center; gap: 12px;
+            font-family: var(--f-mono);
+            font-size: 12px;
+            letter-spacing: .16em;
+            text-transform: uppercase;
+            text-decoration: none;
+            padding: 16px 28px;
+            border: 1px solid transparent;
+            border-radius: 2px;
+            cursor: pointer;
+            transition: all .3s var(--ease);
+            background: none;
+        }
+        .btn-dark {
+            background: var(--ink);
+            color: var(--paper);
+            border-color: var(--ink);
+        }
+        .btn-dark:hover { background: var(--accent); border-color: var(--accent); }
+        .btn-outline {
+            background: transparent;
+            color: var(--ink);
+            border-color: var(--line-strong);
+        }
+        .btn-outline:hover { border-color: var(--ink); }
+
+        /* FOOTER */
         .site-footer {
-            background-color: var(--color-dark); color: rgba(255,255,255,0.6);
-            text-align: center; padding: 40px 0; font-size: 13px;
+            padding: 40px 0;
+            background: var(--ink);
+            color: rgba(245,242,236,.65);
+        }
+        .site-footer .container {
+            display: flex; justify-content: space-between; align-items: center;
+            gap: 20px; flex-wrap: wrap;
+            font-family: var(--f-mono);
+            font-size: 11px;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+        }
+        .site-footer a {
+            text-decoration: none;
+            color: rgba(245,242,236,.65);
+            transition: color .2s;
+        }
+        .site-footer a:hover { color: var(--paper); }
+
+        /* RESPONSIVE */
+        @media (max-width: 1100px) {
+            .container { padding: 0 30px; }
+            .product-hero-grid { grid-template-columns: 1fr; gap: 50px; align-items: start; }
+            .case-grid { grid-template-columns: 1fr; gap: 40px; }
+            .case-label { position: static; }
+            .case-cta-inner { grid-template-columns: 1fr; gap: 40px; align-items: start; }
+            .niches-list { grid-template-columns: repeat(2, 1fr); }
+            .deploy-list { grid-template-columns: 1fr; }
         }
 
-        @media (max-width: 1024px) {
-            .container { padding: 0 40px; }
-            .project-hero h1 { font-size: 48px; }
-            .project-overview { grid-template-columns: 1fr; gap: 50px; }
-            .section-title { font-size: 32px; }
-            .screenshots-gallery { grid-template-columns: 1fr; }
-            .features-list { grid-template-columns: 1fr; }
-            .highlights-grid { grid-template-columns: 1fr; }
-            .deployment-options { grid-template-columns: 1fr; }
-        }
-        @media (max-width: 768px) {
-            .container { padding: 0 25px; }
+        @media (max-width: 720px) {
+            .container { padding: 0 20px; }
             .main-nav { display: none; }
-            .project-hero { padding: 140px 0 80px; }
-            .project-hero h1 { font-size: 36px; }
-            .project-subtitle { font-size: 16px; }
-            .project-section { padding: 80px 0; }
-            .section-title { font-size: 28px; }
+            .hamburger { display: flex; }
+
+            .breadcrumbs-wrap { padding: 100px 0 0; }
+            .product-hero { padding: 30px 0 60px; }
+            .product-title { font-size: clamp(40px, 11vw, 64px); }
+            .product-subtitle { font-size: 18px; }
+            .product-cover { padding: 50px 0; }
+
+            .case-section { padding: 60px 0; }
+            .case-body p { font-size: 16px; }
+            .case-body p.lead { font-size: 22px; }
+
+            .niches-list { grid-template-columns: 1fr; }
+            .niche-item { padding: 14px 16px; }
+
+            .feature-item { grid-template-columns: 40px 1fr; gap: 16px; padding: 28px 0; }
+            .feature-item h3 { font-size: 20px; }
+
+            .deploy-cell { padding: 24px 20px 28px; }
+
+            .case-nav-grid { grid-template-columns: 1fr; }
+            .case-nav-item { padding: 40px 24px; }
+            .case-nav-item.prev {
+                border-right: none;
+                border-bottom: 1px solid var(--line);
+                align-items: flex-start;
+                text-align: left;
+            }
+            .case-nav-item.next { align-items: flex-start; text-align: left; }
+
+            .case-cta { padding: 70px 0; }
+            .case-cta-actions { align-items: stretch; }
+            .btn { justify-content: center; }
+
+            .site-footer .container { flex-direction: column; text-align: center; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                transition-duration: 0.01ms !important;
+            }
         }
     </style>
 </head>
 <body>
 
+    <!-- HEADER -->
     <header class="site-header" id="main-header">
         <div class="container">
-            <a href="index-en.html" class="logo">Viktor Willmann</a>
+            <a href="index-en.html" class="logo">Viktor <em>Willmann</em></a>
             <nav class="main-nav">
                 <ul>
-                    <li><a href="index-en.html#portfolio">Portfolio</a></li>
-                    <li><a href="index-en.html#about">About</a></li>
+                    <li><a href="index-en.html#portfolio">Work</a></li>
                     <li><a href="index-en.html#services">Services</a></li>
+                    <li><a href="index-en.html#about">About</a></li>
                     <li><a href="index-en.html#contact">Contact</a></li>
                     <li class="lang-switcher"><a href="software-youtube-analyzer.html">RU</a></li>
                 </ul>
             </nav>
+            <button class="hamburger" id="hamburger" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
         </div>
     </header>
 
-    <section class="project-hero">
+    <!-- BREADCRUMBS -->
+    <div class="breadcrumbs-wrap">
         <div class="container">
-            <div class="project-hero-content">
-                <p class="project-category-label">Software Development</p>
-                <h1>YouTube Analyzer</h1>
-                <p class="project-subtitle">Tool for Searching and Analyzing YouTube Channels Worldwide</p>
+            <nav class="breadcrumbs" aria-label="Breadcrumbs">
+                <a href="index-en.html">Home</a>
+                <span class="sep">/</span>
+                <a href="index-en.html#software">Software</a>
+                <span class="sep">/</span>
+                <span class="current">YouTube Analyzer</span>
+            </nav>
+        </div>
+    </div>
+
+    <!-- HERO -->
+    <section class="product-hero">
+        <div class="container">
+            <div class="product-hero-grid">
+                <div class="product-hero-left">
+                    <span class="eyebrow">Software · 2024</span>
+                    <h1 class="product-title">YouTube <em>Analyzer</em></h1>
+                    <p class="product-subtitle">
+                        A tool for search, competitive analysis, and profitability estimation of YouTube channels worldwide. For content creators, producers, marketers, and niche researchers.
+                    </p>
+                </div>
+
+                <div class="product-hero-meta">
+                    <div class="meta-list">
+                        <div class="meta-row"><span>Type</span><span>Analytics tool</span></div>
+                        <div class="meta-row"><span>Stack</span><span>React 19 · TypeScript · Tailwind</span></div>
+                        <div class="meta-row"><span>Data</span><span>YouTube Data API v3</span></div>
+                        <div class="meta-row"><span>Platforms</span><span>Web · .exe · Single-file HTML</span></div>
+                        <div class="meta-row"><span>Coverage</span><span>12 countries · 4 macro-regions</span></div>
+                    </div>
+
+                    <a href="index-en.html#contact" class="product-cta-btn">
+                        Request access
+                        <span>→</span>
+                    </a>
+                </div>
             </div>
         </div>
     </section>
 
-    <section class="project-section">
+    <!-- COVER -->
+    <section class="product-cover">
         <div class="container">
-            <div class="project-overview">
-                <div class="project-info">
-                    <h3>About the App</h3>
-                    <p>YouTube Analyzer is a specialized tool for searching, competitive analysis, and revenue estimation of YouTube channels worldwide. The program is designed for content creators, producers, marketers, and niche researchers, allowing them to find promising channels and evaluate their potential based on official YouTube Data API v3 data.</p>
-                    
-                    <div class="project-details">
-                        <div class="detail-item">
-                            <strong>Type</strong>
-                            <span>Analytics Tool</span>
+            <div class="product-cover-image">
+                <img src="images/software-youtube-analyzer-thumb.jpg" alt="YouTube Analyzer — application interface">
+            </div>
+            <div class="product-cover-caption">YouTube Analyzer interface — 2024</div>
+        </div>
+    </section>
+
+    <!-- 01 · ABOUT -->
+    <section class="case-section">
+        <div class="container">
+            <div class="case-grid">
+                <aside class="case-label">
+                    <div class="count">01 / 05</div>
+                    <span class="eyebrow">About</span>
+                    <h2>What it is and who it's for</h2>
+                </aside>
+
+                <div class="case-body">
+                    <p class="lead">
+                        Finding promising YouTube channels by niche and region — with an estimate of activity, publishing pace, and potential revenue.
+                    </p>
+                    <p>
+                        YouTube Analyzer Pro is a tool for those exploring new niches, evaluating competitors, or researching the YouTube market. The app works in real time based on official <strong>YouTube Data API v3</strong> data and lets you find promising channels in selected niches and geographic regions, estimate their activity, publishing pace, and potential revenue from monetisation.
+                    </p>
+                    <p>
+                        The audience is content creators, producers, marketers, and niche researchers. For those launching a channel, planning a content series, or looking for a direction with the least competition and the greatest potential.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 02 · FEATURES -->
+    <section class="case-section alt">
+        <div class="container">
+            <div class="case-grid">
+                <aside class="case-label">
+                    <div class="count">02 / 05</div>
+                    <span class="eyebrow">Features</span>
+                    <h2>What it can do</h2>
+                </aside>
+
+                <div class="case-body">
+                    <div class="feature-list">
+                        <div class="feature-item">
+                            <div class="num">01</div>
+                            <div>
+                                <h3>Flexible search <em>and filtering</em></h3>
+                                <p><strong>Search by keywords</strong> — refine your query with arbitrary phrases (e.g., "games", "cooking", "renovation"). <strong>12 ready-made popular niches</strong> — from personal finance to IT and esports (full list below).</p>
+                            </div>
                         </div>
-                        <div class="detail-item">
-                            <strong>Platform</strong>
-                            <span>Web / Desktop (Windows)</span>
+                        <div class="feature-item">
+                            <div class="num">02</div>
+                            <div>
+                                <h3>Multilingual localisation <em>and regions</em></h3>
+                                <p>Support for search across <strong>12 countries</strong> (USA, Germany, France, UK, Japan, South Korea, Russia, Brazil, Canada, Spain, Italy, Australia) and <strong>4 macro-regions</strong> (Americas, Europe, Asia, Africa). <strong>Automatic query translation:</strong> the algorithm translates niche terms into the target country's language — it searches in Japanese for Japan, in German for Germany, in Portuguese for Brazil. This lets you discover real local channels without manual translation.</p>
+                            </div>
                         </div>
-                        <div class="detail-item">
-                            <strong>Status</strong>
-                            <span>Ready to Use</span>
+                        <div class="feature-item">
+                            <div class="num">03</div>
+                            <div>
+                                <h3>Channel table <em>and one-click sorting</em></h3>
+                                <p>Search results displayed as an interactive table with a preview, channel name, subscriber count, and estimated revenue. <strong>One-click sorting</strong> by name, subscriber count, and estimated revenue (ascending / descending).</p>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="num">04</div>
+                            <div>
+                                <h3>Deep channel <em>analysis panel</em></h3>
+                                <p>Clicking the <strong>"Analyse"</strong> button triggers a detailed scan of the selected channel: <strong>country of registration</strong>, exact <strong>subscriber count</strong> and high-resolution channel avatar, <strong>video upload frequency</strong> (from "Daily" to "Once a month or less"), <strong>revenue from the latest video</strong> based on the last video's views, <strong>monthly revenue ranges</strong> — minimum and maximum projected monthly earnings, and <strong>quick jump</strong> — a button to open the channel directly on YouTube in a new tab.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <p style="margin-top: 48px; font-family: var(--f-mono); font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--accent);">12 ready-made niches</p>
+                    <div class="niches-list">
+                        <div class="niche-item"><span class="niche-num">01</span><span class="niche-name">Personal finance and investments</span></div>
+                        <div class="niche-item"><span class="niche-num">02</span><span class="niche-name">Tech and gadget reviews</span></div>
+                        <div class="niche-item"><span class="niche-num">03</span><span class="niche-name">True Crime</span></div>
+                        <div class="niche-item"><span class="niche-num">04</span><span class="niche-name">Business documentaries</span></div>
+                        <div class="niche-item"><span class="niche-num">05</span><span class="niche-name">Horror stories and the mystical</span></div>
+                        <div class="niche-item"><span class="niche-num">06</span><span class="niche-name">Aviation and military equipment</span></div>
+                        <div class="niche-item"><span class="niche-num">07</span><span class="niche-name">Real estate and property investment</span></div>
+                        <div class="niche-item"><span class="niche-num">08</span><span class="niche-name">AI / Neural networks</span></div>
+                        <div class="niche-item"><span class="niche-num">09</span><span class="niche-name">Cryptocurrency</span></div>
+                        <div class="niche-item"><span class="niche-num">10</span><span class="niche-name">Programming and IT</span></div>
+                        <div class="niche-item"><span class="niche-num">11</span><span class="niche-name">Lifestyle</span></div>
+                        <div class="niche-item"><span class="niche-num">12</span><span class="niche-name">All categories (general search)</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 03 · DEPLOYMENT -->
+    <section class="case-section">
+        <div class="container">
+            <div class="case-grid">
+                <aside class="case-label">
+                    <div class="count">03 / 05</div>
+                    <span class="eyebrow">Deployment</span>
+                    <h2>Three usage formats</h2>
+                </aside>
+
+                <div class="case-body" style="max-width: 100%;">
+                    <div class="deploy-list">
+                        <div class="deploy-cell">
+                            <div class="deploy-num">01 / 03</div>
+                            <h3>Web application <em>(Cloud)</em></h3>
+                            <p>Runs right in the browser by link. No installation required — open it any time, from any device.</p>
+                        </div>
+                        <div class="deploy-cell">
+                            <div class="deploy-num">02 / 03</div>
+                            <h3>Standalone <em>Windows app</em></h3>
+                            <p>Built on <strong>Electron</strong>. No third-party libraries required — launches with a single click as a fully independent program. <strong>Portable .exe</strong> format.</p>
+                        </div>
+                        <div class="deploy-cell">
+                            <div class="deploy-num">03 / 03</div>
+                            <h3>Single-file <em>HTML</em></h3>
+                            <p>Using the <strong>vite-plugin-singlefile</strong> plugin, the project is bundled into a single <strong>YouTube_Analyzer.html</strong> file that combines all code, scripts, and styles with no external dependencies.</p>
                         </div>
                     </div>
                 </div>
-                
+            </div>
+        </div>
+    </section>
+
+    <!-- 04 · INTERFACE -->
+    <section class="case-section alt">
+        <div class="container">
+            <div class="case-grid">
+                <aside class="case-label">
+                    <div class="count">04 / 05</div>
+                    <span class="eyebrow">Interface</span>
+                    <h2>Design and ergonomics</h2>
+                </aside>
+
+                <div class="case-body">
+                    <p>
+                        <strong>Dark, high-contrast palette</strong> — optimised for extended work sessions. Every colour has a purpose: the dark background shades reduce eye strain, the accent red marks active elements, the informational blue carries analytical data, and the money green displays financial metrics.
+                    </p>
+
+                    <div class="palette-grid">
+                        <span class="palette-chip"><span class="palette-swatch" style="background:#0f0f0f;"></span>#0F0F0F</span>
+                        <span class="palette-chip"><span class="palette-swatch" style="background:#121212;"></span>#121212</span>
+                        <span class="palette-chip"><span class="palette-swatch" style="background:#ff4757;"></span>#FF4757</span>
+                        <span class="palette-chip"><span class="palette-swatch" style="background:#3498db;"></span>#3498DB</span>
+                        <span class="palette-chip"><span class="palette-swatch" style="background:#2ecc71;"></span>#2ECC71</span>
+                    </div>
+
+                    <p style="margin-top: 48px;">
+                        <strong>Three-column layout</strong> of the interface:
+                    </p>
+                    <ul class="interface-list">
+                        <li><strong>Left panel</strong> — control of the API key, filters, niches, and countries.</li>
+                        <li><strong>Central area</strong> — search results table.</li>
+                        <li><strong>Right panel</strong> — detailed financial and dynamic analysis card.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 05 · STACK -->
+    <section class="case-section">
+        <div class="container">
+            <div class="case-grid">
+                <aside class="case-label">
+                    <div class="count">05 / 05</div>
+                    <span class="eyebrow">Technologies</span>
+                    <h2>Stack</h2>
+                </aside>
+
+                <div class="case-body">
+                    <div class="tech-tags">
+                        <span class="tech-tag">React 19</span>
+                        <span class="tech-tag">TypeScript</span>
+                        <span class="tech-tag">Tailwind CSS</span>
+                        <span class="tech-tag">Lucide Icons</span>
+                        <span class="tech-tag">Vite</span>
+                        <span class="tech-tag">Vite Plugin Singlefile</span>
+                        <span class="tech-tag">Electron</span>
+                        <span class="tech-tag">Electron Builder</span>
+                        <span class="tech-tag">YouTube Data API v3</span>
+                        <span class="tech-tag">Search API</span>
+                        <span class="tech-tag">Channels API</span>
+                        <span class="tech-tag">Videos / Activity API</span>
+                        <span class="tech-tag">i18n</span>
+                        <span class="tech-tag">Responsive Design</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PRODUCT NAV -->
+    <section class="case-nav">
+        <div class="container" style="padding: 0;">
+            <div class="case-nav-grid">
+                <a href="software-fb-leads-en.html" class="case-nav-item prev">
+                    <span class="case-nav-dir">← Previous</span>
+                    <span class="case-nav-title">FB <em>Leads</em></span>
+                </a>
+                <a href="software-dashbook-en.html" class="case-nav-item next">
+                    <span class="case-nav-dir">Next →</span>
+                    <span class="case-nav-title">Dash<em>Book</em></span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="case-cta">
+        <div class="container">
+            <div class="case-cta-inner">
                 <div>
-                    <img src="images/youtube-analyzer-1.jpg" alt="YouTube Analyzer - main screen" style="width: 100%; border-radius: 8px; box-shadow: 0 20px 60px rgba(0,0,0,0.15);">
+                    <span class="eyebrow">Interested?</span>
+                    <h2>Tell me about <em>your task</em></h2>
+                </div>
+                <div class="case-cta-actions">
+                    <a href="index-en.html#contact" class="btn btn-dark">Get in touch →</a>
+                    <a href="index-en.html#software" class="btn btn-outline">← All software</a>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="project-section alt-bg">
-        <div class="container">
-            <h2 class="section-title">App Screenshots</h2>
-            <div class="screenshots-gallery">
-                <div class="screenshot-item">
-                    <img src="images/youtube-analyzer-1.jpg" alt="YouTube Analyzer - channel search">
-                </div>
-                <div class="screenshot-item">
-                    <img src="images/youtube-analyzer-2.jpg" alt="YouTube Analyzer - results table">
-                </div>
-                <div class="screenshot-item">
-                    <img src="images/youtube-analyzer-3.jpg" alt="YouTube Analyzer - analysis panel">
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="project-section">
-        <div class="container">
-            <h2 class="section-title">Key Features</h2>
-            <div class="features-list">
-                <div class="feature-item">
-                    <h3>🔍 Flexible Search & Filtering</h3>
-                    <ul>
-                        <li>Keyword search with query refinement</li>
-                        <li>12 ready-made popular niches: finance, technology, True Crime, business, real estate, AI, cryptocurrencies, and more</li>
-                        <li>General search across all categories</li>
-                    </ul>
-                </div>
-
-                <div class="feature-item">
-                    <h3> Multilingual Localization</h3>
-                    <ul>
-                        <li>Search by individual countries: USA, Germany, France, UK, Japan, South Korea, Russia, Brazil, and others</li>
-                        <li>Search by macro-regions: Americas, Europe, Asia, Africa</li>
-                        <li>Automatic translation of queries to the target country's language</li>
-                    </ul>
-                </div>
-
-                <div class="feature-item">
-                    <h3>📊 Channel Table & Sorting</h3>
-                    <ul>
-                        <li>Interactive table with preview, name, subscribers, and revenue</li>
-                        <li>One-click sorting by name, subscribers, and revenue</li>
-                        <li>Ascending and descending order</li>
-                    </ul>
-                </div>
-
-                <div class="feature-item">
-                    <h3>📈 Deep Analysis Panel</h3>
-                    <ul>
-                        <li>Channel registration country</li>
-                        <li>Exact subscriber count and high-resolution avatar</li>
-                        <li>Video upload frequency calculation (from daily to monthly)</li>
-                        <li>Last video revenue and monthly income ranges</li>
-                        <li>Quick link to the channel on YouTube</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="project-section alt-bg">
-        <div class="container">
-            <h2 class="section-title">Key Highlights</h2>
-            <div class="highlights-grid">
-                <div class="highlight-item">
-                    <div class="highlight-icon">🔍</div>
-                    <h4>12 Popular Niches</h4>
-                    <p>Ready-made categories for quick search: from personal finance to programming and AI.</p>
-                </div>
-
-                <div class="highlight-item">
-                    <div class="highlight-icon"></div>
-                    <h4>Auto-Translation</h4>
-                    <p>Algorithm automatically translates niche terms to the target country's language for local channel discovery.</p>
-                </div>
-
-                <div class="highlight-item">
-                    <div class="highlight-icon">💰</div>
-                    <h4>Revenue Estimation</h4>
-                    <p>Revenue calculation based on last video views and projected monthly income.</p>
-                </div>
-
-                <div class="highlight-item">
-                    <div class="highlight-icon">📊</div>
-                    <h4>Upload Frequency</h4>
-                    <p>Analysis of time intervals between recent uploads to assess channel activity.</p>
-                </div>
-
-                <div class="highlight-item">
-                    <div class="highlight-icon">🎨</div>
-                    <h4>Dark Interface</h4>
-                    <p>Contrast palette optimized for extended work sessions with accent colors.</p>
-                </div>
-
-                <div class="highlight-item">
-                    <div class="highlight-icon">⚡</div>
-                    <h4>YouTube Data API v3</h4>
-                    <p>Official YouTube data for accurate channel and video analysis.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="project-section">
-        <div class="container">
-            <h2 class="section-title">Technologies</h2>
-            <div class="tech-tags">
-                <span class="tech-tag">React 19</span>
-                <span class="tech-tag">TypeScript</span>
-                <span class="tech-tag">Tailwind CSS</span>
-                <span class="tech-tag">Lucide Icons</span>
-                <span class="tech-tag">Vite</span>
-                <span class="tech-tag">Electron</span>
-                <span class="tech-tag">YouTube Data API v3</span>
-                <span class="tech-tag">i18n (Multilingual)</span>
-            </div>
-        </div>
-    </section>
-
-    <section class="project-section alt-bg">
-        <div class="container">
-            <h2 class="section-title">Deployment Options</h2>
-            <div class="deployment-options">
-                <div class="deployment-item">
-                    <h4>🌐 Web Application</h4>
-                    <p>Works in browser via link. No installation required. Available on any device.</p>
-                </div>
-                <div class="deployment-item">
-                    <h4>💻 Desktop (Electron .exe)</h4>
-                    <p>Standalone Windows application. Launches in one click without third-party libraries.</p>
-                </div>
-                <div class="deployment-item">
-                    <h4>📄 Single-File HTML</h4>
-                    <p>All code in one HTML file with no external dependencies via vite-plugin-singlefile.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="project-cta">
-        <div class="container">
-            <h2>Interested in the App?</h2>
-            <a href="index-en.html#contact" class="btn-large">Get in Touch →</a>
-            <a href="index-en.html#software" class="back-link">← Back to Software</a>
-        </div>
-    </section>
-
+    <!-- FOOTER -->
     <footer class="site-footer">
         <div class="container">
-            <p>&copy; 2026 Viktor Willmann. All rights reserved.</p>
+            <span>© 2026 Viktor Willmann</span>
+            <span>Made with care · Germany</span>
+            <a href="index-en.html">Back to home ↑</a>
         </div>
     </footer>
 
     <script>
+        const header = document.getElementById('main-header');
         window.addEventListener('scroll', () => {
-            const header = document.getElementById('main-header');
-            if (window.scrollY > 50) {
-                header.classList.add('scrolled');
-            } else {
-                header.classList.remove('scrolled');
-            }
-        });
+            header.classList.toggle('scrolled', window.scrollY > 40);
+        }, { passive: true });
     </script>
-
 </body>
 </html>
