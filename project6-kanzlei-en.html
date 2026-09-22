@@ -3,228 +3,563 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Kanzlei Vees — law firm website (Germany). Expert structure, GDPR compliance, map integration.">
-    <title>Kanzlei Vees — Viktor Willmann Portfolio</title>
-    
-    <!-- Favicon -->
+
+    <meta name="description" content="Kanzlei Vees & Guardiera — website for a German law firm (Rottweil, Germany). Expert structure, GDPR compliance, Google Maps. Case study by Viktor Willmann.">
+    <meta name="keywords" content="Kanzlei Vees, Guardiera, WordPress, law firm, GDPR, DSGVO, case study, portfolio, Germany">
+    <meta name="author" content="Viktor Willmann">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://vitwill.github.io/project6-kanzlei-en.html">
+
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://vitwill.github.io/project6-kanzlei-en.html">
+    <meta property="og:title" content="Kanzlei Vees & Guardiera — Viktor Willmann">
+    <meta property="og:description" content="Website for a German law firm. Expert structure, GDPR compliance, Google Maps.">
+    <meta property="og:image" content="https://vitwill.github.io/images/project6-thumb.jpg">
+
     <link rel="icon" type="image/png" sizes="512x512" href="images/favicon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="images/favicon.png">
     <link rel="icon" type="image/png" sizes="16x16" href="images/favicon.png">
     <link rel="apple-touch-icon" sizes="180x180" href="images/favicon.png">
-    
+
+    <title>Kanzlei Vees — Case Study | Viktor Willmann</title>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
     <style>
         :root {
-            --color-dark: #0f1419;
-            --color-dark-blue: #1a1f2e;
-            --color-white: #ffffff;
-            --color-cream: #f5f1eb;
-            --color-gold: #b8935a;
-            --color-gray: #666666;
-            --font-serif: 'Cormorant Garamond', serif;
-            --font-sans: 'Inter', sans-serif;
-            --transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            --paper: #F5F2EC;
+            --paper-2: #EFEBE3;
+            --ink: #0E0E0E;
+            --muted: rgba(14, 14, 14, .68);
+            --muted-2: rgba(14, 14, 14, .45);
+            --line: rgba(14, 14, 14, .14);
+            --line-strong: rgba(14, 14, 14, .22);
+            --accent: #C1440E;
+            --accent-soft: #E8A87C;
+
+            --f-display: 'Inter Tight', sans-serif;
+            --f-text: 'Inter', sans-serif;
+            --f-serif: 'Instrument Serif', serif;
+            --f-mono: 'JetBrains Mono', monospace;
+
+            --ease: cubic-bezier(0.22, 1, 0.36, 1);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
-        
         body {
-            font-family: var(--font-sans);
-            font-weight: 300;
+            font-family: var(--f-text);
+            font-weight: 400;
+            font-size: 15px;
             line-height: 1.6;
-            color: var(--color-dark);
-            background-color: var(--color-white);
+            color: var(--ink);
+            background: var(--paper);
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
         }
+        img { max-width: 100%; display: block; }
+        a { color: inherit; }
+        ::selection { background: var(--ink); color: var(--paper); }
 
-        .container { max-width: 1400px; margin: 0 auto; padding: 0 60px; }
+        .container { max-width: 1440px; margin: 0 auto; padding: 0 40px; }
+
+        .eyebrow {
+            font-family: var(--f-mono);
+            font-size: 11px;
+            letter-spacing: .18em;
+            text-transform: uppercase;
+            color: var(--accent);
+            display: inline-flex;
+            align-items: center;
+            gap: 14px;
+        }
+        .eyebrow::before {
+            content: "";
+            display: inline-block;
+            width: 32px;
+            height: 1px;
+            background: var(--accent);
+        }
 
         /* HEADER */
         .site-header {
-            position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;
-            background-color: transparent; padding: 30px 0; transition: var(--transition);
+            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+            background: rgba(245, 242, 236, .85);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border-bottom: 1px solid var(--line);
+            transition: padding .3s var(--ease);
         }
-        .site-header.scrolled {
-            background-color: rgba(15, 20, 25, 0.75);
-            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); padding: 18px 0;
+        .site-header .container {
+            display: flex; justify-content: space-between; align-items: center;
+            padding-top: 20px; padding-bottom: 20px;
+            transition: padding .3s var(--ease);
         }
-        .site-header .container { display: flex; justify-content: space-between; align-items: center; }
+        .site-header.scrolled .container { padding-top: 14px; padding-bottom: 14px; }
+
         .logo {
-            font-family: var(--font-serif); font-size: 26px; font-weight: 600;
-            color: var(--color-white); text-decoration: none;
+            font-family: var(--f-display);
+            font-size: 17px; font-weight: 600;
+            letter-spacing: -.02em;
+            text-decoration: none;
+            color: var(--ink);
         }
-        .main-nav ul { list-style: none; display: flex; gap: 40px; align-items: center; }
+        .logo em {
+            font-family: var(--f-serif);
+            font-style: italic; font-weight: 400;
+            color: var(--accent);
+        }
+        .main-nav ul { list-style: none; display: flex; gap: 30px; align-items: center; }
         .main-nav a {
-            color: var(--color-white); text-decoration: none; font-size: 12px;
-            font-weight: 400; text-transform: uppercase; letter-spacing: 1.5px;
+            text-decoration: none; color: var(--muted);
+            font-size: 13px; letter-spacing: .01em;
+            transition: color .2s;
         }
-        .main-nav a:hover { opacity: 0.7; }
+        .main-nav a:hover { color: var(--ink); }
         .lang-switcher a {
-            display: inline-block; padding: 6px 14px; border: 1px solid rgba(255,255,255,0.4);
-            border-radius: 4px; font-size: 11px; font-weight: 500;
+            border: 1px solid var(--line-strong);
+            padding: 6px 12px;
+            font-family: var(--f-mono);
+            font-size: 11px;
+            letter-spacing: .1em;
+            border-radius: 2px;
+            color: var(--ink);
+        }
+        .lang-switcher a:hover {
+            background: rgba(14,14,14,.05);
+            border-color: rgba(14,14,14,.45);
+        }
+        .hamburger {
+            display: none; flex-direction: column; gap: 5px;
+            cursor: pointer; z-index: 1001;
+            background: none; border: none; padding: 5px;
+        }
+        .hamburger span {
+            display: block; width: 26px; height: 2px;
+            background: var(--ink); transition: all .35s var(--ease);
         }
 
-        /* PROJECT HERO */
-        .project-hero {
-            padding: 180px 0 100px;
-            background: linear-gradient(135deg, var(--color-dark-blue) 0%, var(--color-dark) 100%);
-            color: var(--color-white);
-            text-align: center;
+        /* BREADCRUMBS */
+        .breadcrumbs-wrap {
+            padding: 130px 0 0;
+            background: var(--paper);
         }
-        .project-hero-content { max-width: 800px; margin: 0 auto; }
-        .project-category-label {
-            font-size: 12px; font-weight: 500; color: var(--color-gold);
-            letter-spacing: 3px; text-transform: uppercase; margin-bottom: 20px;
+        .breadcrumbs {
+            font-family: var(--f-mono);
+            font-size: 11px;
+            letter-spacing: .14em;
+            text-transform: uppercase;
+            color: var(--muted);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
         }
-        .project-hero h1 {
-            font-family: var(--font-serif); font-size: 64px; font-weight: 400;
-            margin-bottom: 20px; line-height: 1.1;
+        .breadcrumbs a {
+            text-decoration: none;
+            color: var(--muted);
+            transition: color .2s;
         }
-        .project-subtitle {
-            font-size: 18px; color: rgba(255,255,255,0.8); font-weight: 300;
-        }
+        .breadcrumbs a:hover { color: var(--ink); }
+        .breadcrumbs .sep { opacity: .5; }
+        .breadcrumbs .current { color: var(--ink); }
 
-        /* PROJECT SECTIONS */
-        .project-section { padding: 100px 0; }
-        .project-section.alt-bg { background-color: var(--color-cream); }
-        
-        .section-title {
-            font-family: var(--font-serif); font-size: 36px; font-weight: 400;
-            margin-bottom: 40px; color: var(--color-dark);
+        /* CASE HERO */
+        .case-hero {
+            padding: 40px 0 80px;
+            background: var(--paper);
+            border-bottom: 1px solid var(--line);
         }
-
-        /* PROJECT OVERVIEW */
-        .project-overview {
+        .case-hero-grid {
             display: grid;
-            grid-template-columns: 1fr 1.5fr;
+            grid-template-columns: 1.5fr 1fr;
             gap: 80px;
-            align-items: start;
+            align-items: end;
         }
-        .project-info h3 {
-            font-size: 12px; font-weight: 500; color: var(--color-gold);
-            text-transform: uppercase; letter-spacing: 2px; margin-bottom: 10px;
+        .case-hero-left { max-width: 780px; }
+        .case-title {
+            font-family: var(--f-display);
+            font-size: clamp(42px, 6.5vw, 108px);
+            font-weight: 600;
+            line-height: .92;
+            letter-spacing: -.05em;
+            margin: 24px 0 28px;
         }
-        .project-info p {
-            font-size: 16px; line-height: 1.8; color: var(--color-gray); margin-bottom: 30px;
+        .case-title em {
+            font-family: var(--f-serif);
+            font-style: italic;
+            font-weight: 400;
+            color: var(--accent);
         }
-        .project-details {
-            display: flex; flex-direction: column; gap: 20px; margin-top: 40px;
-        }
-        .detail-item {
-            display: flex; flex-direction: column; gap: 8px;
-        }
-        .detail-item strong {
-            font-size: 12px; text-transform: uppercase; letter-spacing: 1px;
-            color: var(--color-gray);
-        }
-        .detail-item span, .detail-item a {
-            font-size: 16px; color: var(--color-dark);
-        }
-        .detail-item a {
-            color: var(--color-dark); text-decoration: none;
-            border-bottom: 1px solid var(--color-gold);
-            display: inline-block; width: fit-content;
+        .case-subtitle {
+            font-family: var(--f-serif);
+            font-size: clamp(18px, 1.6vw, 24px);
+            font-style: italic;
+            line-height: 1.4;
+            color: var(--ink);
+            max-width: 620px;
         }
 
-        .full-screenshot-container {
-            max-width: 100%;
-            background: var(--color-white);
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
-            border: 1px solid rgba(0,0,0,0.1);
+        .case-hero-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
         }
-        .full-screenshot {
+        .meta-list { display: flex; flex-direction: column; }
+        .meta-row {
+            display: flex; justify-content: space-between; gap: 20px;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--line);
+            font-size: 14px;
+        }
+        .meta-row:first-child { border-top: 1px solid var(--line); }
+        .meta-row span:first-child {
+            font-family: var(--f-mono);
+            font-size: 10px;
+            letter-spacing: .16em;
+            text-transform: uppercase;
+            color: var(--muted);
+            padding-top: 2px;
+        }
+        .meta-row span:last-child { text-align: right; color: var(--ink); }
+
+        .case-cta-btn {
+            display: inline-flex; align-items: center; gap: 14px;
+            font-family: var(--f-mono);
+            font-size: 12px;
+            letter-spacing: .16em;
+            text-transform: uppercase;
+            text-decoration: none;
+            color: var(--paper);
+            background: var(--ink);
+            border: 1px solid var(--ink);
+            padding: 16px 28px;
+            border-radius: 2px;
+            transition: all .3s var(--ease);
+            align-self: flex-start;
+        }
+        .case-cta-btn:hover {
+            background: var(--accent);
+            border-color: var(--accent);
+            gap: 20px;
+        }
+
+        /* COVER */
+        .case-cover {
+            padding: 80px 0;
+            background: var(--paper);
+            border-bottom: 1px solid var(--line);
+        }
+        .case-cover-image {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+            border-radius: 2px;
+            background: var(--paper-2);
+            border: 1px solid var(--line);
+        }
+        .case-cover-image img {
             width: 100%;
             height: auto;
             display: block;
         }
-
-        /* SOLUTION */
-        .solution-list {
-            display: flex; flex-direction: column; gap: 50px;
-        }
-        .solution-item {
-            display: flex; gap: 30px; align-items: flex-start;
-        }
-        .solution-number {
-            width: 50px; height: 50px; background: var(--color-dark);
-            color: var(--color-white); border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 20px; font-weight: 600; flex-shrink: 0;
-        }
-        .solution-content h3 {
-            font-family: var(--font-serif); font-size: 24px;
-            margin-bottom: 15px; color: var(--color-dark);
-        }
-        .solution-content p {
-            font-size: 16px; line-height: 1.8; color: var(--color-gray);
+        .case-cover-caption {
+            margin-top: 18px;
+            font-family: var(--f-mono);
+            font-size: 10px;
+            letter-spacing: .14em;
+            text-transform: uppercase;
+            color: var(--muted);
         }
 
-        /* TECHNOLOGIES */
-        .tech-tags {
-            display: flex; flex-wrap: wrap; gap: 15px;
-        }
-        .tech-tag {
-            padding: 10px 20px; background: var(--color-cream);
-            border: 1px solid rgba(0,0,0,0.1); border-radius: 4px;
-            font-size: 14px; font-weight: 500;
-        }
-
-        /* CTA SECTION */
-        .project-cta {
+        /* SECTIONS */
+        .case-section {
             padding: 100px 0;
-            background: var(--color-dark);
-            color: var(--color-white);
-            text-align: center;
+            border-bottom: 1px solid var(--line);
         }
-        .project-cta h2 {
-            font-family: var(--font-serif); font-size: 36px;
+        .case-section.alt { background: var(--paper-2); }
+
+        .case-grid {
+            display: grid;
+            grid-template-columns: 260px 1fr;
+            gap: 80px;
+            align-items: start;
+        }
+        .case-label {
+            position: sticky;
+            top: 100px;
+        }
+        .case-label .count {
+            font-family: var(--f-mono);
+            font-size: 11px;
+            letter-spacing: .18em;
+            color: var(--muted-2);
+            margin-bottom: 16px;
+        }
+        .case-label h2 {
+            font-family: var(--f-display);
+            font-size: 22px;
+            font-weight: 500;
+            letter-spacing: -.02em;
+            line-height: 1.2;
+            margin-top: 14px;
+        }
+
+        .case-body p {
+            font-size: 17px;
+            line-height: 1.75;
+            color: var(--muted);
+            margin-bottom: 20px;
+            max-width: 760px;
+        }
+        .case-body p.lead {
+            font-family: var(--f-serif);
+            font-size: clamp(22px, 2.4vw, 32px);
+            font-style: italic;
+            line-height: 1.4;
+            color: var(--ink);
+            max-width: 780px;
             margin-bottom: 40px;
         }
-        .btn-large {
-            display: inline-block; padding: 20px 50px;
-            background: var(--color-white); color: var(--color-dark);
-            text-decoration: none; font-size: 14px; font-weight: 600;
-            text-transform: uppercase; letter-spacing: 2px;
-            transition: var(--transition);
+
+        /* Approach */
+        .approach-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
         }
-        .btn-large:hover {
-            background: var(--color-cream);
-            transform: translateY(-2px);
+        .approach-item {
+            display: grid;
+            grid-template-columns: 60px 1fr;
+            gap: 32px;
+            padding: 36px 0;
+            border-bottom: 1px solid var(--line);
+            align-items: start;
         }
-        .back-link {
-            display: block; margin-top: 30px;
-            color: rgba(255,255,255,0.7); text-decoration: none;
-            font-size: 14px; transition: var(--transition);
+        .approach-item:first-child { border-top: 1px solid var(--line); }
+        .approach-item .num {
+            font-family: var(--f-mono);
+            font-size: 11px;
+            letter-spacing: .16em;
+            color: var(--muted-2);
+            padding-top: 6px;
         }
-        .back-link:hover { color: var(--color-white); }
+        .approach-item h3 {
+            font-family: var(--f-display);
+            font-size: clamp(20px, 2vw, 26px);
+            font-weight: 500;
+            letter-spacing: -.025em;
+            line-height: 1.2;
+            margin-bottom: 12px;
+        }
+        .approach-item h3 em {
+            font-family: var(--f-serif);
+            font-style: italic;
+            font-weight: 400;
+            color: var(--accent);
+        }
+        .approach-item p {
+            font-size: 16px;
+            line-height: 1.7;
+            color: var(--muted);
+            max-width: 700px;
+        }
+
+        /* Tech */
+        .tech-tags {
+            display: flex; flex-wrap: wrap; gap: 8px;
+            margin-top: 8px;
+        }
+        .tech-tag {
+            padding: 8px 16px;
+            background: var(--paper);
+            border: 1px solid var(--line-strong);
+            border-radius: 2px;
+            font-family: var(--f-mono);
+            font-size: 11px;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            color: var(--ink);
+        }
+        .case-section.alt .tech-tag { background: var(--paper); }
+
+        /* Case nav */
+        .case-nav { border-bottom: 1px solid var(--line); }
+        .case-nav-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+        }
+        .case-nav-item {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            padding: 56px 40px;
+            text-decoration: none;
+            color: inherit;
+            transition: background .35s var(--ease), padding .35s var(--ease);
+        }
+        .case-nav-item.prev {
+            border-right: 1px solid var(--line);
+            align-items: flex-start;
+            text-align: left;
+        }
+        .case-nav-item.next {
+            align-items: flex-end;
+            text-align: right;
+        }
+        .case-nav-item:hover { background: var(--ink); color: var(--paper); }
+        .case-nav-item:hover .case-nav-dir { color: var(--accent-soft); }
+        .case-nav-dir {
+            font-family: var(--f-mono);
+            font-size: 11px;
+            letter-spacing: .16em;
+            text-transform: uppercase;
+            color: var(--muted);
+            transition: color .3s;
+        }
+        .case-nav-title {
+            font-family: var(--f-display);
+            font-size: clamp(24px, 3vw, 42px);
+            font-weight: 500;
+            letter-spacing: -.03em;
+            line-height: 1.1;
+        }
+        .case-nav-title em {
+            font-family: var(--f-serif);
+            font-style: italic;
+            font-weight: 400;
+        }
+
+        /* CTA */
+        .case-cta {
+            padding: 100px 0;
+            background: var(--paper-2);
+            border-bottom: 1px solid var(--line);
+        }
+        .case-cta-inner {
+            display: grid;
+            grid-template-columns: 1.4fr 1fr;
+            gap: 60px;
+            align-items: end;
+        }
+        .case-cta h2 {
+            font-family: var(--f-display);
+            font-size: clamp(34px, 5vw, 72px);
+            font-weight: 500;
+            letter-spacing: -.04em;
+            line-height: 1;
+            margin-top: 20px;
+        }
+        .case-cta h2 em {
+            font-family: var(--f-serif);
+            font-style: italic;
+            font-weight: 400;
+            color: var(--accent);
+        }
+        .case-cta-actions {
+            display: flex; flex-direction: column; gap: 16px;
+            align-items: flex-start;
+        }
+
+        .btn {
+            display: inline-flex; align-items: center; gap: 12px;
+            font-family: var(--f-mono);
+            font-size: 12px;
+            letter-spacing: .16em;
+            text-transform: uppercase;
+            text-decoration: none;
+            padding: 16px 28px;
+            border: 1px solid transparent;
+            border-radius: 2px;
+            cursor: pointer;
+            transition: all .3s var(--ease);
+            background: none;
+        }
+        .btn-dark {
+            background: var(--ink);
+            color: var(--paper);
+            border-color: var(--ink);
+        }
+        .btn-dark:hover { background: var(--accent); border-color: var(--accent); }
+        .btn-outline {
+            background: transparent;
+            color: var(--ink);
+            border-color: var(--line-strong);
+        }
+        .btn-outline:hover { border-color: var(--ink); }
 
         /* FOOTER */
         .site-footer {
-            background-color: var(--color-dark); color: rgba(255,255,255,0.6);
-            text-align: center; padding: 40px 0; font-size: 13px;
+            padding: 40px 0;
+            background: var(--ink);
+            color: rgba(245,242,236,.65);
         }
+        .site-footer .container {
+            display: flex; justify-content: space-between; align-items: center;
+            gap: 20px; flex-wrap: wrap;
+            font-family: var(--f-mono);
+            font-size: 11px;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+        }
+        .site-footer a {
+            text-decoration: none;
+            color: rgba(245,242,236,.65);
+            transition: color .2s;
+        }
+        .site-footer a:hover { color: var(--paper); }
 
         /* RESPONSIVE */
-        @media (max-width: 1024px) {
-            .container { padding: 0 40px; }
-            .project-hero h1 { font-size: 48px; }
-            .project-overview { grid-template-columns: 1fr; gap: 50px; }
-            .section-title { font-size: 32px; }
+        @media (max-width: 1100px) {
+            .container { padding: 0 30px; }
+            .case-hero-grid { grid-template-columns: 1fr; gap: 50px; align-items: start; }
+            .case-grid { grid-template-columns: 1fr; gap: 40px; }
+            .case-label { position: static; }
+            .case-cta-inner { grid-template-columns: 1fr; gap: 40px; align-items: start; }
         }
-        @media (max-width: 768px) {
-            .container { padding: 0 25px; }
+
+        @media (max-width: 720px) {
+            .container { padding: 0 20px; }
             .main-nav { display: none; }
-            .project-hero { padding: 140px 0 80px; }
-            .project-hero h1 { font-size: 36px; }
-            .project-subtitle { font-size: 16px; }
-            .project-section { padding: 80px 0; }
-            .section-title { font-size: 28px; }
-            .solution-item { flex-direction: column; gap: 15px; }
+            .hamburger { display: flex; }
+
+            .breadcrumbs-wrap { padding: 100px 0 0; }
+            .case-hero { padding: 30px 0 60px; }
+            .case-title { font-size: clamp(36px, 10vw, 60px); }
+            .case-subtitle { font-size: 18px; }
+            .case-cover { padding: 50px 0; }
+
+            .case-section { padding: 60px 0; }
+            .case-body p { font-size: 16px; }
+            .case-body p.lead { font-size: 22px; }
+
+            .approach-item { grid-template-columns: 40px 1fr; gap: 16px; padding: 28px 0; }
+            .approach-item h3 { font-size: 20px; }
+
+            .case-nav-grid { grid-template-columns: 1fr; }
+            .case-nav-item { padding: 40px 24px; }
+            .case-nav-item.prev {
+                border-right: none;
+                border-bottom: 1px solid var(--line);
+                align-items: flex-start;
+                text-align: left;
+            }
+            .case-nav-item.next { align-items: flex-start; text-align: left; }
+
+            .case-cta { padding: 70px 0; }
+            .case-cta-actions { align-items: stretch; }
+            .btn { justify-content: center; }
+
+            .site-footer .container { flex-direction: column; text-align: center; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                transition-duration: 0.01ms !important;
+            }
         }
     </style>
 </head>
@@ -233,139 +568,228 @@
     <!-- HEADER -->
     <header class="site-header" id="main-header">
         <div class="container">
-            <a href="index-en.html" class="logo">Viktor Willmann</a>
+            <a href="index-en.html" class="logo">Viktor <em>Willmann</em></a>
             <nav class="main-nav">
                 <ul>
-                    <li><a href="index-en.html#portfolio">Portfolio</a></li>
-                    <li><a href="index-en.html#about">About</a></li>
+                    <li><a href="index-en.html#portfolio">Work</a></li>
                     <li><a href="index-en.html#services">Services</a></li>
+                    <li><a href="index-en.html#about">About</a></li>
                     <li><a href="index-en.html#contact">Contact</a></li>
                     <li class="lang-switcher"><a href="project6-kanzlei.html">RU</a></li>
                 </ul>
             </nav>
+            <button class="hamburger" id="hamburger" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
         </div>
     </header>
 
-    <!-- PROJECT HERO -->
-    <section class="project-hero">
+    <!-- BREADCRUMBS -->
+    <div class="breadcrumbs-wrap">
         <div class="container">
-            <div class="project-hero-content">
-                <p class="project-category-label">Web Design & Development</p>
-                <h1>Kanzlei Vees</h1>
-                <p class="project-subtitle">Law Firm (Germany)</p>
-            </div>
+            <nav class="breadcrumbs" aria-label="Breadcrumbs">
+                <a href="index-en.html">Home</a>
+                <span class="sep">/</span>
+                <a href="index-en.html#portfolio">Work</a>
+                <span class="sep">/</span>
+                <span class="current">Kanzlei Vees & Guardiera</span>
+            </nav>
         </div>
-    </section>
+    </div>
 
-    <!-- PROJECT OVERVIEW -->
-    <section class="project-section">
+    <!-- CASE HERO -->
+    <section class="case-hero">
         <div class="container">
-            <div class="project-overview">
-                <div class="project-info">
-                    <h3>About the Project</h3>
-                    <p>Kanzlei Vees is a German law firm providing expert counsel in various areas of law. The client needed a strict, trustworthy website with full GDPR compliance, map integration for easy office location, and a transparent appointment booking system.</p>
-                    
-                    <div class="project-details">
-                        <div class="detail-item">
-                            <strong>Client</strong>
-                            <span>Kanzlei Vees</span>
-                        </div>
-                        <div class="detail-item">
-                            <strong>Location</strong>
-                            <span>Germany</span>
-                        </div>
-                        <div class="detail-item">
-                            <strong>Website</strong>
-                            <a href="https://kanzlei-vees.de/" target="_blank">kanzlei-vees.de/ →</a>
-                        </div>
-                    </div>
+            <div class="case-hero-grid">
+                <div class="case-hero-left">
+                    <span class="eyebrow">Case · Germany · 2025</span>
+                    <h1 class="case-title">Kanzlei <em>Vees</em></h1>
+                    <p class="case-subtitle">
+                        A law firm website with an expert structure, trust-building content, and full compliance with GDPR.
+                    </p>
                 </div>
-                
-                <div class="full-screenshot-container">
-                    <img src="images/project6-full.jpg" alt="Kanzlei Vees - full website screenshot" class="full-screenshot">
-                </div>
-            </div>
-        </div>
-    </section>
 
-    <!-- SOLUTION -->
-    <section class="project-section alt-bg">
-        <div class="container">
-            <h2 class="section-title">My Approach</h2>
-            
-            <div class="solution-list">
-                <div class="solution-item">
-                    <div class="solution-number">1</div>
-                    <div class="solution-content">
-                        <h3>Expert Structure & GDPR Compliance</h3>
-                        <p>Developed a clear hierarchy of sections for legal practices. Implemented strict data protection measures (cookie banners, privacy policies, Impressum) in full compliance with German legislation (DSGVO/GDPR).</p>
+                <div class="case-hero-meta">
+                    <div class="meta-list">
+                        <div class="meta-row"><span>Client</span><span>Vees & Guardiera</span></div>
+                        <div class="meta-row"><span>Industry</span><span>Law firm</span></div>
+                        <div class="meta-row"><span>Location</span><span>Rottweil, Germany</span></div>
+                        <div class="meta-row"><span>Stack</span><span>WP · Custom PHP · Maps API</span></div>
+                        <div class="meta-row"><span>Language</span><span>Deutsch</span></div>
                     </div>
-                </div>
-                
-                <div class="solution-item">
-                    <div class="solution-number">2</div>
-                    <div class="solution-content">
-                        <h3>Map Integration & Intuitive UX</h3>
-                        <p>Implemented an interactive Google Map for easy office location. Designed the user journey from meeting the legal team to booking an appointment, minimizing the number of required clicks.</p>
-                    </div>
-                </div>
-                
-                <div class="solution-item">
-                    <div class="solution-number">3</div>
-                    <div class="solution-content">
-                        <h3>Transparency & Trust</h3>
-                        <p>Introduced a section with information about the initial consultation fee. This removes barriers for potential clients and builds trust in the firm from the first seconds on the site.</p>
-                    </div>
+
+                    <a href="https://kanzlei-vees.de/" class="case-cta-btn" target="_blank" rel="noopener">
+                        Visit website
+                        <span>→</span>
+                    </a>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- TECHNOLOGIES -->
-    <section class="project-section">
+    <!-- COVER -->
+    <section class="case-cover">
         <div class="container">
-            <h2 class="section-title">Technologies Used</h2>
-            <div class="tech-tags">
-                <span class="tech-tag">WordPress</span>
-                <span class="tech-tag">Custom PHP</span>
-                <span class="tech-tag">HTML5</span>
-                <span class="tech-tag">CSS3</span>
-                <span class="tech-tag">JavaScript</span>
-                <span class="tech-tag">GDPR Compliance Tools</span>
-                <span class="tech-tag">Google Maps API</span>
-                <span class="tech-tag">Responsive Design</span>
+            <div class="case-cover-image">
+                <img src="images/project6-full.jpg" alt="Kanzlei Vees & Guardiera — full website screenshot">
+            </div>
+            <div class="case-cover-caption">Homepage screenshot — 2025</div>
+        </div>
+    </section>
+
+    <!-- 01 · BRIEF -->
+    <section class="case-section">
+        <div class="container">
+            <div class="case-grid">
+                <aside class="case-label">
+                    <div class="count">01 / 03</div>
+                    <span class="eyebrow">Brief</span>
+                    <h2>What the client needed</h2>
+                </aside>
+
+                <div class="case-body">
+                    <p class="lead">
+                        Not just to talk about their services, but to express the core values: expertise, decades of experience, and a human approach to clients.
+                    </p>
+                    <p>
+                        Attorneys Judith Vees and Berthold Guardiera needed a website that would fully represent their firm online. The firm specialises in six key areas of law: family, inheritance, labour, medical, corporate, and tort law. Each of them required a separate, detailed page.
+                    </p>
+                    <p>
+                        It was important to show that in a small firm, the client receives a personalised approach — unlike large, faceless practices. And to encourage visitors to take action: book a consultation right from the first visit.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 02 · APPROACH -->
+    <section class="case-section alt">
+        <div class="container">
+            <div class="case-grid">
+                <aside class="case-label">
+                    <div class="count">02 / 03</div>
+                    <span class="eyebrow">Approach</span>
+                    <h2>What I did</h2>
+                </aside>
+
+                <div class="case-body">
+                    <div class="approach-list">
+                        <div class="approach-item">
+                            <div class="num">01</div>
+                            <div>
+                                <h3>Structure across <em>six practice areas</em></h3>
+                                <p>Built a website where each of the six practice areas is a standalone section with its own detailed description. This lets visitors find the information they need quickly and builds trust through demonstrable specialisation.</p>
+                            </div>
+                        </div>
+                        <div class="approach-item">
+                            <div class="num">02</div>
+                            <div>
+                                <h3>The <em>attorneys' profiles</em></h3>
+                                <p>Designed the content and presentation around the attorneys themselves. The homepage and dedicated blocks detail their education, experience, and specialisations: Judith Vees — in practice since 1993, family law specialist since 1996, and a certified mediator. Berthold Guardiera — in practice since 1982, labour and medical law specialist. This is a strong signal of reliability for potential clients.</p>
+                            </div>
+                        </div>
+                        <div class="approach-item">
+                            <div class="num">03</div>
+                            <div>
+                                <h3>Fixed <em>consultation fee</em></h3>
+                                <p>Implemented a clear call to action: a fixed fee for an initial consultation — 190 EUR net. This removes the uncertainty barrier and encourages visitors to book.</p>
+                            </div>
+                        </div>
+                        <div class="approach-item">
+                            <div class="num">04</div>
+                            <div>
+                                <h3>Maps <em>and contact form</em></h3>
+                                <p>Integrated Google Maps to display the firm's location in Rottweil, and set up a contact form for consultation bookings. Enquiries go directly to the firm's inbox.</p>
+                            </div>
+                        </div>
+                        <div class="approach-item">
+                            <div class="num">05</div>
+                            <div>
+                                <h3>Full <em>GDPR / DSGVO compliance</em></h3>
+                                <p>Ensured full compliance with the European regulation: proper cookie notices, consent management for data processing, and reCAPTCHA integration to protect forms from spam. The website also includes a legally required Impressum section per German law.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 03 · TECH -->
+    <section class="case-section">
+        <div class="container">
+            <div class="case-grid">
+                <aside class="case-label">
+                    <div class="count">03 / 03</div>
+                    <span class="eyebrow">Technologies</span>
+                    <h2>Tools used</h2>
+                </aside>
+
+                <div class="case-body">
+                    <div class="tech-tags">
+                        <span class="tech-tag">WordPress</span>
+                        <span class="tech-tag">Custom PHP</span>
+                        <span class="tech-tag">HTML5</span>
+                        <span class="tech-tag">CSS3</span>
+                        <span class="tech-tag">JavaScript</span>
+                        <span class="tech-tag">Google Maps API</span>
+                        <span class="tech-tag">reCAPTCHA</span>
+                        <span class="tech-tag">GDPR / DSGVO Compliance</span>
+                        <span class="tech-tag">Responsive Design</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CASE NAV -->
+    <section class="case-nav">
+        <div class="container" style="padding: 0;">
+            <div class="case-nav-grid">
+                <a href="project5-serebryanyikrug-en.html" class="case-nav-item prev">
+                    <span class="case-nav-dir">← Previous</span>
+                    <span class="case-nav-title">Silver <em>Circle</em></span>
+                </a>
+                <a href="project1-getfullcare-en.html" class="case-nav-item next">
+                    <span class="case-nav-dir">Next →</span>
+                    <span class="case-nav-title">Get Full <em>Care</em></span>
+                </a>
             </div>
         </div>
     </section>
 
     <!-- CTA -->
-    <section class="project-cta">
+    <section class="case-cta">
         <div class="container">
-            <h2>Visit the Website</h2>
-            <a href="https://kanzlei-vees.de/" class="btn-large" target="_blank">Visit Kanzlei Vees Website →</a>
-            <a href="index-en.html#portfolio" class="back-link">← Back to Portfolio</a>
+            <div class="case-cta-inner">
+                <div>
+                    <span class="eyebrow">Similar project?</span>
+                    <h2>Let's discuss <em>your project</em></h2>
+                </div>
+                <div class="case-cta-actions">
+                    <a href="index-en.html#contact" class="btn btn-dark">Get in touch →</a>
+                    <a href="index-en.html#portfolio" class="btn btn-outline">← All work</a>
+                </div>
+            </div>
         </div>
     </section>
 
     <!-- FOOTER -->
     <footer class="site-footer">
         <div class="container">
-            <p>&copy; 2026 Viktor Willmann. All rights reserved.</p>
+            <span>© 2026 Viktor Willmann</span>
+            <span>Made with care · Germany</span>
+            <a href="index-en.html">Back to home ↑</a>
         </div>
     </footer>
 
-    <!-- SCRIPTS -->
     <script>
-        // Dynamic header
+        const header = document.getElementById('main-header');
         window.addEventListener('scroll', () => {
-            const header = document.getElementById('main-header');
-            if (window.scrollY > 50) {
-                header.classList.add('scrolled');
-            } else {
-                header.classList.remove('scrolled');
-            }
-        });
+            header.classList.toggle('scrolled', window.scrollY > 40);
+        }, { passive: true });
     </script>
-
 </body>
 </html>
