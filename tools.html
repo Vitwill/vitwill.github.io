@@ -1325,4 +1325,387 @@
             let regMax = REGULAR.hosting[1] + REGULAR.domain[1];
             const regBreakdown = [
                 { label: 'Хостинг', min: REGULAR.hosting[0], max: REGULAR.hosting[1] },
-                { label: 'Домен', min: REGULAR.domain[0],
+                { label: 'Домен', min: REGULAR.domain[0], max: REGULAR.domain[1] }
+            ];
+
+            const pluginsEl = document.getElementById('opt-plugins');
+            if (pluginsEl && pluginsEl.checked) {
+                regMin += REGULAR.plugins[0];
+                regMax += REGULAR.plugins[1];
+                regBreakdown.push({ label: 'Премиум-плагины', min: REGULAR.plugins[0], max: REGULAR.plugins[1] });
+            }
+
+            const supportEl = document.getElementById('opt-support');
+            let supportMonthly = 0;
+            if (supportEl && supportEl.checked) supportMonthly = REGULAR.support[0];
+
+            document.getElementById('result-dev').textContent = fmt(devMin) + ' — ' + fmt(devMax);
+            document.getElementById('result-reg').textContent = fmt(regMin) + ' — ' + fmt(regMax) + ' / год';
+
+            const supportEl2 = document.getElementById('result-support');
+            if (supportMonthly > 0) supportEl2.textContent = '+ поддержка ' + fmt(supportMonthly) + ' / мес';
+            else supportEl2.textContent = '';
+
+            const breakdownEl = document.getElementById('result-breakdown');
+            let html = '<div class="result-breakdown-title">Структура сметы</div>';
+            html += `<div class="breakdown-row"><span>Базовая разработка</span><span>${fmt(baseRange[0])} — ${fmt(baseRange[1])}</span></div>`;
+            if (adjRange[0] > 0 || adjRange[1] > 0) html += `<div class="breakdown-row"><span>Технологическая база</span><span>+${fmt(adjRange[0])} — +${fmt(adjRange[1])}</span></div>`;
+            pctBreakdown.forEach(item => { html += `<div class="breakdown-row"><span>${item.label}</span><span>+${fmt(item.min)} — +${fmt(item.max)}</span></div>`; });
+            fixedBreakdown.forEach(item => { html += `<div class="breakdown-row"><span>${item.label}</span><span>+${fmt(item.min)} — +${fmt(item.max)}</span></div>`; });
+            html += `<div class="breakdown-row" style="margin-top:8px;padding-top:12px;border-top:1px solid var(--line);color:var(--ink);"><span><strong>Итого</strong></span><span><strong>${fmt(devMin)} — ${fmt(devMax)}</strong></span></div>`;
+            breakdownEl.innerHTML = html;
+        }
+
+        const calcForm = document.getElementById('calc-form');
+        calcForm.addEventListener('change', calculate);
+        calcForm.addEventListener('input', calculate);
+
+        document.getElementById('currency-switch').addEventListener('click', (e) => {
+            const btn = e.target.closest('button[data-cur]');
+            if (!btn) return;
+            currentCurrency = btn.dataset.cur;
+            document.querySelectorAll('#currency-switch button').forEach(b => { b.classList.toggle('active', b === btn); });
+            calculate();
+        });
+
+        calculate();
+    })();
+
+    /* ============================================================
+       ЧЕК-ЛИСТ НА ГЛАВНОЙ
+       ============================================================ */
+    (function() {
+        const checklist = document.getElementById('checklist');
+        const checkCurrent = document.getElementById('check-current');
+        const checkFill = document.getElementById('check-fill');
+
+        function updateChecklist() {
+            const items = checklist.querySelectorAll('input[type="checkbox"]');
+            const total = items.length;
+            const checked = Array.from(items).filter(i => i.checked).length;
+            checkCurrent.textContent = checked;
+            checkFill.style.width = (checked / total * 100) + '%';
+        }
+
+        checklist.addEventListener('change', updateChecklist);
+        updateChecklist();
+    })();
+
+    /* ============================================================
+       ЗАЯВКА / ТЗ
+       ============================================================ */
+    (function() {
+        const LABELS = {
+            's1-type': { landing: 'Лендинг (одностраничник)', vizitka: 'Сайт-визитка (3–7 страниц)', corporate: 'Корпоративный сайт', shop: 'Интернет-магазин (WooCommerce)', hybrid: 'Гибрид (HTML + WordPress)', unknown: 'Пока не определён — нужен совет' },
+            's1-what': { 'new': 'Новый сайт с нуля', redesign: 'Редизайн существующего', update: 'Доработка / новый функционал', migrate: 'Перенос на другую CMS' },
+            's1-goals': { sales: 'Продажи и заявки', image: 'Имидж и презентация', info: 'Информирование / контент', catalog: 'Каталог товаров или услуг', account: 'Личный кабинет / сервис', education: 'Обучение / сообщество' },
+            's2-design': { unique: 'Уникальный дизайн с нуля', template: 'Готовый шаблон', brand: 'Фирменный стиль / брендбук', unknown: 'Нужен совет' },
+            's2-style': { minimal: 'Минимализм', classic: 'Классика', bright: 'Яркий', premium: 'Премиум', strict: 'Строгий деловой', unknown: 'Нужен совет' },
+            's2-color': { brand: 'Есть фирменные цвета', propose: 'Предложить на выбор', unknown: 'Нужен совет' },
+            's2-anim': { yes: 'Да, живой сайт', minimal: 'Минимально', no: 'Не нужны' },
+            's2-copy': { ready: 'Готовы, предоставлю', partial: 'Частично', need: 'Нужен копирайтинг с нуля' },
+            's2-photo': { ready: 'Готовы, предоставлю', process: 'Нужна обработка / ретушь', shoot: 'Нужна фотосъёмка', stock: 'Подобрать стоки' },
+            's2-fill': { performer: 'Исполнитель под ключ', client: 'Заказчик сам', together: 'Вместе' },
+            's2-pages': { home: 'Главная', about: 'О нас', services: 'Услуги', cases: 'Кейсы / Портфолио', prices: 'Цены', blog: 'Блог / Новости', faq: 'FAQ', reviews: 'Отзывы', contacts: 'Контакты' },
+            's3-platform': { wp: 'WordPress', html: 'HTML (чистая вёрстка)', hybrid: 'Гибрид (HTML + WP)', unknown: 'Нужен совет' },
+            's3-devices': { mobile: 'Мобильные телефоны', tablet: 'Планшеты', desktop: 'Десктоп' },
+            's3-browsers': { chrome: 'Chrome', safari: 'Safari', firefox: 'Firefox', edge: 'Edge' },
+            's3-speed': { '80': 'PageSpeed 80+', '90': 'PageSpeed 90+', none: 'Не критично' },
+            's3-plugins': { seo: 'SEO (Yoast / Rank Math)', cache: 'Кеширование', security: 'Безопасность', forms: 'Формы', backup: 'Резервное копирование (на хостинге)' },
+            's3-modules': { woocommerce: 'WooCommerce (магазин)', multilang: 'Мультиязычность (WPML / Polylang)', booking: 'Бронирование / запись', account: 'Личный кабинет', search: 'Поиск по сайту', blog: 'Блог / новости', gallery: 'Галереи' },
+            's3-premium': { yes: 'Нужны платные плагины', free: 'Обойтись бесплатными', performer: 'Решает исполнитель' },
+            's3-integrations': { crm: 'CRM (amoCRM, Bitrix24)', payment: 'Оплата (ЮKassa, Stripe, PayPal)', delivery: 'Доставка (СДЭК, Boxberry, DHL)', mailings: 'Рассылки (Mailchimp, SendPulse)', analytics: 'Аналитика (Метрика, GA4)' },
+            's3-security': { ssl: 'SSL-сертификат', bruteforce: 'Защита от брутфорса', '2fa': 'Двухфакторная авторизация' },
+            's4-hosting': { have: 'Уже есть, предоставлю доступ', help: 'Нужна помощь с выбором', turnkey: 'Под ключ — исполнитель решает' },
+            's4-deadline': { urgent: 'Срочно (1–2 недели)', '1month': '1 месяц', '2-3months': '2–3 месяца', quality: 'Не горит, важнее качество', date: 'Конкретная дата' },
+            's4-budget': { lt50: 'До 50 000 ₽', '50-150': '50 000 – 150 000 ₽', '150-300': '150 000 – 300 000 ₽', '300-500': '300 000 – 500 000 ₽', gt500: 'Более 500 000 ₽', unknown: 'Не определён — нужен совет' },
+            's4-payment': { prepay: 'Полная предоплата', half: 'Аванс + финальный расчёт (например, 50/50)', stages: 'Поэтапная оплата (транши)', postpay: 'Оплата по факту (постоплата)', discuss: 'Обсудить' },
+            's4-access': { 'own-hosting': 'Работа на хостинге исполнителя', 'full-access': 'Полный доступ к хостингу заказчика на время работ', 'by-stage': 'Поэтапно, синхронно с оплатой', limited: 'Ограниченный доступ', discuss: 'Обсудить' },
+            's4-support': { none: 'Не нужна', onetime: 'Разовые доработки', monthly: 'Абонентское обслуживание', unknown: 'Нужен совет' },
+            's4-accept': { pages: 'Все страницы из списка работают', responsive: 'Адаптивность на мобильных и планшетах', speed: 'Скорость загрузки (PageSpeed / Core Web Vitals)', forms: 'Формы отправляют заявки', integrations: 'Интеграции работают (CRM, оплата, доставка)', design: 'Соответствие утверждённому дизайну', training: 'Обучение работе с сайтом' },
+            's4-contract': { payment: 'Порядок и сроки оплаты (суммы, этапы, даты)', access: 'Момент передачи доступов и исходников', rights: 'Права на код и дизайн после завершения', accept: 'Критерии приёмки (что считается «готово»)', liability: 'Ответственность за задержки и форс-мажор', regular: 'Кто оплачивает хостинг, домен и плагины' }
+        };
+
+        function getRadio(name) {
+            const el = document.querySelector(`input[name="${name}"]:checked`);
+            return el ? el.value : '';
+        }
+        function getLabel(name, value) {
+            if (!value) return '';
+            return (LABELS[name] && LABELS[name][value]) || value;
+        }
+        function getChecked(name) {
+            const els = document.querySelectorAll(`input[name="${name}"]:checked`);
+            return Array.from(els).map(el => getLabel(name, el.value));
+        }
+        function getVal(id) {
+            const el = document.getElementById(id);
+            return el ? el.value.trim() : '';
+        }
+        function isDelegate(target) {
+            const cb = document.querySelector(`.delegate-checkbox[data-target="${target}"]`);
+            return cb && cb.checked;
+        }
+
+        const stepNavItems = document.querySelectorAll('.step-nav-item');
+        const steps = document.querySelectorAll('.step');
+
+        function showStep(n) {
+            steps.forEach(s => s.classList.toggle('active', s.dataset.step === String(n)));
+            stepNavItems.forEach(b => b.classList.toggle('active', b.dataset.step === String(n)));
+            if (String(n) === '5') updateSummary();
+            window.scrollTo({ top: document.getElementById('tabs-nav').offsetTop - 73, behavior: 'smooth' });
+        }
+
+        stepNavItems.forEach(btn => {
+            btn.addEventListener('click', () => showStep(btn.dataset.step));
+        });
+        document.querySelectorAll('[data-next]').forEach(btn => {
+            btn.addEventListener('click', () => showStep(btn.dataset.next));
+        });
+        document.querySelectorAll('[data-prev]').forEach(btn => {
+            btn.addEventListener('click', () => showStep(btn.dataset.prev));
+        });
+
+        document.querySelectorAll('.delegate-checkbox').forEach(cb => {
+            cb.addEventListener('change', () => {
+                const target = cb.dataset.target;
+                const others = document.querySelectorAll(`input[name="${target}"]`);
+                others.forEach(o => {
+                    o.disabled = cb.checked;
+                    if (cb.checked) o.checked = false;
+                });
+            });
+        });
+
+        const deadlineRadios = document.querySelectorAll('input[name="s4-deadline"]');
+        const dateRow = document.getElementById('s4-date-row');
+        function syncDateRow() {
+            const isDate = !!document.querySelector('input[name="s4-deadline"][value="date"]:checked');
+            dateRow.classList.toggle('hidden', !isDate);
+        }
+        deadlineRadios.forEach(r => r.addEventListener('change', syncDateRow));
+        syncDateRow();
+
+        function updateSummary() {
+            const rows = [
+                ['Тип сайта', getLabel('s1-type', getRadio('s1-type'))],
+                ['Что нужно сделать', getLabel('s1-what', getRadio('s1-what'))],
+                ['Платформа', getLabel('s3-platform', getRadio('s3-platform'))],
+                ['Бюджет', getLabel('s4-budget', getRadio('s4-budget'))],
+                ['Сроки', getLabel('s4-deadline', getRadio('s4-deadline'))],
+                ['Модель оплаты', getLabel('s4-payment', getRadio('s4-payment'))]
+            ];
+
+            const grid = document.getElementById('summary-grid');
+            grid.innerHTML = rows.map(([k, v]) =>
+                `<div class="summary-item"><div class="summary-item-label">${k}</div><div class="summary-item-value${v ? '' : ' empty'}">${v || 'не выбрано'}</div></div>`
+            ).join('');
+        }
+
+        const { Document, Packer, Paragraph, TextRun, AlignmentType, Table, TableRow, TableCell, WidthType, BorderStyle } = docx;
+
+        function sectionTitle(num, text) {
+            return new Paragraph({
+                spacing: { before: 400, after: 200 },
+                border: { bottom: { style: BorderStyle.SINGLE, size: 6, color: 'C1440E', space: 6 } },
+                children: [new TextRun({ text: num + '  ', bold: true, color: 'C1440E', size: 24 }), new TextRun({ text: text, bold: true, size: 28, color: '0E0E0E' })]
+            });
+        }
+        function kv(key, value) {
+            return new Paragraph({
+                spacing: { after: 140 },
+                children: [new TextRun({ text: key + ': ', bold: true, color: '0E0E0E' }), new TextRun({ text: value || '—', color: '333333' })]
+            });
+        }
+        function bullet(text) {
+            return new Paragraph({ bullet: { level: 0 }, spacing: { after: 80 }, children: [new TextRun({ text: text, color: '333333' })] });
+        }
+        function subheading(text) {
+            return new Paragraph({ spacing: { before: 200, after: 100 }, children: [new TextRun({ text: text, bold: true, color: '0E0E0E' })] });
+        }
+        function listOrEmpty(items, emptyText) {
+            if (!items || !items.length) {
+                return [new Paragraph({ spacing: { after: 140 }, children: [new TextRun({ text: emptyText || '—', color: '333333', italics: true })] })];
+            }
+            return items.map(bullet);
+        }
+        function cell(text, opts) {
+            opts = opts || {};
+            return new TableCell({
+                width: { size: opts.width || 50, type: WidthType.PERCENTAGE },
+                shading: opts.head ? { fill: 'EFEBE3' } : undefined,
+                margins: { top: 100, bottom: 100, left: 140, right: 140 },
+                children: [new Paragraph({ children: [new TextRun({ text: text, bold: !!opts.head, size: 20, color: opts.head ? '0E0E0E' : '333333' })] })]
+            });
+        }
+
+        function buildDocument() {
+            const today = new Date().toLocaleDateString('ru-RU', { day: '2-digit', month: 'long', year: 'numeric' });
+            const clientName = getVal('contact-name') || 'Заказчик';
+            const children = [];
+
+            children.push(new Paragraph({ spacing: { after: 80 }, children: [new TextRun({ text: 'ТЕХНИЧЕСКОЕ ЗАДАНИЕ', bold: true, size: 16, color: 'C1440E', characterSpacing: 40 })] }));
+            children.push(new Paragraph({ spacing: { after: 120 }, children: [new TextRun({ text: 'на разработку сайта', bold: true, size: 40, color: '0E0E0E' })] }));
+            children.push(new Paragraph({ spacing: { after: 400 }, border: { bottom: { style: BorderStyle.SINGLE, size: 6, color: '0E0E0E', space: 8 } }, children: [new TextRun({ text: 'Дата: ' + today + '  ·  Заказчик: ' + clientName, size: 20, color: '666666' })] }));
+
+            children.push(sectionTitle('01', 'О проекте'));
+            children.push(kv('Тип сайта', getLabel('s1-type', getRadio('s1-type'))));
+            children.push(kv('Что нужно сделать', getLabel('s1-what', getRadio('s1-what'))));
+            const goals = getChecked('s1-goals');
+            const goalsOther = getVal('s1-goals-other');
+            if (goalsOther) goals.push(goalsOther);
+            children.push(kv('Цель сайта', goals.length ? goals.join(', ') : ''));
+            children.push(kv('Целевая аудитория', getVal('s1-audience')));
+            children.push(kv('Текущий сайт', getVal('s1-url')));
+            children.push(kv('Что не устраивает', getVal('s1-problems')));
+            children.push(kv('Особые пожелания', getVal('s1-wishes')));
+
+            children.push(sectionTitle('02', 'Видение проекта'));
+            children.push(kv('Дизайн', getLabel('s2-design', getRadio('s2-design'))));
+            children.push(kv('Стиль', getLabel('s2-style', getRadio('s2-style'))));
+            children.push(kv('Настроение и ассоциации', getVal('s2-mood')));
+            children.push(kv('Цветовая гамма', getLabel('s2-color', getRadio('s2-color'))));
+            children.push(kv('Что нравится в референсах', getVal('s2-refs-like')));
+            children.push(kv('Что не нравится', getVal('s2-refs-dislike')));
+            children.push(kv('Анимации и интерактив', getLabel('s2-anim', getRadio('s2-anim'))));
+            children.push(kv('Тексты', getLabel('s2-copy', getRadio('s2-copy'))));
+            children.push(kv('Фото и изображения', getLabel('s2-photo', getRadio('s2-photo'))));
+            children.push(kv('Кто наполняет сайт', getLabel('s2-fill', getRadio('s2-fill'))));
+
+            const pages = getChecked('s2-pages');
+            const pagesOther = getVal('s2-pages-other');
+            if (pages.length || pagesOther) {
+                children.push(new Paragraph({ spacing: { before: 200, after: 140 }, children: [new TextRun({ text: 'Страницы сайта', bold: true, size: 24, color: '0E0E0E' })] }));
+                children.push(new Table({
+                    width: { size: 100, type: WidthType.PERCENTAGE },
+                    borders: { top: { style: BorderStyle.SINGLE, size: 4, color: 'CCCCCC' }, bottom: { style: BorderStyle.SINGLE, size: 4, color: 'CCCCCC' }, left: { style: BorderStyle.SINGLE, size: 4, color: 'CCCCCC' }, right: { style: BorderStyle.SINGLE, size: 4, color: 'CCCCCC' }, insideHorizontal: { style: BorderStyle.SINGLE, size: 4, color: 'CCCCCC' }, insideVertical: { style: BorderStyle.SINGLE, size: 4, color: 'CCCCCC' } },
+                    rows: (function () {
+                        const rows = [new TableRow({ tableHeader: true, children: [cell('Страница', { head: true, width: 70 }), cell('Включена', { head: true, width: 30 })] })];
+                        Object.keys(LABELS['s2-pages']).forEach(key => {
+                            const label = LABELS['s2-pages'][key];
+                            rows.push(new TableRow({ children: [cell(label), cell(pages.includes(label) ? 'Да' : '—')] }));
+                        });
+                        if (pagesOther) pagesOther.split('\n').filter(s => s.trim()).forEach(line => { rows.push(new TableRow({ children: [cell(line.trim()), cell('Да')] })); });
+                        return rows;
+                    })()
+                }));
+            }
+
+            children.push(sectionTitle('03', 'Технические решения'));
+            children.push(kv('Платформа', getLabel('s3-platform', getRadio('s3-platform'))));
+            children.push(kv('Адаптивность', getChecked('s3-devices').join(', ')));
+            children.push(kv('Кроссбраузерность', getChecked('s3-browsers').join(', ')));
+            children.push(kv('Скорость загрузки', getLabel('s3-speed', getRadio('s3-speed'))));
+
+            children.push(subheading('Обязательные плагины и модули:'));
+            if (isDelegate('s3-plugins')) children.push(bullet('Доверяю выбор исполнителю — специалист подберёт оптимальный набор'));
+            else listOrEmpty(getChecked('s3-plugins'), 'Не указаны').forEach(p => children.push(p));
+
+            children.push(subheading('Дополнительные модули:'));
+            if (isDelegate('s3-modules')) children.push(bullet('Доверяю выбор исполнителю — специалист подберёт оптимальный набор'));
+            else listOrEmpty(getChecked('s3-modules'), 'Не указаны').forEach(p => children.push(p));
+
+            children.push(kv('Премиум-лицензии', getLabel('s3-premium', getRadio('s3-premium'))));
+
+            const integrations = getChecked('s3-integrations');
+            const integOther = getVal('s3-integrations-other');
+            if (integOther) integrations.push(integOther);
+            if (integrations.length) { children.push(subheading('Интеграции:')); integrations.forEach(item => children.push(bullet(item))); }
+
+            const security = getChecked('s3-security');
+            if (security.length) { children.push(subheading('Безопасность:')); security.forEach(item => children.push(bullet(item))); }
+
+            children.push(kv('Особые технические требования', getVal('s3-special')));
+
+            children.push(sectionTitle('04', 'Организация и оплата'));
+            children.push(kv('Хостинг и домен', getLabel('s4-hosting', getRadio('s4-hosting'))));
+            children.push(kv('Сроки', getLabel('s4-deadline', getRadio('s4-deadline'))));
+            const dateVal = getVal('s4-date');
+            if (dateVal) children.push(kv('Желаемая дата запуска', dateVal));
+            children.push(kv('Бюджет', getLabel('s4-budget', getRadio('s4-budget'))));
+            children.push(kv('Модель оплаты', getLabel('s4-payment', getRadio('s4-payment'))));
+            children.push(kv('Передача доступов и исходников', getLabel('s4-access', getRadio('s4-access'))));
+            children.push(kv('Поддержка после запуска', getLabel('s4-support', getRadio('s4-support'))));
+
+            children.push(subheading('Критерии приёмки:'));
+            const accept = getChecked('s4-accept');
+            const acceptOther = getVal('s4-accept-other');
+            if (acceptOther) accept.push(acceptOther);
+            listOrEmpty(accept, 'Не указаны').forEach(p => children.push(p));
+
+            children.push(subheading('Что зафиксировать в договоре:'));
+            listOrEmpty(getChecked('s4-contract'), 'Не указано').forEach(p => children.push(p));
+
+            const tg = getVal('contact-telegram');
+            const phone = getVal('contact-phone');
+            const comment = getVal('contact-comment');
+            if (tg || phone || comment) {
+                children.push(sectionTitle('05', 'Контакты'));
+                if (tg) children.push(kv('Telegram', tg));
+                if (phone) children.push(kv('Телефон', phone));
+                if (comment) children.push(kv('Комментарий', comment));
+            }
+
+            children.push(new Paragraph({ spacing: { before: 600, after: 100 }, border: { top: { style: BorderStyle.SINGLE, size: 4, color: 'CCCCCC', space: 8 } }, alignment: AlignmentType.CENTER, children: [new TextRun({ text: 'Сгенерировано на vitwill.github.io  ·  ' + today, size: 16, color: '999999' })] }));
+            children.push(new Paragraph({ alignment: AlignmentType.CENTER, children: [new TextRun({ text: 'Это рабочий документ для обсуждения проекта. Используйте его как основу для диалога с исполнителем.', italics: true, size: 16, color: '999999' })] }));
+
+            return new Document({
+                creator: 'Viktor Willmann', title: 'Техническое задание на разработку сайта', description: 'Сгенерировано на vitwill.github.io',
+                styles: { default: { document: { run: { font: 'Calibri', size: 22, color: '333333' }, paragraph: { spacing: { line: 300 } } } } },
+                sections: [{ properties: { page: { margin: { top: 1134, bottom: 1134, left: 1134, right: 1134 } } }, children: children }]
+            });
+        }
+
+        document.getElementById('download-btn').addEventListener('click', async function () {
+            const btn = this;
+            const status = document.getElementById('status');
+            status.className = 'status';
+            status.textContent = '';
+
+            const name = getVal('contact-name');
+            const email = getVal('contact-email');
+            const consent = document.getElementById('contact-consent').checked;
+            const errors = [];
+            if (!name) errors.push('имя');
+            if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) errors.push('корректный email');
+            if (!consent) errors.push('согласие на обработку');
+
+            if (errors.length) {
+                status.className = 'status err';
+                status.textContent = '✗ Не заполнено: ' + errors.join(', ');
+                return;
+            }
+
+            btn.disabled = true;
+            status.textContent = 'Генерация...';
+
+            try {
+                const doc = buildDocument();
+                const blob = await Packer.toBlob(doc);
+                const typeMap = { landing: 'лендинг', vizitka: 'визитка', corporate: 'корпоративный', shop: 'магазин', hybrid: 'гибрид', unknown: 'сайт' };
+                const typeLabel = typeMap[getRadio('s1-type')] || 'сайт';
+                const dateStr = new Date().toISOString().slice(0, 10);
+                const filename = 'ТЗ_' + typeLabel + '_' + dateStr + '.docx';
+
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url; a.download = filename;
+                document.body.appendChild(a); a.click(); document.body.removeChild(a);
+                setTimeout(() => URL.revokeObjectURL(url), 1000);
+
+                status.className = 'status ok';
+                status.textContent = '✓ Файл скачан';
+            } catch (err) {
+                console.error(err);
+                status.className = 'status err';
+                status.textContent = '✗ Ошибка: ' + err.message;
+            } finally {
+                btn.disabled = false;
+            }
+        });
+    })();
+</script>
+
+</body>
+</html>
