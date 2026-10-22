@@ -1,1 +1,1785 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Client Tools — Viktor Willmann</title>
+    <meta name="description" content="Calculate the estimated cost of a website, understand the estimate structure, and download a ready-made technical specification.">
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <style>
+        /* ============================================================
+           ТОКЕНЫ
+           ============================================================ */
+        :root {
+            --paper: #F5F2EC;
+            --paper-2: #EFEBE3;
+            --ink: #0E0E0E;
+            --muted: rgba(14, 14, 14, .68);
+            --muted-2: rgba(14, 14, 14, .45);
+            --line: rgba(14, 14, 14, .14);
+            --line-strong: rgba(14, 14, 14, .22);
+            --accent: #C1440E;
+            --accent-soft: #E8A87C;
+            --f-display: 'Inter Tight', sans-serif;
+            --f-text: 'Inter', sans-serif;
+            --f-serif: 'Instrument Serif', serif;
+            --f-mono: 'JetBrains Mono', monospace;
+            --ease: cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: var(--f-text);
+            font-size: 15px;
+            line-height: 1.6;
+            color: var(--ink);
+            background: var(--paper);
+            -webkit-font-smoothing: antialiased;
+        }
+        ::selection { background: var(--ink); color: var(--paper); }
+        .container { max-width: 1440px; margin: 0 auto; padding: 0 40px; }
+
+        /* ============================================================
+           ХЕДЕР
+           ============================================================ */
+        .site-header {
+            position: sticky; top: 0; z-index: 100;
+            background: rgba(245, 242, 236, .88);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border-bottom: 1px solid var(--line);
+        }
+        .site-header .container {
+            display: flex; justify-content: space-between; align-items: center;
+            padding-top: 20px; padding-bottom: 20px;
+        }
+        .logo {
+            font-family: var(--f-display);
+            font-size: 17px; font-weight: 600;
+            letter-spacing: -.02em;
+            text-decoration: none; color: var(--ink);
+        }
+        .logo em { font-family: var(--f-serif); font-style: italic; font-weight: 400; color: var(--accent); }
+        
+        .header-actions { display: flex; align-items: center; gap: 16px; }
+        .back-link {
+            font-family: var(--f-mono); font-size: 11px; letter-spacing: .14em;
+            text-transform: uppercase; color: var(--muted); text-decoration: none;
+            display: inline-flex; align-items: center; gap: 8px;
+            transition: color .2s, gap .2s var(--ease);
+        }
+        .back-link:hover { color: var(--ink); gap: 12px; }
+        .lang-switch {
+            font-family: var(--f-mono);
+            font-size: 11px;
+            letter-spacing: .1em;
+            color: var(--ink);
+            text-decoration: none;
+            padding: 8px 12px;
+            border: 1px solid var(--line-strong);
+            border-radius: 2px;
+            transition: all .3s var(--ease);
+        }
+        .lang-switch:hover { background: rgba(14,14,14,.05); border-color: rgba(14,14,14,.45); }
+
+        /* ============================================================
+           HERO
+           ============================================================ */
+        .tools-hero {
+            position: relative; padding: 100px 0 80px;
+            border-bottom: 1px solid var(--line); background: var(--paper);
+        }
+        .tools-hero::before {
+            content: ""; position: absolute; inset: 0;
+            background-image: linear-gradient(90deg, var(--line) 1px, transparent 1px);
+            background-size: 25% 100%; opacity: .5; pointer-events: none;
+        }
+        .tools-hero .container { 
+            position: relative; z-index: 1;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 60px;
+        }
+        .tools-hero-content { max-width: 800px; flex: 1; }
+        
+        .tools-hero-top {
+            display: flex; justify-content: space-between; align-items: baseline;
+            gap: 40px; margin-bottom: 40px;
+        }
+        .tools-hero-loc {
+            font-family: var(--f-mono); font-size: 11px; letter-spacing: .14em;
+            text-transform: uppercase; color: var(--muted); text-align: right; line-height: 1.9;
+        }
+        .tools-hero-title {
+            font-family: var(--f-display); font-size: clamp(44px, 6vw, 96px);
+            font-weight: 600; line-height: .95; letter-spacing: -.045em; margin-bottom: 32px;
+        }
+        .tools-hero-title em { font-family: var(--f-serif); font-style: italic; font-weight: 400; color: var(--accent); }
+        .tools-hero-desc {
+            font-size: clamp(15px, 1.3vw, 18px); line-height: 1.7;
+            color: var(--muted); max-width: 640px;
+        }
+
+        .hero-aside-nav {
+            display: flex; flex-direction: column; gap: 12px;
+            border-left: 1px solid var(--line-strong);
+            padding-left: 30px;
+            min-width: 280px;
+            margin-top: 20px;
+        }
+        .aside-nav-label {
+            font-family: var(--f-mono);
+            font-size: 11px;
+            letter-spacing: .16em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 12px;
+            display: flex; align-items: center; gap: 10px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--line);
+        }
+        .aside-nav-label::before {
+            content: ""; display: inline-block;
+            width: 6px; height: 6px; background: var(--accent); border-radius: 50%;
+        }
+        .aside-nav-btn {
+            background: none; border: none; text-align: left;
+            font-family: var(--f-mono); font-size: 13px; letter-spacing: .05em;
+            color: var(--ink); cursor: pointer;
+            transition: color 0.2s, padding-left 0.2s;
+            padding: 4px 0;
+        }
+        .aside-nav-btn:hover, .aside-nav-btn.active { color: var(--accent); padding-left: 8px; }
+
+        /* ============================================================
+           ГЛАВНЫЕ ТАБЫ
+           ============================================================ */
+        .tabs-nav {
+            position: sticky; top: 73px; z-index: 90;
+            background: var(--paper-2); border-bottom: 1px solid var(--line);
+        }
+        .tabs-nav .container { display: grid; grid-template-columns: repeat(3, 1fr); padding: 0 40px; }
+        .tab-btn {
+            padding: 22px 20px;
+            font-family: var(--f-mono); font-size: 11px; letter-spacing: .14em;
+            text-transform: uppercase; color: var(--muted); background: none;
+            border: none; border-right: 1px solid var(--line); cursor: pointer;
+            white-space: nowrap; transition: all .3s var(--ease);
+            display: flex; align-items: center; justify-content: center; gap: 12px;
+            text-decoration: none;
+        }
+        .tab-btn:last-child { border-right: none; }
+        .tab-btn::before {
+            content: ""; width: 6px; height: 6px; border-radius: 50%;
+            border: 1px solid var(--muted-2); transition: all .3s var(--ease);
+        }
+        .tab-btn:hover { color: var(--ink); }
+        .tab-btn.active { color: var(--paper); background: var(--ink); }
+        .tab-btn.active::before { background: var(--accent-soft); border-color: var(--accent-soft); }
+
+        /* ============================================================
+           ПАНЕЛИ
+           ============================================================ */
+        .tab-panel { display: none; padding: 70px 0 100px; }
+        .tab-panel.active { display: block; }
+
+        /* ============================================================
+           КАЛЬКУЛЯТОР
+           ============================================================ */
+        .calc-layout { display: grid; grid-template-columns: 1.4fr 1fr; gap: 70px; align-items: start; }
+        .calc-form fieldset { border: none; padding: 0; margin-bottom: 40px; }
+        .calc-form legend {
+            font-family: var(--f-mono); font-size: 11px; letter-spacing: .16em;
+            text-transform: uppercase; color: var(--muted); margin-bottom: 16px;
+            display: flex; align-items: baseline; gap: 10px; width: 100%;
+            padding-bottom: 12px; border-bottom: 1px solid var(--line);
+        }
+        .calc-form legend .legend-num { color: var(--accent); font-weight: 500; }
+
+        .pill-group { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 8px; }
+        .pill { position: relative; cursor: pointer; }
+        .pill input { position: absolute; opacity: 0; pointer-events: none; }
+        .pill span {
+            display: block; padding: 14px 18px; border: 1px solid var(--line-strong);
+            border-radius: 2px; font-size: 13px; text-align: center;
+            transition: all .2s var(--ease); background: var(--paper); line-height: 1.35;
+        }
+        .pill:hover span { border-color: var(--ink); }
+        .pill input:checked + span { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+        .pill small {
+            display: block; font-family: var(--f-mono); font-size: 10px; letter-spacing: .06em;
+            color: var(--muted-2); margin-top: 4px; text-transform: none;
+        }
+        .pill input:checked + span small { color: var(--accent-soft); }
+
+        .check-list { display: flex; flex-direction: column; gap: 6px; }
+        .check-item {
+            display: flex; align-items: center; gap: 14px; padding: 14px 18px;
+            cursor: pointer; border: 1px solid var(--line); border-radius: 2px;
+            transition: all .2s var(--ease); background: var(--paper); font-size: 14px;
+        }
+        .check-item:hover { border-color: var(--line-strong); background: var(--paper-2); }
+        .check-item input {
+            appearance: none; -webkit-appearance: none; width: 16px; height: 16px;
+            border: 1px solid var(--line-strong); border-radius: 2px; cursor: pointer;
+            position: relative; flex-shrink: 0; background: var(--paper); transition: all .2s;
+        }
+        .check-item input:checked { background: var(--accent); border-color: var(--accent); }
+        .check-item input:checked::after {
+            content: ""; position: absolute; left: 4px; top: 1px;
+            width: 5px; height: 9px; border: solid var(--paper);
+            border-width: 0 2px 2px 0; transform: rotate(45deg);
+        }
+        .check-label { flex: 1; color: var(--ink); }
+        .check-price { font-family: var(--f-mono); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted-2); white-space: nowrap; }
+
+        .calc-result {
+            position: sticky; top: 160px; background: var(--paper-2);
+            border: 1px solid var(--line-strong); border-radius: 2px; padding: 32px 32px 28px;
+        }
+        .result-header { display: flex; justify-content: space-between; align-items: center; padding-bottom: 18px; margin-bottom: 24px; border-bottom: 1px solid var(--line); }
+        .result-eyebrow { font-family: var(--f-mono); font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--accent); }
+        .currency-switch { display: flex; border: 1px solid var(--line-strong); border-radius: 2px; overflow: hidden; }
+        .currency-switch button { font-family: var(--f-mono); font-size: 11px; padding: 6px 10px; background: var(--paper); border: none; cursor: pointer; color: var(--muted); transition: all .2s; letter-spacing: .06em; }
+        .currency-switch button + button { border-left: 1px solid var(--line-strong); }
+        .currency-switch button:hover { color: var(--ink); }
+        .currency-switch button.active { background: var(--ink); color: var(--paper); }
+
+        .result-label { font-family: var(--f-mono); font-size: 10px; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+        .result-dev { font-family: var(--f-display); font-size: clamp(26px, 2.6vw, 36px); font-weight: 500; letter-spacing: -.03em; line-height: 1.1; color: var(--ink); }
+        .result-reg { font-family: var(--f-display); font-size: 18px; font-weight: 500; letter-spacing: -.01em; color: var(--ink); line-height: 1.2; }
+        .result-support { font-family: var(--f-mono); font-size: 11px; letter-spacing: .08em; color: var(--muted); margin-top: 6px; }
+        .result-block { padding: 18px 0; border-bottom: 1px dashed var(--line-strong); }
+        .result-block:last-of-type { border-bottom: none; }
+
+        .result-breakdown { margin: 8px 0 24px; padding-top: 16px; border-top: 1px solid var(--line); font-size: 13px; }
+        .result-breakdown-title { font-family: var(--f-mono); font-size: 10px; letter-spacing: .16em; text-transform: uppercase; color: var(--muted-2); margin-bottom: 12px; }
+        .breakdown-row { display: flex; justify-content: space-between; gap: 16px; padding: 6px 0; color: var(--muted); font-size: 13px; }
+        .breakdown-row span:last-child { font-family: var(--f-mono); font-size: 11px; color: var(--ink); white-space: nowrap; letter-spacing: .02em; }
+
+        .result-actions { margin-top: 8px; }
+        .result-actions .btn { width: 100%; justify-content: center; padding: 16px 20px; }
+        .result-disclaimer { margin-top: 16px; font-size: 14px; line-height: 1.6; color: var(--muted-2); font-style: italic; font-family: var(--f-serif); }
+
+        .result-includes { margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--line); font-size: 12px; line-height: 1.65; color: var(--muted); }
+        .result-includes strong { display: block; font-family: var(--f-mono); font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: var(--ink); margin-bottom: 6px; font-weight: 500; }
+
+        /* ============================================================
+           ОБЩИЕ СТИЛИ ДЛЯ КОНТЕНТА (АНАТОМИЯ, VS, РАСХОДЫ)
+           ============================================================ */
+        .anatomy-intro { max-width: 680px; font-size: 16px; line-height: 1.75; color: var(--muted); margin-bottom: 60px; }
+        .anatomy-intro strong { color: var(--ink); font-weight: 500; }
+        .anatomy-list { margin-top: 20px; }
+        .anatomy-row { display: grid; grid-template-columns: 40px 1fr 2fr 80px; gap: 24px; align-items: center; padding: 20px 0; border-bottom: 1px solid var(--line); }
+        .anatomy-num { font-family: var(--f-mono); font-size: 11px; color: var(--muted-2); letter-spacing: .1em; }
+        .anatomy-name { font-family: var(--f-display); font-size: 17px; font-weight: 500; letter-spacing: -.01em; }
+        .anatomy-bar { height: 4px; background: var(--paper-2); border-radius: 2px; overflow: hidden; }
+        .anatomy-fill { height: 100%; background: var(--accent); border-radius: 2px; transition: width .8s var(--ease); }
+        .anatomy-pct { font-family: var(--f-mono); font-size: 12px; letter-spacing: .06em; color: var(--ink); text-align: right; }
+        .anatomy-note { margin-top: 40px; padding: 24px 28px; background: var(--paper-2); border-left: 2px solid var(--accent); font-family: var(--f-serif); font-style: italic; font-size: 16px; line-height: 1.6; color: var(--ink); max-width: 760px; }
+
+        .vs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 40px; }
+        .vs-card { padding: 36px 32px; border: 1px solid var(--line-strong); border-radius: 2px; background: var(--paper); position: relative; }
+        .vs-card.accent { background: var(--paper-2); border-color: var(--accent); }
+        .vs-card h3 { font-family: var(--f-display); font-size: 26px; font-weight: 500; letter-spacing: -.02em; margin-bottom: 6px; }
+        .vs-card .vs-tag { font-family: var(--f-mono); font-size: 10px; letter-spacing: .16em; text-transform: uppercase; color: var(--accent); margin-bottom: 24px; display: block; }
+        .vs-list { list-style: none; padding: 0; margin: 0; }
+        .vs-list li { position: relative; padding: 12px 0 12px 24px; font-size: 14px; line-height: 1.6; color: var(--muted); border-bottom: 1px solid var(--line); }
+        .vs-list li:last-child { border-bottom: none; }
+        .vs-list li::before { content: ""; position: absolute; left: 0; top: 19px; width: 10px; height: 1px; background: var(--accent); }
+        .vs-list li strong { color: var(--ink); font-weight: 500; }
+
+        .costs-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border-left: 1px solid var(--line); margin-top: 40px; }
+        .cost-card { padding: 36px 28px; border-right: 1px solid var(--line); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); transition: background .3s var(--ease); }
+        .cost-card:hover { background: rgba(14,14,14,.03); }
+        .cost-num { font-family: var(--f-mono); font-size: 11px; letter-spacing: .16em; color: var(--muted-2); margin-bottom: 24px; }
+        .cost-card h3 { font-family: var(--f-display); font-size: 22px; font-weight: 500; letter-spacing: -.02em; margin-bottom: 10px; }
+        .cost-card p { font-size: 14px; line-height: 1.65; color: var(--muted); margin-bottom: 24px; min-height: 66px; }
+        .cost-price { font-family: var(--f-display); font-size: 18px; font-weight: 500; letter-spacing: -.01em; color: var(--ink); padding-top: 16px; border-top: 1px solid var(--line); }
+        .cost-price small { font-family: var(--f-mono); font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted-2); display: block; margin-top: 4px; font-weight: 400; }
+
+        .checklist-wrap { max-width: 820px; }
+        .checklist-intro { max-width: 680px; font-size: 16px; line-height: 1.75; color: var(--muted); margin-bottom: 40px; }
+        .checklist { display: flex; flex-direction: column; gap: 0; border-top: 1px solid var(--line); }
+        .checklist-item { display: flex; align-items: flex-start; gap: 16px; padding: 20px 0; border-bottom: 1px solid var(--line); cursor: pointer; transition: padding .3s var(--ease); font-size: 15px; line-height: 1.6; }
+        .checklist-item:hover { padding-left: 8px; }
+        .checklist-item input { appearance: none; -webkit-appearance: none; width: 18px; height: 18px; border: 1px solid var(--line-strong); border-radius: 2px; cursor: pointer; position: relative; flex-shrink: 0; margin-top: 2px; background: var(--paper); transition: all .2s; }
+        .checklist-item input:checked { background: var(--accent); border-color: var(--accent); }
+        .checklist-item input:checked::after { content: ""; position: absolute; left: 5px; top: 1px; width: 5px; height: 10px; border: solid var(--paper); border-width: 0 2px 2px 0; transform: rotate(45deg); }
+        .checklist-item input:checked ~ .checklist-text { color: var(--muted-2); text-decoration: line-through; text-decoration-color: var(--accent); }
+        .checklist-text { flex: 1; }
+        .checklist-progress { display: flex; justify-content: space-between; align-items: center; padding: 24px 0 0; margin-top: 20px; border-top: 1px solid var(--line-strong); }
+        .checklist-progress-label { font-family: var(--f-mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+        .checklist-progress-count { font-family: var(--f-display); font-size: 24px; font-weight: 500; letter-spacing: -.02em; color: var(--ink); }
+        .checklist-progress-count .total { color: var(--muted-2); font-weight: 400; }
+        .checklist-progress-bar { flex: 1; height: 4px; background: var(--paper-2); border-radius: 2px; overflow: hidden; margin: 0 24px; max-width: 320px; }
+        .checklist-progress-fill { height: 100%; background: var(--accent); width: 0%; transition: width .5s var(--ease); border-radius: 2px; }
+
+        /* ============================================================
+           ФОРМА ТЗ
+           ============================================================ */
+        .step-nav { display: grid; grid-template-columns: repeat(5, 1fr); border-bottom: 1px solid var(--line-strong); margin-bottom: 50px; background: var(--paper-2); }
+        .step-nav-item { display: flex; align-items: baseline; gap: 12px; padding: 22px 16px; background: none; border: none; border-right: 1px solid var(--line); cursor: pointer; text-align: left; transition: all .3s var(--ease); position: relative; font-size: 15px; font-family: inherit; color: inherit; }
+        .step-nav-item:last-child { border-right: none; }
+        .step-nav-item:hover { background: rgba(14,14,14,.05); }
+        .step-nav-item.active { background: var(--ink); color: var(--paper); }
+        .step-nav-num { font-family: var(--f-mono); font-size: 11px; letter-spacing: .12em; color: var(--muted-2); transition: color .3s; flex-shrink: 0; }
+        .step-nav-item.active .step-nav-num { color: var(--accent-soft); }
+        .step-nav-label { font-family: var(--f-display); font-size: 14px; font-weight: 500; letter-spacing: -.01em; color: var(--muted); transition: color .3s, font-size .3s; line-height: 1.2; }
+        .step-nav-item.active .step-nav-label { color: var(--paper); font-size: 16px; }
+        .step-nav-item:hover .step-nav-label { color: var(--ink); }
+        .step-nav-item.active:hover .step-nav-label { color: var(--paper); }
+
+        .step { display: none; padding-bottom: 50px; }
+        .step.active { display: block; }
+
+        .field-head { display: flex; align-items: baseline; gap: 16px; padding-bottom: 14px; margin-bottom: 18px; border-bottom: 1px solid var(--line-strong); }
+        .field-num { font-family: var(--f-mono); font-size: 13px; letter-spacing: .1em; color: var(--accent); font-weight: 500; flex-shrink: 0; }
+        .field-title { font-family: var(--f-display); font-size: 20px; font-weight: 500; letter-spacing: -.02em; color: var(--ink); line-height: 1.2; }
+        .field { margin-bottom: 40px; }
+
+        .check-reminder { display: inline-flex; align-items: center; gap: 8px; font-family: var(--f-mono); font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); margin-bottom: 12px; }
+        .check-reminder::before { content: ""; width: 5px; height: 5px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
+
+        .check-item:has(.delegate-checkbox) { border-color: var(--accent); background: rgba(193, 68, 14, .04); }
+        .check-item:has(.delegate-checkbox) .check-label { color: var(--accent); font-weight: 500; }
+        .check-item:has(input[type="checkbox"]:disabled) { opacity: .4; pointer-events: none; cursor: not-allowed; }
+
+        .form-group { margin-bottom: 24px; }
+        .form-group label { display: block; font-family: var(--f-mono); font-size: 10px; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
+        .form-group input, .form-group textarea, .form-group select {
+            width: 100%; padding: 14px 18px; font-family: var(--f-text); font-size: 16px; color: var(--ink);
+            background: var(--paper-2); border: 1px solid var(--line-strong); border-radius: 2px;
+            transition: border-color .3s var(--ease), background .3s var(--ease), box-shadow .3s var(--ease);
+            appearance: none; -webkit-appearance: none;
+        }
+        .form-group textarea { min-height: 100px; resize: vertical; }
+        .form-group input:hover, .form-group textarea:hover, .form-group select:hover { border-color: rgba(14,14,14,.35); }
+        .form-group input:focus, .form-group textarea:focus, .form-group select:focus { outline: none; border-color: var(--accent); background: var(--paper); box-shadow: 0 0 0 3px rgba(193, 68, 14, .08); }
+
+        .field-hint { margin-top: 8px; font-size: 12px; line-height: 1.55; color: var(--muted-2); }
+
+        .pay-list { display: flex; flex-direction: column; gap: 8px; }
+        .pay-option { display: block; position: relative; padding: 16px 18px; border: 1px solid var(--line); border-radius: 2px; background: var(--paper); cursor: pointer; transition: all .2s var(--ease); }
+        .pay-option:hover { border-color: var(--line-strong); background: var(--paper-2); }
+        .pay-option input { position: absolute; opacity: 0; pointer-events: none; }
+        .pay-option-head { display: flex; align-items: center; gap: 12px; }
+        .pay-option-marker { width: 14px; height: 14px; border: 1px solid var(--line-strong); border-radius: 50%; flex-shrink: 0; position: relative; transition: all .2s var(--ease); }
+        .pay-option-title { font-size: 14px; font-weight: 500; color: var(--ink); letter-spacing: -.005em; }
+        .pay-option-desc { margin-top: 8px; padding-left: 26px; font-size: 13px; line-height: 1.6; color: var(--muted); }
+        .pay-option:has(input:checked) { border-color: var(--accent); background: var(--paper-2); }
+        .pay-option:has(input:checked) .pay-option-marker { border-color: var(--accent); background: var(--accent); box-shadow: inset 0 0 0 3px var(--paper-2); }
+        .pay-option-desc strong { color: var(--ink); font-weight: 500; }
+
+        .date-row { margin-top: 12px; max-width: 260px; }
+        .date-row.hidden { display: none; }
+
+        .step-actions { display: flex; justify-content: space-between; align-items: center; gap: 20px; margin-top: 50px; padding-top: 30px; border-top: 1px solid var(--line-strong); }
+        .step-actions .btn { display: inline-flex; align-items: center; gap: 12px; font-family: var(--f-mono); font-size: 12px; letter-spacing: .16em; text-transform: uppercase; text-decoration: none; padding: 16px 28px; border: 1px solid transparent; border-radius: 2px; cursor: pointer; transition: all .3s var(--ease); background: none; font-weight: 500; }
+        .step-actions .btn-dark { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+        .step-actions .btn-dark:hover { background: var(--accent); border-color: var(--accent); }
+        .step-actions .btn-outline { background: transparent; color: var(--ink); border-color: var(--line-strong); }
+        .step-actions .btn-outline:hover { border-color: var(--ink); }
+        .step-actions .btn-outline.hidden { visibility: hidden; }
+
+        .summary-card { background: var(--paper-2); border: 1px solid var(--line-strong); border-radius: 2px; padding: 32px; margin-bottom: 40px; }
+        .summary-title { font-family: var(--f-mono); font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid var(--line); font-weight: 500; }
+        .summary-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px 32px; }
+        .summary-item { display: flex; flex-direction: column; gap: 4px; padding-bottom: 12px; border-bottom: 1px dashed var(--line); }
+        .summary-item-label { font-family: var(--f-mono); font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted-2); }
+        .summary-item-value { font-size: 15px; color: var(--ink); font-weight: 500; line-height: 1.4; }
+        .summary-item-value.empty { color: var(--muted-2); font-weight: 400; font-style: italic; }
+
+        .consent-item { display: flex; align-items: flex-start; gap: 14px; padding: 16px 18px; border: 1px solid var(--line); border-radius: 2px; background: var(--paper); cursor: pointer; font-size: 14px; line-height: 1.55; color: var(--muted); margin-bottom: 24px; }
+        .consent-item input { appearance: none; -webkit-appearance: none; width: 16px; height: 16px; border: 1px solid var(--line-strong); border-radius: 2px; cursor: pointer; position: relative; flex-shrink: 0; background: var(--paper); margin-top: 2px; transition: all .2s; }
+        .consent-item input:checked { background: var(--accent); border-color: var(--accent); }
+        .consent-item input:checked::after { content: ""; position: absolute; left: 4px; top: 1px; width: 5px; height: 9px; border: solid var(--paper); border-width: 0 2px 2px 0; transform: rotate(45deg); }
+
+        .download-block { max-width: 900px; padding: 40px; background: var(--paper); border: 1px solid var(--line-strong); border-radius: 2px; margin-top: 40px; }
+        .download-note { font-family: var(--f-serif); font-style: italic; font-size: 16px; line-height: 1.55; color: var(--muted); margin-bottom: 24px; padding-left: 18px; border-left: 2px solid var(--accent); }
+        .download-block .btn { width: 100%; justify-content: center; padding: 20px; font-size: 13px; }
+        .status { margin-top: 16px; font-family: var(--f-mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; text-align: center; color: var(--muted-2); min-height: 16px; }
+        .status.ok { color: #1e5c2a; }
+        .status.err { color: #8b1f29; }
+
+        /* ============================================================
+           FOOTER & БАЗОВЫЕ КНОПКИ
+           ============================================================ */
+        .btn { display: inline-flex; align-items: center; gap: 12px; font-family: var(--f-mono); font-size: 12px; letter-spacing: .16em; text-transform: uppercase; text-decoration: none; padding: 16px 28px; border: 1px solid transparent; border-radius: 2px; cursor: pointer; transition: all .3s var(--ease); background: none; font-weight: 500; }
+        .btn-dark { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+        .btn-dark:hover { background: var(--accent); border-color: var(--accent); }
+        .site-footer { padding: 40px 0; background: var(--ink); color: rgba(245,242,236,.65); }
+        .site-footer .container { display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap; font-family: var(--f-mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; }
+        .site-footer a { text-decoration: none; color: rgba(245,242,236,.65); transition: color .2s; }
+        .site-footer a:hover { color: var(--paper); }
+
+        /* ============================================================
+           АДАПТИВНОСТЬ
+           ============================================================ */
+        @media (max-width: 1100px) {
+            .container { padding: 0 30px; }
+            .calc-layout { grid-template-columns: 1fr; gap: 50px; }
+            .calc-result { position: static; }
+            .vs-grid { grid-template-columns: 1fr; }
+            .costs-grid { grid-template-columns: repeat(2, 1fr); }
+            .anatomy-row { grid-template-columns: 30px 1fr 60px; gap: 16px; }
+            .anatomy-bar { display: none; }
+            .step-nav { grid-template-columns: repeat(2, 1fr); }
+            .step-nav-item:nth-child(2), .step-nav-item:nth-child(4) { border-right: none; }
+            .step-nav-item { border-bottom: 1px solid var(--line); }
+            .summary-grid { grid-template-columns: 1fr; }
+            
+            .tools-hero .container { flex-direction: column; align-items: flex-start; }
+            .hero-aside-nav { border-left: none; border-top: 1px solid var(--line-strong); padding-left: 0; padding-top: 30px; width: 100%; flex-direction: row; flex-wrap: wrap; gap: 20px; }
+            .aside-nav-label { width: 100%; margin-bottom: 0; }
+        }
+        @media (max-width: 720px) {
+            .container { padding: 0 20px; }
+            .tools-hero { padding: 70px 0 50px; }
+            .tools-hero-top { flex-direction: column; align-items: flex-start; gap: 16px; }
+            .tools-hero-loc { text-align: left; }
+            .tab-panel { padding: 50px 0 70px; }
+            .tabs-nav .container { display: flex; overflow-x: auto; padding: 0 20px; }
+            .tab-btn { flex: none; padding: 18px 20px; font-size: 10px; }
+            .tabs-nav { top: 65px; }
+            .calc-result { padding: 26px 22px 24px; }
+            .costs-grid { grid-template-columns: 1fr; }
+            .anatomy-row { grid-template-columns: 1fr; gap: 4px; }
+            .anatomy-num { display: none; }
+            .anatomy-pct { text-align: left; }
+            .pill-group { grid-template-columns: repeat(2, 1fr); }
+            .field-title { font-size: 17px; }
+            .step-nav-label { font-size: 13px; }
+            .step-nav-item.active .step-nav-label { font-size: 14px; }
+            .download-block { padding: 24px; }
+            .site-footer .container { flex-direction: column; text-align: center; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+        }
+    </style>
+</head>
+<body>
+
+<header class="site-header">
+    <div class="container">
+        <a href="index-en.html" class="logo">Viktor <em>Willmann</em></a>
+        <div class="header-actions">
+            <a href="index-en.html" class="back-link">← Back to Home</a>
+            <a href="tools.html" class="lang-switch">RU</a>
+        </div>
+    </div>
+</header>
+
+<section class="tools-hero">
+    <div class="container">
+        <div class="tools-hero-content">
+            <div class="tools-hero-top">
+                <span class="eyebrow">Client Tools</span>
+                <div class="tools-hero-loc">
+                    Calculator · Spec · Audit<br>
+                    Help before you call
+                </div>
+            </div>
+            <h1 class="tools-hero-title">
+                Understand<br>
+                your project <em>before you start</em>
+            </h1>
+            <p class="tools-hero-desc">
+                Calculate the estimated cost, understand the estimate structure, and learn about hidden costs — before discussing the project with a contractor. The more accurately you understand the budget, the fewer revisions and disappointments there will be in the process.
+            </p>
+        </div>
+
+        <div class="hero-aside-nav">
+            <div class="aside-nav-label">Good to know</div>
+            <button class="aside-nav-btn" data-tab="anatomy">01 · Price anatomy</button>
+            <button class="aside-nav-btn" data-tab="vs">02 · Agency vs Freelancer</button>
+            <button class="aside-nav-btn" data-tab="costs">03 · Hidden costs</button>
+            <button class="aside-nav-btn" data-tab="checklist">04 · Checklist</button>
+        </div>
+    </div>
+</section>
+
+<nav class="tabs-nav" id="tabs-nav">
+    <div class="container">
+        <button class="tab-btn active" data-tab="calc">01 · Calculator</button>
+        <a href="https://vitwill.github.io/web-audit/" class="tab-btn" target="_blank">02 · SEO Audit ↗</a>
+        <button class="tab-btn" data-tab="tz">03 · Request / Spec</button>
+    </div>
+</nav>
+
+<!-- ============================================================
+     ТАБ 1: КАЛЬКУЛЯТОР
+     ============================================================ -->
+<section class="tab-panel active" data-panel="calc">
+    <div class="container">
+        <div class="calc-layout">
+            <form class="calc-form" id="calc-form" onsubmit="return false;">
+                <fieldset>
+                    <legend><span class="legend-num">01</span> Site type</legend>
+                    <div class="pill-group">
+                        <label class="pill"><input type="radio" name="type" value="landing" checked><span>Landing page<small>one-pager</small></span></label>
+                        <label class="pill"><input type="radio" name="type" value="vizitka"><span>Business card<small>3–7 pages</small></span></label>
+                        <label class="pill"><input type="radio" name="type" value="corporate"><span>Corporate<small>catalog, services</small></span></label>
+                        <label class="pill"><input type="radio" name="type" value="shop"><span>E-commerce<small>WooCommerce</small></span></label>
+                    </div>
+                </fieldset>
+
+                <fieldset>
+                    <legend><span class="legend-num">02</span> Performer</legend>
+                    <div class="pill-group">
+                        <label class="pill"><input type="radio" name="performer" value="studio"><span>Agency<small>team, process</small></span></label>
+                        <label class="pill"><input type="radio" name="performer" value="senior" checked><span>Experienced freelancer<small>5+ years</small></span></label>
+                        <label class="pill"><input type="radio" name="performer" value="junior"><span>Beginner<small>marketplace, 1-2 years</small></span></label>
+                    </div>
+                </fieldset>
+
+                <fieldset>
+                    <legend><span class="legend-num">03</span> Tech stack</legend>
+                    <div class="pill-group">
+                        <label class="pill"><input type="radio" name="base" value="wordpress" checked><span>WordPress<small>CMS, plugins</small></span></label>
+                        <label class="pill"><input type="radio" name="base" value="html"><span>HTML<small>clean coding</small></span></label>
+                        <label class="pill"><input type="radio" name="base" value="hybrid"><span>Hybrid<small>HTML + WP</small></span></label>
+                    </div>
+                </fieldset>
+
+                <fieldset>
+                    <legend><span class="legend-num">04</span> Additional work</legend>
+                    <div class="check-list">
+                        <label class="check-item"><input type="checkbox" id="opt-design"><span class="check-label">Custom design (instead of a ready theme)</span><span class="check-price">+60–150%</span></label>
+                        <label class="check-item"><input type="checkbox" id="opt-copy"><span class="check-label">Copywriting and texts from scratch</span><span class="check-price">+15–45%</span></label>
+                        <label class="check-item"><input type="checkbox" id="opt-content"><span class="check-label">Content filling (photos, texts, products)</span><span class="check-price">+10–25%</span></label>
+                        <label class="check-item"><input type="checkbox" id="opt-integrations"><span class="check-label">Integrations: CRM, payment, delivery</span><span class="check-price">+20–50%</span></label>
+                        <label class="check-item"><input type="checkbox" id="opt-multilang"><span class="check-label">Multilingualism</span><span class="check-price">+25–60%</span></label>
+                        <label class="check-item"><input type="checkbox" id="opt-seo"><span class="check-label">SEO audit before launch</span><span class="check-price">15–30k ₽</span></label>
+                    </div>
+                </fieldset>
+
+                <fieldset>
+                    <legend><span class="legend-num">05</span> Service & Support</legend>
+                    <div class="check-list">
+                        <label class="check-item"><input type="checkbox" id="opt-plugins"><span class="check-label">Premium plugins (annual licenses)</span><span class="check-price">+15–30k/year</span></label>
+                        <label class="check-item"><input type="checkbox" id="opt-support"><span class="check-label">Tech support and updates</span><span class="check-price">10k/month</span></label>
+                    </div>
+                </fieldset>
+            </form>
+
+            <aside class="calc-result" id="calc-result">
+                <div class="result-header">
+                    <span class="result-eyebrow">Estimate</span>
+                    <div class="currency-switch" id="currency-switch">
+                        <button data-cur="rub">₽</button>
+                        <button data-cur="usd" class="active">$</button>
+                        <button data-cur="eur">€</button>
+                    </div>
+                </div>
+
+                <div class="result-block">
+                    <div class="result-label">Development (one-time)</div>
+                    <div class="result-dev" id="result-dev">—</div>
+                </div>
+
+                <div class="result-block">
+                    <div class="result-label">Recurring costs (per year)</div>
+                    <div class="result-reg" id="result-reg">—</div>
+                    <div class="result-support" id="result-support"></div>
+                </div>
+
+                <div class="result-breakdown" id="result-breakdown"></div>
+
+                <div class="result-actions">
+                    <a href="index-en.html#contact" class="btn btn-dark">Discuss estimate →</a>
+                    <p class="result-disclaimer">
+                        This is a rough estimate based on 2026 market ranges. The exact cost is fixed after the technical specification is agreed upon.
+                    </p>
+                </div>
+
+                <div class="result-includes">
+                    <strong>Basic cost includes</strong>
+                    Responsive layout, CMS setup (for WP) or HTML structure, basic on-page SEO, contact form, one round of revisions before launch.
+                </div>
+            </aside>
+        </div>
+    </div>
+</section>
+
+<!-- Анатомия цены -->
+<section class="tab-panel" data-panel="anatomy">
+    <div class="container">
+        <span class="eyebrow">Price anatomy</span>
+        <h2 style="font-family:var(--f-display);font-size:clamp(32px,4vw,56px);font-weight:500;letter-spacing:-.04em;line-height:1.05;margin:16px 0 24px;max-width:900px;">
+            What you pay for <em style="font-family:var(--f-serif);font-style:italic;font-weight:400;">inside the estimate</em>
+        </h2>
+        <p class="anatomy-intro">
+            Any website price is not "magic". It's the sum of hours and competencies. Below is a typical estimate structure for a WordPress site. <strong>Percentages may vary depending on the project</strong>, but the general logic remains unchanged.
+        </p>
+
+        <div class="anatomy-list">
+            <div class="anatomy-row"><span class="anatomy-num">01</span><span class="anatomy-name">Programming & integrations</span><div class="anatomy-bar"><div class="anatomy-fill" style="width:30%"></div></div><span class="anatomy-pct">30%</span></div>
+            <div class="anatomy-row"><span class="anatomy-num">02</span><span class="anatomy-name">Design</span><div class="anatomy-bar"><div class="anatomy-fill" style="width:20%"></div></div><span class="anatomy-pct">20%</span></div>
+            <div class="anatomy-row"><span class="anatomy-num">03</span><span class="anatomy-name">Coding & responsiveness</span><div class="anatomy-bar"><div class="anatomy-fill" style="width:15%"></div></div><span class="anatomy-pct">15%</span></div>
+            <div class="anatomy-row"><span class="anatomy-num">04</span><span class="anatomy-name">Content & filling</span><div class="anatomy-bar"><div class="anatomy-fill" style="width:15%"></div></div><span class="anatomy-pct">15%</span></div>
+            <div class="anatomy-row"><span class="anatomy-num">05</span><span class="anatomy-name">SEO & optimization</span><div class="anatomy-bar"><div class="anatomy-fill" style="width:10%"></div></div><span class="anatomy-pct">10%</span></div>
+            <div class="anatomy-row"><span class="anatomy-num">06</span><span class="anatomy-name">Testing & launch</span><div class="anatomy-bar"><div class="anatomy-fill" style="width:10%"></div></div><span class="anatomy-pct">10%</span></div>
+        </div>
+
+        <p class="anatomy-note">
+            If a contractor names a price "for the site" without a breakdown — ask to show the structure. This way you will understand what exactly is included in the work, and what will have to be ordered separately.
+        </p>
+    </div>
+</section>
+
+<!-- Студия vs Фрилансер -->
+<section class="tab-panel" data-panel="vs">
+    <div class="container">
+        <span class="eyebrow">Comparison</span>
+        <h2 style="font-family:var(--f-display);font-size:clamp(32px,4vw,56px);font-weight:500;letter-spacing:-.04em;line-height:1.05;margin:16px 0 24px;max-width:900px;">
+            Agency or <em style="font-family:var(--f-serif);font-style:italic;font-weight:400;">Freelancer</em>
+        </h2>
+        <p class="anatomy-intro">
+            Both options work. The difference is in price, speed, level of control, and risks. Here is an honest comparison without marketing.
+        </p>
+
+        <div class="vs-grid">
+            <div class="vs-card">
+                <h3>Agency / Studio</h3>
+                <span class="vs-tag">Team · Process · Guarantees</span>
+                <ul class="vs-list">
+                    <li><strong>Price:</strong> 2–4 times higher — you pay for the team, management, and office</li>
+                    <li><strong>Speed:</strong> slower start (approvals), but parallel work speeds up development</li>
+                    <li><strong>Guarantees:</strong> contract, warranty period, replacement of the performer if necessary</li>
+                    <li><strong>Risks:</strong> minimal — but higher price and less flexibility</li>
+                    <li><strong>Best for:</strong> large projects, tight deadlines, need for reporting</li>
+                </ul>
+            </div>
+            <div class="vs-card accent">
+                <h3>Experienced Freelancer</h3>
+                <span class="vs-tag">Flexibility · Direct contact</span>
+                <ul class="vs-list">
+                    <li><strong>Price:</strong> average — without markup for office and management</li>
+                    <li><strong>Speed:</strong> fast start, direct communication without intermediaries</li>
+                    <li><strong>Guarantees:</strong> depend on reputation and contract — check reviews and portfolio</li>
+                    <li><strong>Risks:</strong> higher if the performer disappears — but lower if chosen by recommendation</li>
+                    <li><strong>Best for:</strong> small and medium businesses, landing pages, business cards, improvements</li>
+                </ul>
+            </div>
+        </div>
+
+        <p class="anatomy-note">
+            Main advice: don't choose by price. Choose by <strong>portfolio and process transparency</strong>. If a performer cannot explain the estimate structure — this is an alarming signal, regardless of whether it's an agency or a freelancer.
+        </p>
+    </div>
+</section>
+
+<!-- Скрытые расходы -->
+<section class="tab-panel" data-panel="costs">
+    <div class="container">
+        <span class="eyebrow">Hidden costs</span>
+        <h2 style="font-family:var(--f-display);font-size:clamp(32px,4vw,56px);font-weight:500;letter-spacing:-.04em;line-height:1.05;margin:16px 0 24px;max-width:900px;">
+            What is forgotten <em style="font-family:var(--f-serif);font-style:italic;font-weight:400;">after launch</em>
+        </h2>
+        <p class="anatomy-intro">
+            Development is a one-time investment. After that, the site needs to be maintained. Here are the recurring costs that most clients do not include in the budget — and then are surprised.
+        </p>
+
+        <div class="costs-grid">
+            <div class="cost-card">
+                <span class="cost-num">01</span>
+                <h3>Hosting</h3>
+                <p>The place where the site physically lives. The quality of hosting affects speed and stability.</p>
+                <div class="cost-price">$50 – $250<small>per year</small></div>
+            </div>
+            <div class="cost-card">
+                <span class="cost-num">02</span>
+                <h3>Domain</h3>
+                <p>The address of the site. Cheaper for .ru, more expensive for international projects .com / .de.</p>
+                <div class="cost-price">$10 – $30<small>per year</small></div>
+            </div>
+            <div class="cost-card">
+                <span class="cost-num">03</span>
+                <h3>Premium plugins</h3>
+                <p>SEO, caching, security, backups. Without licenses, the site works, but less reliably.</p>
+                <div class="cost-price">$150 – $300<small>per year</small></div>
+            </div>
+            <div class="cost-card">
+                <span class="cost-num">04</span>
+                <h3>Support</h3>
+                <p>CMS and plugin updates, fixes, monitoring. Needed if the site is actively used.</p>
+                <div class="cost-price">$100 – $500<small>per month</small></div>
+            </div>
+            <div class="cost-card">
+                <span class="cost-num">05</span>
+                <h3>Content editor</h3>
+                <p>If you plan to publish news or articles yourself — you will need training or help.</p>
+                <div class="cost-price">$50 – $200<small>per month</small></div>
+            </div>
+            <div class="cost-card">
+                <span class="cost-num">06</span>
+                <h3>Speed-up (PageSpeed)</h3>
+                <p>One-time work on optimizing speed and Core Web Vitals. Often required after 6–12 months.</p>
+                <div class="cost-price">$150 – $400<small>one-time</small></div>
+            </div>
+        </div>
+
+        <p class="anatomy-note">
+            Total: even a "simple" business card site requires <strong>at least $50–$100 per year</strong> for hosting and domain alone. If the contractor did not warn you about this — ask yourself. This is a sign of a mature performer.
+        </p>
+    </div>
+</section>
+
+<!-- Чек-лист -->
+<section class="tab-panel" data-panel="checklist">
+    <div class="container">
+        <span class="eyebrow">Checklist</span>
+        <h2 style="font-family:var(--f-display);font-size:clamp(32px,4vw,56px);font-weight:500;letter-spacing:-.04em;line-height:1.05;margin:16px 0 24px;max-width:900px;">
+            Before ordering <em style="font-family:var(--f-serif);font-style:italic;font-weight:400;">check</em>
+        </h2>
+        <p class="checklist-intro">
+            A good specification protects both parties: you get what you ordered, and the performer gets adequate deadlines and payment. Check the items you already have in your spec — and see what is left to clarify.
+        </p>
+
+        <div class="checklist-wrap">
+            <div class="checklist" id="checklist">
+                <label class="checklist-item"><input type="checkbox"><span class="checklist-text">Site goal and target audience are described</span></label>
+                <label class="checklist-item"><input type="checkbox"><span class="checklist-text">Page structure is defined (sitemap or list of sections)</span></label>
+                <label class="checklist-item"><input type="checkbox"><span class="checklist-text">Acceptance criteria are specified (what is considered "done")</span></label>
+                <label class="checklist-item"><input type="checkbox"><span class="checklist-text">Rights to design and code after delivery are discussed</span></label>
+                <label class="checklist-item"><input type="checkbox"><span class="checklist-text">Deadlines, stages, and payment terms are prescribed</span></label>
+                <label class="checklist-item"><input type="checkbox"><span class="checklist-text">It is clarified who pays for hosting, domain, and plugins</span></label>
+                <label class="checklist-item"><input type="checkbox"><span class="checklist-text">It is clear what is included in post-launch support</span></label>
+                <label class="checklist-item"><input type="checkbox"><span class="checklist-text">There is a backup plan for force majeure</span></label>
+            </div>
+
+            <div class="checklist-progress">
+                <span class="checklist-progress-label">Spec readiness</span>
+                <div class="checklist-progress-bar"><div class="checklist-progress-fill" id="check-fill"></div></div>
+                <span class="checklist-progress-count"><span id="check-current">0</span><span class="total"> / 8</span></span>
+            </div>
+        </div>
+
+        <p class="anatomy-note">
+            If more than half of the items are unchecked, the spec is still raw. That's normal. Use these questions as a basis for the brief — and discuss them with the contractor before starting work.
+        </p>
+    </div>
+</section>
+
+<!-- ============================================================
+     ТАБ: ЗАЯВКА / ТЗ
+     ============================================================ -->
+<section class="tab-panel" data-panel="tz">
+    <div class="container">
+        <div class="page-intro" style="padding-top: 0; border: none; margin-bottom: 30px;">
+            <span class="eyebrow">Request / Spec</span>
+            <h1 style="font-family:var(--f-display);font-size:clamp(32px,4vw,52px);font-weight:500;letter-spacing:-.04em;line-height:1.05;margin-top:16px;">
+                Technical Specification <em style="font-family:var(--f-serif);font-style:italic;font-weight:400;">for Website Development</em>
+            </h1>
+        </div>
+
+        <nav class="step-nav" id="step-nav">
+            <button class="step-nav-item active" data-step="1"><span class="step-nav-num">01</span><span class="step-nav-label">What I want</span></button>
+            <button class="step-nav-item" data-step="2"><span class="step-nav-num">02</span><span class="step-nav-label">My vision</span></button>
+            <button class="step-nav-item" data-step="3"><span class="step-nav-num">03</span><span class="step-nav-label">Tech solutions</span></button>
+            <button class="step-nav-item" data-step="4"><span class="step-nav-num">04</span><span class="step-nav-label">Organization & payment</span></button>
+            <button class="step-nav-item" data-step="5"><span class="step-nav-num">05</span><span class="step-nav-label">Download Spec</span></button>
+        </nav>
+
+        <!-- ШАГ 1 -->
+        <section class="step active" data-step="1">
+            <div class="field">
+                <div class="field-head"><span class="field-num">01</span><h3 class="field-title">Site type</h3></div>
+                <div class="pill-group">
+                    <label class="pill"><input type="radio" name="s1-type" value="landing" checked><span>Landing page<small>one-pager</small></span></label>
+                    <label class="pill"><input type="radio" name="s1-type" value="vizitka"><span>Business card<small>3–7 pages</small></span></label>
+                    <label class="pill"><input type="radio" name="s1-type" value="corporate"><span>Corporate<small>catalog, services</small></span></label>
+                    <label class="pill"><input type="radio" name="s1-type" value="shop"><span>E-commerce<small>WooCommerce</small></span></label>
+                    <label class="pill"><input type="radio" name="s1-type" value="hybrid"><span>Hybrid<small>HTML + WP</small></span></label>
+                    <label class="pill"><input type="radio" name="s1-type" value="unknown"><span>Don't know<small>need advice</small></span></label>
+                </div>
+                <p class="field-hint">Determines the scope of work. If you are not sure — select "don't know", we'll figure it out together.</p>
+            </div>
+
+            <div class="field">
+                <div class="field-head"><span class="field-num">02</span><h3 class="field-title">What needs to be done</h3></div>
+                <div class="pill-group">
+                    <label class="pill"><input type="radio" name="s1-what" value="new" checked><span>New site<small>from scratch</small></span></label>
+                    <label class="pill"><input type="radio" name="s1-what" value="redesign"><span>Redesign<small>update</small></span></label>
+                    <label class="pill"><input type="radio" name="s1-what" value="update"><span>Improvement<small>new features</small></span></label>
+                    <label class="pill"><input type="radio" name="s1-what" value="migrate"><span>Migration<small>to another CMS</small></span></label>
+                </div>
+            </div>
+
+            <div class="field">
+                <div class="field-head"><span class="field-num">03</span><h3 class="field-title">Site goal</h3></div>
+                <p class="check-reminder">Check the necessary items</p>
+                <div class="check-list">
+                    <label class="check-item"><input type="checkbox" name="s1-goals" value="sales"><span class="check-label">Sales and leads</span></label>
+                    <label class="check-item"><input type="checkbox" name="s1-goals" value="image"><span class="check-label">Image and presentation</span></label>
+                    <label class="check-item"><input type="checkbox" name="s1-goals" value="info"><span class="check-label">Information / content</span></label>
+                    <label class="check-item"><input type="checkbox" name="s1-goals" value="catalog"><span class="check-label">Product or service catalog</span></label>
+                    <label class="check-item"><input type="checkbox" name="s1-goals" value="account"><span class="check-label">Personal account / service</span></label>
+                    <label class="check-item"><input type="checkbox" name="s1-goals" value="education"><span class="check-label">Education / community</span></label>
+                </div>
+                <div class="form-group" style="margin-top:12px;margin-bottom:0;">
+                    <label>Custom goal</label>
+                    <input type="text" id="s1-goals-other" placeholder="For example: a promotional video on an existing site, a sales funnel, a non-standard request">
+                </div>
+                <p class="field-hint">The goal determines the structure. If your request does not fit the categories — write in your own words.</p>
+            </div>
+
+            <div class="field">
+                <div class="field-head"><span class="field-num">04</span><h3 class="field-title">Target audience</h3></div>
+                <div class="form-group" style="margin-bottom:0;">
+                    <textarea id="s1-audience" placeholder="Who are your clients: age, role, what is important to them. For example: 'small business owners 30-45 years old, value reliability and speed'"></textarea>
+                </div>
+                <p class="field-hint">Helps to choose the tone, visuals, and structure. The more accurate the portrait, the fewer revisions.</p>
+            </div>
+
+            <div class="field">
+                <div class="field-head"><span class="field-num">05</span><h3 class="field-title">Current site (if any)</h3></div>
+                <div class="form-group">
+                    <label>Site URL</label>
+                    <input type="url" id="s1-url" placeholder="https://example.com">
+                </div>
+                <div class="form-group" style="margin-bottom:0;">
+                    <label>What is not satisfactory</label>
+                    <textarea id="s1-problems" placeholder="Describe the problems: outdated design, slow loading, inconvenient admin panel..."></textarea>
+                </div>
+            </div>
+
+            <div class="field">
+                <div class="field-head"><span class="field-num">06</span><h3 class="field-title">Special wishes</h3></div>
+                <div class="form-group" style="margin-bottom:0;">
+                    <textarea id="s1-wishes" placeholder="Everything that did not fit into other points, but is important to you"></textarea>
+                </div>
+            </div>
+
+            <div class="step-actions">
+                <button class="btn btn-outline hidden" disabled>← Back</button>
+                <button class="btn btn-dark" data-next="2">Next →</button>
+            </div>
+        </section>
+
+        <!-- ШАГ 2 -->
+        <section class="step" data-step="2">
+            <div class="field">
+                <div class="field-head"><span class="field-num">01</span><h3 class="field-title">Design</h3></div>
+                <div class="pill-group">
+                    <label class="pill"><input type="radio" name="s2-design" value="unique"><span>Custom<small>from scratch</small></span></label>
+                    <label class="pill"><input type="radio" name="s2-design" value="template" checked><span>Template<small>faster</small></span></label>
+                    <label class="pill"><input type="radio" name="s2-design" value="brand"><span>Brand style<small>have a brandbook</small></span></label>
+                    <label class="pill"><input type="radio" name="s2-design" value="unknown"><span>Don't know<small>need advice</small></span></label>
+                </div>
+            </div>
+
+            <div class="field">
+                <div class="field-head"><span class="field-num">02</span><h3 class="field-title">Style</h3></div>
+                <div class="pill-group">
+                    <label class="pill"><input type="radio" name="s2-style" value="minimal" checked><span>Minimalism<small>clean, simple</small></span></label>
+                    <label class="pill"><input type="radio" name="s2-style" value="classic"><span>Classic<small>reliable</small></span></label>
+                    <label class="pill"><input type="radio" name="s2-style" value="bright"><span>Bright<small>noticeable</small></span></label>
+                    <label class="pill"><input type="radio" name="s2-style" value="premium"><span>Premium<small>expensive, strict</small></span></label>
+                    <label class="pill"><input type="radio" name="s2-style" value="strict"><span>Strict<small>business</small></span></label>
+                    <label class="pill"><input type="radio" name="s2-style" value="unknown"><span>Don't know<small>need advice</small></span></label>
+                </div>
+            </div>
+
+            <div class="field">
+                <div class="field-head"><span class="field-num">03</span><h3 class="field-title">Mood and associations</h3></div>
+                <div class="form-group" style="margin-bottom:0;">
+                    <textarea id="s2-mood" placeholder="3-5 words that the site should be associated with: reliability, speed, luxury, warmth, technology..."></textarea>
+                </div>
+                <p class="field-hint">This helps the designer hit the tone from the first time.</p>
+            </div>
+
+            <div class="field">
+                <div class="field-head"><span class="field-num">04</span><h3 class="field-title">Color scheme</h3></div>
+                <div class="pill-group">
+                    <label class="pill"><input type="radio" name="s2-color" value="brand" checked><span>Have brand colors<small>will provide</small></span></label>
+                    <label class="pill"><input type="radio" name="s2-color" value="propose"><span>Suggest<small>to choose</small></span></label>
+                    <label class="pill"><input type="radio" name="s2-color" value="unknown"><span>Don't know<small>need advice</small></span></label>
+                </div>
+            </div>
+
+            <div class="field">
+                <div class="field-head"><span class="field-num">05</span><h3 class="field-title">References</h3></div>
+                <div class="form-group">
+                    <label>What you like and why</label>
+                    <textarea id="s2-refs-like" placeholder="Sites that you like. It is important to specify 'why': structure, colors, tone, animations..."></textarea>
+                </div>
+                <div class="form-group" style="margin-bottom:0;">
+                    <label>What you don't like</label>
+                    <textarea id="s2-refs-dislike" placeholder="Sites that you don't like, and what exactly repels"></textarea>
+                </div>
+                <p class="field-hint">Images and screenshots can be attached as a separate file to the spec.</p>
+            </div>
+
+            <div class="field">
+                <div class="field-head"><span class="field-num">06</span><h3 class="field-title">Animations and interactivity</h3></div>
+                <div class="pill-group">
+                    <label class="pill"><input type="radio" name="s2-anim" value="yes" checked><span>Yes<small>lively site</small></span></label>
+                    <label class="pill"><input type="radio" name="s2-anim" value="minimal"><span>Minimal<small>only necessary</small></span></label>
+                    <label class="pill"><input type="radio" name="s2-anim" value="no"><span>Not needed<small>static</small></span></label>
+                </div>
+            </div>
+
+            <div class="field">
+                <div class="field-head"><span class="field-num">07</span><h3 class="field-title">Texts</h3></div>
+                <div class="pill-group">
+                    <label class="pill"><input type="radio" name="s2-copy" value="ready"><span>Ready<small>will provide</small></span></label>
+                    <label class="pill"><input type="radio" name="s2-copy" value="partial"><span>Partially<small>will supplement</small></span></label>
+                    <label class="pill"><input type="radio" name="s2-copy" value="need" checked><span>Need copywriting<small>from scratch</small></span></label>
+                </div>
+            </div>
+
+            <div class="field">
+                <div class="field-head"><span class="field-num">08</span><h3 class="field-title">Photos and images</h3></div>
+                <div class="pill-group">
+                    <label class="pill"><input type="radio" name="s2-photo" value="ready" checked><span>Ready<small>will provide</small></span></label>
+                    <label class="pill"><input type="radio" name="s2-photo" value="process"><span>Need processing<small>retouching</small></span></label>
+                    <label class="pill"><input type="radio" name="s2-photo" value="shoot"><span>Need photography<small>photographer</small></span></label>
+                    <label class="pill"><input type="radio" name="s2-photo" value="stock"><span>Stock photos<small>to pick</small></span></label>
+                </div>
+            </div>
+
+            <div class="field">
+                <div class="field-head"><span class="field-num">09</span><h3 class="field-title">Who fills the site</h3></div>
+                <div class="pill-group">
+                    <label class="pill"><input type="radio" name="s2-fill" value="performer" checked><span>Performer<small>turnkey</small></span></label>
+                    <label class="pill"><input type="radio" name="s2-fill" value="client"><span>Client<small>myself</small></span></label>
+                    <label class="pill"><input type="radio" name="s2-fill" value="together"><span>Together<small>will divide</small></span></label>
+                </div>
+            </div>
+
+            <div class="field">
+                <div class="field-head"><span class="field-num">10</span><h3 class="field-title">Pages</h3></div>
+                <p class="check-reminder">Check the necessary pages</p>
+                <div class="check-list">
+                    <label class="check-item"><input type="checkbox" name="s2-pages" value="home"><span class="check-label">Home</span></label>
+                    <label class="check-item"><input type="checkbox" name="s2-pages" value="about"><span class="check-label">About us</span></label>
+                    <label class="check-item"><input type="checkbox" name="s2-pages" value="services"><span class="check-label">Services</span></label>
+                    <label class="check-item"><input type="checkbox" name="s2-pages" value="cases"><span class="check-label">Cases / Portfolio</span></label>
+                    <label class="check-item"><input type="checkbox" name="s2-pages" value="prices"><span class="check-label">Prices</span></label>
+                    <label class="check-item"><input type="checkbox" name="s2-pages" value="blog"><span class="check-label">Blog / News</span></label>
+                    <label class="check-item"><input type="checkbox" name="s2-pages" value="faq"><span class="check-label">FAQ</span></label>
+                    <label class="check-item"><input type="checkbox" name="s2-pages" value="reviews"><span class="check-label">Reviews</span></label>
+                    <label class="check-item"><input type="checkbox" name="s2-pages" value="contacts"><span class="check-label">Contacts</span></label>
+                </div>
+                <div class="form-group" style="margin-top:12px;margin-bottom:0;">
+                    <label>Other pages</label>
+                    <textarea id="s2-pages-other" placeholder="One per line"></textarea>
+                </div>
+                <p class="field-hint">A sitemap is the basis of the estimate. The more precise the list, the more accurate the estimate.</p>
+            </div>
+
+            <div class="step-actions">
+                <button class="btn btn-outline" data-prev="1">← Back</button>
+                <button class="btn btn-dark" data-next="3">Next →</button>
+            </div>
+        </section>
+
+        <!-- ШАГ 3 -->
+        <section class="step" data-step="3">
+            <div class="field">
+                <div class="field-head"><span class="field-num">01</span><h3 class="field-title">Platform</h3></div>
+                <div class="pill-group">
+                    <label class="pill"><input type="radio" name="s3-platform" value="wp" checked><span>WordPress<small>CMS, plugins</small></span></label>
+                    <label class="pill"><input type="radio" name="s3-platform" value="html"><span>HTML<small>clean coding</small></span></label>
+                    <label class="pill"><input type="radio" name="s3-platform" value="hybrid"><span>Hybrid<small>HTML + WP</small></span></label>
+                    <label class="pill"><input type="radio" name="s3-platform" value="unknown"><span>Don't know<small>need advice</small></span></label>
+                </div>
+                <p class="field-hint">WordPress — if you plan to update content yourself. HTML — if the site is static and rarely changes.</p>
+            </div>
+
+            <div class="field">
+                <div class="field-head"><span class="field-num">02</span><h3 class="field-title">Responsiveness</h3></div>
+                <p class="check-reminder">Check the necessary devices</p>
+                <div class="check-list">
+                    <label class="check-item"><input type="checkbox" name="s3-devices" value="mobile"><span class="check-label">Mobile phones</span></label>
+                    <label class="check-item"><input type="checkbox" name="s3-devices" value="tablet"><span class="check-label">Tablets</span></label>
+                    <label class="check-item"><input type="checkbox" name="s3-devices" value="desktop"><span class="check-label">Desktop</span></label>
+                </div>
+            </div>
+
+            <div class="field">
+                <div class="field-head"><span class="field-num">03</span><h3 class="field-title">Cross-browser compatibility</h3></div>
+                <p class="check-reminder">Check the necessary browsers</p>
+                <div class="check-list">
+                    <label class="check-item"><input type="checkbox" name="s3-browsers" value="chrome"><span class="check-label">Chrome</span></label>
+                    <label class="check-item"><input type="checkbox" name="s3-browsers" value="safari"><span class="check-label">Safari</span></label>
+                    <label class="check-item"><input type="checkbox" name="s3-browsers" value="firefox"><span class="check-label">Firefox</span></label>
+                    <label class="check-item"><input type="checkbox" name="s3-browsers" value="edge"><span class="check-label">Edge</span></label>
+                </div>
+            </div>
+
+            <div class="field">
+                <div class="field-head"><span class="field-num">04</span><h3 class="field-title">Loading speed</h3></div>
+                <div class="pill-group">
+                    <label class="pill"><input type="radio" name="s3-speed" value="80" checked><span>PageSpeed 80+<small>good</small></span></label>
+                    <label class="pill"><input type="radio" name="s3-speed" value="90"><span>PageSpeed 90+<small>excellent</small></span></label>
+                    <label class="pill"><input type="radio" name="s3-speed" value="none"><span>Not critical<small>as it turns out</small></span></label>
+                </div>
+                <p class="field-hint">Affects conversion and SEO. 90+ is a good benchmark for a business site.</p>
+            </div>
+
+            <div class="field">
+                <div class="field-head"><span class="field-num">05</span><h3 class="field-title">Required plugins and modules</h3></div>
+                <p class="check-reminder">Check the necessary items — or trust the performer's choice</p>
+                <div class="check-list">
+                    <label class="check-item"><input type="checkbox" class="delegate-checkbox" data-target="s3-plugins"><span class="check-label">I trust the performer's choice — a specialist will select the optimal set</span></label>
+                    <label class="check-item"><input type="checkbox" name="s3-plugins" value="seo"><span class="check-label">SEO (Yoast / Rank Math)</span></label>
+                    <label class="check-item"><input type="checkbox" name="s3-plugins" value="cache"><span class="check-label">Caching</span></label>
+                    <label class="check-item"><input type="checkbox" name="s3-plugins" value="security"><span class="check-label">Security</span></label>
+                    <label class="check-item"><input type="checkbox" name="s3-plugins" value="forms"><span class="check-label">Forms</span></label>
+                    <label class="check-item"><input type="checkbox" name="s3-plugins" value="backup"><span class="check-label">Backup (on hosting)</span></label>
+                </div>
+                <p class="field-hint">Don't understand plugins? Check "I trust the performer's choice" — the other items will be blocked.</p>
+            </div>
+
+            <div class="field">
+                <div class="field-head"><span class="field-num">06</span><h3 class="field-title">Additional modules</h3></div>
+                <p class="check-reminder">Check the necessary items — or trust the performer's choice</p>
+                <div class="check-list">
+                    <label class="check-item"><input type="checkbox" class="delegate-checkbox" data-target="s3-modules"><span class="check-label">I trust the performer's choice — a specialist will select the optimal set</span></label>
+                    <label class="check-item"><input type="checkbox" name="s3-modules" value="woocommerce"><span class="check-label">WooCommerce (shop)</span></label>
+                    <label class="check-item"><input type="checkbox" name="s3-modules" value="multilang"><span class="check-label">Multilingualism (WPML / Polylang)</span></label>
+                    <label class="check-item"><input type="checkbox" name="s3-modules" value="booking"><span class="check-label">Booking / reservation</span></label>
+                    <label class="check-item"><input type="checkbox" name="s3-modules" value="account"><span class="check-label">Personal account</span></label>
+                    <label class="check-item"><input type="checkbox" name="s3-modules" value="search"><span class="check-label">Site search</span></label>
+                    <label class="check-item"><input type="checkbox" name="s3-modules" value="blog"><span class="check-label">Blog / news</span></label>
+                    <label class="check-item"><input type="checkbox" name="s3-modules" value="gallery"><span class="check-label">Galleries</span></label>
+                </div>
+            </div>
+
+            <div class="field">
+                <div class="field-head"><span class="field-num">07</span><h3 class="field-title">Premium licenses</h3></div>
+                <div class="pill-group">
+                    <label class="pill"><input type="radio" name="s3-premium" value="yes" checked><span>Needed<small>paid plugins</small></span></label>
+                    <label class="pill"><input type="radio" name="s3-premium" value="free"><span>Get by with free<small>only free</small></span></label>
+                    <label class="pill"><input type="radio" name="s3-premium" value="performer"><span>Performer decides<small>depending on situation</small></span></label>
+                </div>
+            </div>
+
+            <div class="field">
+                <div class="field-head"><span class="field-num">08</span><h3 class="field-title">Integrations</h3></div>
+                <p class="check-reminder">Check the necessary integrations</p>
+                <div class="check-list">
+                    <label class="check-item"><input type="checkbox" name="s3-integrations" value="crm"><span class="check-label">CRM (amoCRM, Bitrix24)</span></label>
+                    <label class="check-item"><input type="checkbox" name="s3-integrations" value="payment"><span class="check-label">Payment (Stripe, PayPal, etc.)</span></label>
+                    <label class="check-item"><input type="checkbox" name="s3-integrations" value="delivery"><span class="check-label">Delivery (DHL, FedEx, etc.)</span></label>
+                    <label class="check-item"><input type="checkbox" name="s3-integrations" value="mailings"><span class="check-label">Mailings (Mailchimp, SendPulse)</span></label>
+                    <label class="check-item"><input type="checkbox" name="s3-integrations" value="analytics"><span class="check-label">Analytics (Google Analytics 4)</span></label>
+                </div>
+                <div class="form-group" style="margin-top:12px;margin-bottom:0;">
+                    <label>Custom integration</label>
+                    <input type="text" id="s3-integrations-other" placeholder="For example: 1C, internal ERP, Telegram bot, booking service">
+                </div>
+            </div>
+
+            <div class="field">
+                <div class="field-head"><span class="field-num">09</span><h3 class="field-title">Security</h3></div>
+                <p class="check-reminder">Check the necessary items</p>
+                <div class="check-list">
+                    <label class="check-item"><input type="checkbox" name="s3-security" value="ssl"><span class="check-label">SSL certificate</span></label>
+                    <label class="check-item"><input type="checkbox" name="s3-security" value="bruteforce"><span class="check-label">Brute-force protection</span></label>
+                    <label class="check-item"><input type="checkbox" name="s3-security" value="2fa"><span class="check-label">Two-factor authentication</span></label>
+                </div>
+            </div>
+
+            <div class="field">
+                <div class="field-head"><span class="field-num">10</span><h3 class="field-title">Special technical requirements</h3></div>
+                <div class="form-group" style="margin-bottom:0;">
+                    <textarea id="s3-special" placeholder="Non-standard logic, load requirements, API, integrations with internal systems..."></textarea>
+                </div>
+                <p class="field-hint">Everything that did not fit into the checklists. It is better to specify right away than to remember in the middle.</p>
+            </div>
+
+            <div class="step-actions">
+                <button class="btn btn-outline" data-prev="2">← Back</button>
+                <button class="btn btn-dark" data-next="4">Next →</button>
+            </div>
+        </section>
+
+        <!-- ШАГ 4 -->
+        <section class="step" data-step="4">
+            <div class="field">
+                <div class="field-head"><span class="field-num">01</span><h3 class="field-title">Hosting and domain</h3></div>
+                <div class="pill-group">
+                    <label class="pill"><input type="radio" name="s4-hosting" value="have" checked><span>Already have<small>will provide access</small></span></label>
+                    <label class="pill"><input type="radio" name="s4-hosting" value="help"><span>Need help<small>with choice</small></span></label>
+                    <label class="pill"><input type="radio" name="s4-hosting" value="turnkey"><span>Turnkey<small>performer decides</small></span></label>
+                </div>
+                <p class="field-hint">Recurring costs: hosting — from $50/year, domain — from $10/year.</p>
+            </div>
+
+            <div class="field">
+                <div class="field-head"><span class="field-num">02</span><h3 class="field-title">Deadlines</h3></div>
+                <div class="pill-group">
+                    <label class="pill"><input type="radio" name="s4-deadline" value="urgent"><span>Urgent<small>1–2 weeks</small></span></label>
+                    <label class="pill"><input type="radio" name="s4-deadline" value="1month" checked><span>1 month<small>standard</small></span></label>
+                    <label class="pill"><input type="radio" name="s4-deadline" value="2-3months"><span>2–3 months<small>no rush</small></span></label>
+                    <label class="pill"><input type="radio" name="s4-deadline" value="quality"><span>No rush<small>quality is more important</small></span></label>
+                    <label class="pill"><input type="radio" name="s4-deadline" value="date"><span>Specific date<small>will specify below</small></span></label>
+                </div>
+                <div class="date-row hidden" id="s4-date-row">
+                    <div class="form-group" style="margin-bottom:0;">
+                        <label>Desired launch date</label>
+                        <input type="date" id="s4-date">
+                    </div>
+                </div>
+                <p class="field-hint">Urgency affects the price. A realistic deadline is the key to quality.</p>
+            </div>
+
+            <div class="field">
+                <div class="field-head"><span class="field-num">03</span><h3 class="field-title">Budget</h3></div>
+                <div class="pill-group">
+                    <label class="pill"><input type="radio" name="s4-budget" value="lt50"><span>Up to $500<small>landing, business card</small></span></label>
+                    <label class="pill"><input type="radio" name="s4-budget" value="50-150" checked><span>$500 – $1500<small>basic WP</small></span></label>
+                    <label class="pill"><input type="radio" name="s4-budget" value="150-300"><span>$1500 – $3000<small>corporate</small></span></label>
+                    <label class="pill"><input type="radio" name="s4-budget" value="300-500"><span>$3000 – $5000<small>complex project</small></span></label>
+                    <label class="pill"><input type="radio" name="s4-budget" value="gt500"><span>Over $5000<small>shop, service</small></span></label>
+                    <label class="pill"><input type="radio" name="s4-budget" value="unknown"><span>Not determined<small>need advice</small></span></label>
+                </div>
+                <p class="field-hint">An honest range helps to offer a suitable solution, rather than "bargain".</p>
+            </div>
+
+            <div class="field">
+                <div class="field-head"><span class="field-num">04</span><h3 class="field-title">Payment model</h3></div>
+                <div class="pay-list">
+                    <label class="pay-option"><input type="radio" name="s4-payment" value="prepay"><span class="pay-option-head"><span class="pay-option-marker"></span><span class="pay-option-title">Full prepayment</span></span><span class="pay-option-desc">Suitable for small tasks or with full trust in the performer. <strong>Risk for the client:</strong> you pay before getting the result.</span></label>
+                    <label class="pay-option"><input type="radio" name="s4-payment" value="half" checked><span class="pay-option-head"><span class="pay-option-marker"></span><span class="pay-option-title">Advance + final payment</span></span><span class="pay-option-desc">For example, 50/50. Standard for small projects: the advance covers the start, the rest — after delivery.</span></label>
+                    <label class="pay-option"><input type="radio" name="s4-payment" value="stages"><span class="pay-option-head"><span class="pay-option-marker"></span><span class="pay-option-title">Staged payment (tranches)</span></span><span class="pay-option-desc">Payment after each stage: design → coding → launch. <strong>Reduces risk for both parties</strong>, but requires more approvals.</span></label>
+                    <label class="pay-option"><input type="radio" name="s4-payment" value="postpay"><span class="pay-option-head"><span class="pay-option-marker"></span><span class="pay-option-title">Payment upon fact (postpay)</span></span><span class="pay-option-desc">The performer works without an advance. <strong>Risk for the performer:</strong> high — many do not agree to this.</span></label>
+                    <label class="pay-option"><input type="radio" name="s4-payment" value="discuss"><span class="pay-option-head"><span class="pay-option-marker"></span><span class="pay-option-title">Discuss</span></span><span class="pay-option-desc">Ready to discuss a model that suits both parties.</span></label>
+                </div>
+                <p class="field-hint">Staged payment is not distrust, but a way to synchronize expectations.</p>
+            </div>
+
+            <div class="field">
+                <div class="field-head"><span class="field-num">05</span><h3 class="field-title">Transfer of access and source files</h3></div>
+                <div class="pay-list">
+                    <label class="pay-option"><input type="radio" name="s4-access" value="own-hosting" checked><span class="pay-option-head"><span class="pay-option-marker"></span><span class="pay-option-title">Work on the performer's hosting</span></span><span class="pay-option-desc">The site is developed on the performer's server. You see the progress via a temporary link. After payment, the site is transferred to your hosting. <strong>Protects the performer</strong> from losing access before payment. Client risk: you need to trust the performer.</span></label>
+                    <label class="pay-option"><input type="radio" name="s4-access" value="full-access"><span class="pay-option-head"><span class="pay-option-marker"></span><span class="pay-option-title">Full access to your hosting during work</span></span><span class="pay-option-desc">You provide the performer with full access to the hosting and admin panel. After payment, he transfers all rights to you. <strong>Protects the performer</strong> from sudden revocation of access without payment. Client risk: the performer controls the site until settlement.</span></label>
+                    <label class="pay-option"><input type="radio" name="s4-access" value="by-stage"><span class="pay-option-head"><span class="pay-option-marker"></span><span class="pay-option-title">Staged, synchronized with payment</span></span><span class="pay-option-desc">Access is transferred in parts, synchronized with the payment of stages. <strong>Both parties retain leverage.</strong> Requires more approvals.</span></label>
+                    <label class="pay-option"><input type="radio" name="s4-access" value="limited"><span class="pay-option-head"><span class="pay-option-marker"></span><span class="pay-option-title">Limited access</span></span><span class="pay-option-desc">The performer gets only the necessary rights. <strong>Risk for the performer:</strong> access can be revoked at any time without payment. Suitable only with high trust.</span></label>
+                    <label class="pay-option"><input type="radio" name="s4-access" value="discuss"><span class="pay-option-head"><span class="pay-option-marker"></span><span class="pay-option-title">Discuss</span></span><span class="pay-option-desc">Ready to discuss a scheme that suits both parties.</span></label>
+                </div>
+                <p class="field-hint">The main risk of the performer is to lose access to work before receiving payment. The main risk of the client is to pay and not get the result. Choose a scheme that matches your level of trust.</p>
+            </div>
+
+            <div class="field">
+                <div class="field-head"><span class="field-num">06</span><h3 class="field-title">Post-launch support</h3></div>
+                <div class="pill-group">
+                    <label class="pill"><input type="radio" name="s4-support" value="none"><span>Not needed<small>I'll manage myself</small></span></label>
+                    <label class="pill"><input type="radio" name="s4-support" value="onetime"><span>One-time improvements<small>on request</small></span></label>
+                    <label class="pill"><input type="radio" name="s4-support" value="monthly" checked><span>Subscription<small>maintenance</small></span></label>
+                    <label class="pill"><input type="radio" name="s4-support" value="unknown"><span>Don't know<small>need advice</small></span></label>
+                </div>
+                <p class="field-hint">A site is not "done and forgotten". Updates, backups, and security are regular work.</p>
+            </div>
+
+            <div class="field">
+                <div class="field-head"><span class="field-num">07</span><h3 class="field-title">Acceptance criteria</h3></div>
+                <p class="check-reminder">Check what will be considered "done"</p>
+                <div class="check-list">
+                    <label class="check-item"><input type="checkbox" name="s4-accept" value="pages"><span class="check-label">All pages from the list work</span></label>
+                    <label class="check-item"><input type="checkbox" name="s4-accept" value="responsive"><span class="check-label">Responsiveness on mobile and tablets</span></label>
+                    <label class="check-item"><input type="checkbox" name="s4-accept" value="speed"><span class="check-label">Loading speed (PageSpeed / Core Web Vitals)</span></label>
+                    <label class="check-item"><input type="checkbox" name="s4-accept" value="forms"><span class="check-label">Forms send leads</span></label>
+                    <label class="check-item"><input type="checkbox" name="s4-accept" value="integrations"><span class="check-label">Integrations work (CRM, payment, delivery)</span></label>
+                    <label class="check-item"><input type="checkbox" name="s4-accept" value="design"><span class="check-label">Compliance with the approved design</span></label>
+                    <label class="check-item"><input type="checkbox" name="s4-accept" value="training"><span class="check-label">Training on how to use the site</span></label>
+                </div>
+                <div class="form-group" style="margin-top:12px;margin-bottom:0;">
+                    <label>Custom criterion</label>
+                    <input type="text" id="s4-accept-other" placeholder="For example: 1C integration passes a test deal">
+                </div>
+                <p class="field-hint">"Done" is when specific criteria are met. Without them, acceptance turns into a dispute.</p>
+            </div>
+
+            <div class="field">
+                <div class="field-head"><span class="field-num">08</span><h3 class="field-title">What to fix in the contract</h3></div>
+                <p class="check-reminder">Check what is important to fix in writing</p>
+                <div class="check-list">
+                    <label class="check-item"><input type="checkbox" name="s4-contract" value="payment"><span class="check-label">Payment procedure and terms (amounts, stages, dates)</span></label>
+                    <label class="check-item"><input type="checkbox" name="s4-contract" value="access"><span class="check-label">Moment of transfer of access and source files</span></label>
+                    <label class="check-item"><input type="checkbox" name="s4-contract" value="rights"><span class="check-label">Rights to code and design after completion</span></label>
+                    <label class="check-item"><input type="checkbox" name="s4-contract" value="accept"><span class="check-label">Acceptance criteria (what is considered "done")</span></label>
+                    <label class="check-item"><input type="checkbox" name="s4-contract" value="liability"><span class="check-label">Responsibility for delays and force majeure</span></label>
+                    <label class="check-item"><input type="checkbox" name="s4-contract" value="regular"><span class="check-label">Who pays for hosting, domain, and plugins</span></label>
+                </div>
+                <p class="field-hint">This is not a legal document, but a basis for conversation. If the performer avoids fixing these points — this is a signal.</p>
+            </div>
+
+            <div class="step-actions">
+                <button class="btn btn-outline" data-prev="3">← Back</button>
+                <button class="btn btn-dark" data-next="5">Next →</button>
+            </div>
+        </section>
+
+        <!-- ШАГ 5 -->
+        <section class="step" data-step="5">
+            <div class="field">
+                <div class="field-head"><span class="field-num">01</span><h3 class="field-title">Contacts</h3></div>
+                <div class="form-group">
+                    <label for="contact-name">Your name *</label>
+                    <input type="text" id="contact-name" placeholder="John Smith" autocomplete="name">
+                </div>
+                <div class="form-group">
+                    <label for="contact-email">Email *</label>
+                    <input type="email" id="contact-email" placeholder="john@example.com" autocomplete="email">
+                </div>
+                <div class="form-group">
+                    <label for="contact-telegram">Telegram</label>
+                    <input type="text" id="contact-telegram" placeholder="@username" autocomplete="off">
+                </div>
+                <div class="form-group">
+                    <label for="contact-phone">Phone</label>
+                    <input type="tel" id="contact-phone" placeholder="+1 (999) 123-45-67" autocomplete="tel">
+                </div>
+                <div class="form-group" style="margin-bottom:0;">
+                    <label for="contact-comment">Comment</label>
+                    <textarea id="contact-comment" placeholder="Everything that did not fit in the previous steps"></textarea>
+                </div>
+            </div>
+
+            <div class="field">
+                <div class="field-head"><span class="field-num">02</span><h3 class="field-title">Summary</h3></div>
+                <div class="summary-card">
+                    <div class="summary-title">Key parameters</div>
+                    <div class="summary-grid" id="summary-grid"></div>
+                </div>
+            </div>
+
+            <div class="field">
+                <div class="field-head"><span class="field-num">03</span><h3 class="field-title">Consent</h3></div>
+                <label class="consent-item">
+                    <input type="checkbox" id="contact-consent">
+                    <span>I agree to the processing of personal data. Data is used only for generating the document and is not transferred to third parties.</span>
+                </label>
+            </div>
+
+            <div class="download-block">
+                <p class="download-note">
+                    This is a working document for discussing the project. Use it as a basis for dialogue with the performer.
+                </p>
+                <button class="btn btn-dark" id="download-btn">Download Spec in DOCX format →</button>
+                <div class="status" id="status"></div>
+            </div>
+
+            <div class="step-actions">
+                <button class="btn btn-outline" data-prev="4">← Back</button>
+                <span></span>
+            </div>
+        </section>
+    </div>
+</section>
+
+<footer class="site-footer">
+    <div class="container">
+        <span>© 2026 Viktor Willmann</span>
+        <span>Client Tools</span>
+        <a href="#">Back to top ↑</a>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/docx@8.5.0/build/index.umd.js"></script>
+<script>
+    /* ============================================================
+       ГЛАВНЫЕ ТАБЫ И БОКОВОЕ МЕНЮ
+       ============================================================ */
+    (function() {
+        const topTabBtns = document.querySelectorAll('.tab-btn[data-tab]');
+        const asideNavBtns = document.querySelectorAll('.aside-nav-btn');
+        const tabPanels = document.querySelectorAll('.tab-panel');
+
+        function switchTab(target) {
+            topTabBtns.forEach(b => b.classList.remove('active'));
+            asideNavBtns.forEach(b => b.classList.remove('active'));
+            tabPanels.forEach(p => p.classList.remove('active'));
+
+            const panel = document.querySelector(`.tab-panel[data-panel="${target}"]`);
+            if (panel) panel.classList.add('active');
+
+            const topBtn = document.querySelector(`.tab-btn[data-tab="${target}"]`);
+            if (topBtn) topBtn.classList.add('active');
+            const asideBtn = document.querySelector(`.aside-nav-btn[data-tab="${target}"]`);
+            if (asideBtn) asideBtn.classList.add('active');
+            
+            window.scrollTo({ top: document.getElementById('tabs-nav').offsetTop - 73, behavior: 'smooth' });
+        }
+
+        topTabBtns.forEach(btn => {
+            btn.addEventListener('click', () => switchTab(btn.dataset.tab));
+        });
+
+        asideNavBtns.forEach(btn => {
+            btn.addEventListener('click', () => switchTab(btn.dataset.tab));
+        });
+    })();
+
+    /* ============================================================
+       КАЛЬКУЛЯТОР
+       ============================================================ */
+    (function() {
+        const PRICES = {
+            studio: { landing: [5000, 30000], vizitka: [3000, 15000], corporate: [15000, 50000], shop: [25000, 60000] },
+            senior: { landing: [1500, 5000], vizitka: [1000, 4000], corporate: [3000, 15000], shop: [6000, 20000] },
+            junior: { landing: [300, 1000], vizitka: [500, 2500], corporate: [1000, 4000], shop: [3000, 8000] }
+        };
+        const BASE_ADJ = { wordpress: [1000, 3000], html: [0, 0], hybrid: [2000, 6000] };
+        const PCT_OPTIONS = {
+            design: { id: 'opt-design', min: 0.60, max: 1.50, label: 'Custom design' },
+            copy: { id: 'opt-copy', min: 0.15, max: 0.45, label: 'Copywriting' },
+            content: { id: 'opt-content', min: 0.10, max: 0.25, label: 'Content filling' },
+            integrations: { id: 'opt-integrations', min: 0.20, max: 0.50, label: 'Integrations' },
+            multilang: { id: 'opt-multilang', min: 0.25, max: 0.60, label: 'Multilingualism' }
+        };
+        const FIXED_OPTIONS = { seo: { id: 'opt-seo', min: 1500, max: 3000, label: 'SEO audit' } };
+        const REGULAR = { hosting: [50, 250], domain: [10, 30], plugins: [150, 300], support: [100, 100] };
+        const CURRENCIES = { rub: { symbol: '₽', rate: 90, locale: 'ru-RU' }, usd: { symbol: '$', rate: 1, locale: 'en-US' }, eur: { symbol: '€', rate: 0.9, locale: 'de-DE' } };
+
+        let currentCurrency = 'usd';
+
+        function fmt(usdValue) {
+            const c = CURRENCIES[currentCurrency];
+            const v = Math.round(usdValue * c.rate);
+            let s = currentCurrency === 'rub' ? v.toLocaleString('ru-RU') : currentCurrency === 'eur' ? v.toLocaleString('de-DE') : v.toLocaleString('en-US');
+            s = s.replace(/\u00A0/g, ' ').replace(/,/g, ' ').replace(/\./g, ' ');
+            return s + ' ' + c.symbol;
+        }
+
+        function getRadio(name) {
+            const el = document.querySelector(`input[name="${name}"]:checked`);
+            return el ? el.value : null;
+        }
+
+        function calculate() {
+            const type = getRadio('type');
+            const performer = getRadio('performer');
+            const base = getRadio('base');
+            const baseRange = PRICES[performer][type];
+            const adjRange = BASE_ADJ[base];
+            const baseMin = baseRange[0] + adjRange[0];
+            const baseMax = baseRange[1] + adjRange[1];
+
+            let pctMinSum = 0, pctMaxSum = 0;
+            const pctBreakdown = [];
+            Object.values(PCT_OPTIONS).forEach(opt => {
+                const el = document.getElementById(opt.id);
+                if (el && el.checked) {
+                    const addMin = baseMin * opt.min;
+                    const addMax = baseMax * opt.max;
+                    pctMinSum += addMin;
+                    pctMaxSum += addMax;
+                    pctBreakdown.push({ label: opt.label, min: addMin, max: addMax });
+                }
+            });
+
+            let fixedMinSum = 0, fixedMaxSum = 0;
+            const fixedBreakdown = [];
+            Object.values(FIXED_OPTIONS).forEach(opt => {
+                const el = document.getElementById(opt.id);
+                if (el && el.checked) {
+                    fixedMinSum += opt.min;
+                    fixedMaxSum += opt.max;
+                    fixedBreakdown.push({ label: opt.label, min: opt.min, max: opt.max });
+                }
+            });
+
+            const devMin = baseMin + pctMinSum + fixedMinSum;
+            const devMax = baseMax + pctMaxSum + fixedMaxSum;
+
+            let regMin = REGULAR.hosting[0] + REGULAR.domain[0];
+            let regMax = REGULAR.hosting[1] + REGULAR.domain[1];
+            const regBreakdown = [
+                { label: 'Hosting', min: REGULAR.hosting[0], max: REGULAR.hosting[1] },
+                { label: 'Domain', min: REGULAR.domain[0], max: REGULAR.domain[1] }
+            ];
+
+            const pluginsEl = document.getElementById('opt-plugins');
+            if (pluginsEl && pluginsEl.checked) {
+                regMin += REGULAR.plugins[0];
+                regMax += REGULAR.plugins[1];
+                regBreakdown.push({ label: 'Premium plugins', min: REGULAR.plugins[0], max: REGULAR.plugins[1] });
+            }
+
+            const supportEl = document.getElementById('opt-support');
+            let supportMonthly = 0;
+            if (supportEl && supportEl.checked) supportMonthly = REGULAR.support[0];
+
+            document.getElementById('result-dev').textContent = fmt(devMin) + ' — ' + fmt(devMax);
+            document.getElementById('result-reg').textContent = fmt(regMin) + ' — ' + fmt(regMax) + ' / year';
+
+            const supportEl2 = document.getElementById('result-support');
+            if (supportMonthly > 0) supportEl2.textContent = '+ support ' + fmt(supportMonthly) + ' / mo';
+            else supportEl2.textContent = '';
+
+            const breakdownEl = document.getElementById('result-breakdown');
+            let html = '<div class="result-breakdown-title">Estimate structure</div>';
+            html += `<div class="breakdown-row"><span>Base development</span><span>${fmt(baseRange[0])} — ${fmt(baseRange[1])}</span></div>`;
+            if (adjRange[0] > 0 || adjRange[1] > 0) html += `<div class="breakdown-row"><span>Tech stack</span><span>+${fmt(adjRange[0])} — +${fmt(adjRange[1])}</span></div>`;
+            pctBreakdown.forEach(item => { html += `<div class="breakdown-row"><span>${item.label}</span><span>+${fmt(item.min)} — +${fmt(item.max)}</span></div>`; });
+            fixedBreakdown.forEach(item => { html += `<div class="breakdown-row"><span>${item.label}</span><span>+${fmt(item.min)} — +${fmt(item.max)}</span></div>`; });
+            html += `<div class="breakdown-row" style="margin-top:8px;padding-top:12px;border-top:1px solid var(--line);color:var(--ink);"><span><strong>Total</strong></span><span><strong>${fmt(devMin)} — ${fmt(devMax)}</strong></span></div>`;
+            breakdownEl.innerHTML = html;
+        }
+
+        const calcForm = document.getElementById('calc-form');
+        calcForm.addEventListener('change', calculate);
+        calcForm.addEventListener('input', calculate);
+
+        document.getElementById('currency-switch').addEventListener('click', (e) => {
+            const btn = e.target.closest('button[data-cur]');
+            if (!btn) return;
+            currentCurrency = btn.dataset.cur;
+            document.querySelectorAll('#currency-switch button').forEach(b => { b.classList.toggle('active', b === btn); });
+            calculate();
+        });
+
+        calculate();
+    })();
+
+    /* ============================================================
+       ЧЕК-ЛИСТ НА ГЛАВНОЙ
+       ============================================================ */
+    (function() {
+        const checklist = document.getElementById('checklist');
+        const checkCurrent = document.getElementById('check-current');
+        const checkFill = document.getElementById('check-fill');
+
+        function updateChecklist() {
+            const items = checklist.querySelectorAll('input[type="checkbox"]');
+            const total = items.length;
+            const checked = Array.from(items).filter(i => i.checked).length;
+            checkCurrent.textContent = checked;
+            checkFill.style.width = (checked / total * 100) + '%';
+        }
+
+        checklist.addEventListener('change', updateChecklist);
+        updateChecklist();
+    })();
+
+    /* ============================================================
+       ЗАЯВКА / ТЗ
+       ============================================================ */
+    (function() {
+        const LABELS = {
+            's1-type': { landing: 'Landing page (one-pager)', vizitka: 'Business card site (3–7 pages)', corporate: 'Corporate site', shop: 'E-commerce (WooCommerce)', hybrid: 'Hybrid (HTML + WordPress)', unknown: 'Not determined yet — need advice' },
+            's1-what': { 'new': 'New site from scratch', redesign: 'Redesign of existing', update: 'Improvement / new functionality', migrate: 'Migration to another CMS' },
+            's1-goals': { sales: 'Sales and leads', image: 'Image and presentation', info: 'Information / content', catalog: 'Product or service catalog', account: 'Personal account / service', education: 'Education / community' },
+            's2-design': { unique: 'Custom design from scratch', template: 'Ready template', brand: 'Brand style / brandbook', unknown: 'Need advice' },
+            's2-style': { minimal: 'Minimalism', classic: 'Classic', bright: 'Bright', premium: 'Premium', strict: 'Strict business', unknown: 'Need advice' },
+            's2-color': { brand: 'Have brand colors', propose: 'Suggest to choose', unknown: 'Need advice' },
+            's2-anim': { yes: 'Yes, lively site', minimal: 'Minimal', no: 'Not needed' },
+            's2-copy': { ready: 'Ready, will provide', partial: 'Partially', need: 'Need copywriting from scratch' },
+            's2-photo': { ready: 'Ready, will provide', process: 'Need processing / retouching', shoot: 'Need photography', stock: 'Pick stock photos' },
+            's2-fill': { performer: 'Performer turnkey', client: 'Client myself', together: 'Together' },
+            's2-pages': { home: 'Home', about: 'About us', services: 'Services', cases: 'Cases / Portfolio', prices: 'Prices', blog: 'Blog / News', faq: 'FAQ', reviews: 'Reviews', contacts: 'Contacts' },
+            's3-platform': { wp: 'WordPress', html: 'HTML (clean coding)', hybrid: 'Hybrid (HTML + WP)', unknown: 'Need advice' },
+            's3-devices': { mobile: 'Mobile phones', tablet: 'Tablets', desktop: 'Desktop' },
+            's3-browsers': { chrome: 'Chrome', safari: 'Safari', firefox: 'Firefox', edge: 'Edge' },
+            's3-speed': { '80': 'PageSpeed 80+', '90': 'PageSpeed 90+', none: 'Not critical' },
+            's3-plugins': { seo: 'SEO (Yoast / Rank Math)', cache: 'Caching', security: 'Security', forms: 'Forms', backup: 'Backup (on hosting)' },
+            's3-modules': { woocommerce: 'WooCommerce (shop)', multilang: 'Multilingualism (WPML / Polylang)', booking: 'Booking / reservation', account: 'Personal account', search: 'Site search', blog: 'Blog / news', gallery: 'Galleries' },
+            's3-premium': { yes: 'Paid plugins needed', free: 'Get by with free', performer: 'Performer decides' },
+            's3-integrations': { crm: 'CRM (amoCRM, Bitrix24)', payment: 'Payment (Stripe, PayPal, etc.)', delivery: 'Delivery (DHL, FedEx, etc.)', mailings: 'Mailings (Mailchimp, SendPulse)', analytics: 'Analytics (Google Analytics 4)' },
+            's3-security': { ssl: 'SSL certificate', bruteforce: 'Brute-force protection', '2fa': 'Two-factor authentication' },
+            's4-hosting': { have: 'Already have, will provide access', help: 'Need help with choice', turnkey: 'Turnkey — performer decides' },
+            's4-deadline': { urgent: 'Urgent (1–2 weeks)', '1month': '1 month', '2-3months': '2–3 months', quality: 'No rush, quality is more important', date: 'Specific date' },
+            's4-budget': { lt50: 'Up to $500', '50-150': '$500 – $1500', '150-300': '$1500 – $3000', '300-500': '$3000 – $5000', gt500: 'Over $5000', unknown: 'Not determined — need advice' },
+            's4-payment': { prepay: 'Full prepayment', half: 'Advance + final payment (e.g. 50/50)', stages: 'Staged payment (tranches)', postpay: 'Payment upon fact (postpay)', discuss: 'Discuss' },
+            's4-access': { 'own-hosting': 'Work on the performer\'s hosting', 'full-access': 'Full access to your hosting during work', 'by-stage': 'Staged, synchronized with payment', limited: 'Limited access', discuss: 'Discuss' },
+            's4-support': { none: 'Not needed', onetime: 'One-time improvements', monthly: 'Subscription maintenance', unknown: 'Need advice' },
+            's4-accept': { pages: 'All pages from the list work', responsive: 'Responsiveness on mobile and tablets', speed: 'Loading speed (PageSpeed / Core Web Vitals)', forms: 'Forms send leads', integrations: 'Integrations work (CRM, payment, delivery)', design: 'Compliance with the approved design', training: 'Training on how to use the site' },
+            's4-contract': { payment: 'Payment procedure and terms (amounts, stages, dates)', access: 'Moment of transfer of access and source files', rights: 'Rights to code and design after completion', accept: 'Acceptance criteria (what is considered "done")', liability: 'Responsibility for delays and force majeure', regular: 'Who pays for hosting, domain, and plugins' }
+        };
+
+        function getRadio(name) {
+            const el = document.querySelector(`input[name="${name}"]:checked`);
+            return el ? el.value : '';
+        }
+        function getLabel(name, value) {
+            if (!value) return '';
+            return (LABELS[name] && LABELS[name][value]) || value;
+        }
+        function getChecked(name) {
+            const els = document.querySelectorAll(`input[name="${name}"]:checked`);
+            return Array.from(els).map(el => getLabel(name, el.value));
+        }
+        function getVal(id) {
+            const el = document.getElementById(id);
+            return el ? el.value.trim() : '';
+        }
+        function isDelegate(target) {
+            const cb = document.querySelector(`.delegate-checkbox[data-target="${target}"]`);
+            return cb && cb.checked;
+        }
+
+        const stepNavItems = document.querySelectorAll('.step-nav-item');
+        const steps = document.querySelectorAll('.step');
+
+        function showStep(n) {
+            steps.forEach(s => s.classList.toggle('active', s.dataset.step === String(n)));
+            stepNavItems.forEach(b => b.classList.toggle('active', b.dataset.step === String(n)));
+            if (String(n) === '5') updateSummary();
+            window.scrollTo({ top: document.getElementById('tabs-nav').offsetTop - 73, behavior: 'smooth' });
+        }
+
+        stepNavItems.forEach(btn => {
+            btn.addEventListener('click', () => showStep(btn.dataset.step));
+        });
+        document.querySelectorAll('[data-next]').forEach(btn => {
+            btn.addEventListener('click', () => showStep(btn.dataset.next));
+        });
+        document.querySelectorAll('[data-prev]').forEach(btn => {
+            btn.addEventListener('click', () => showStep(btn.dataset.prev));
+        });
+
+        document.querySelectorAll('.delegate-checkbox').forEach(cb => {
+            cb.addEventListener('change', () => {
+                const target = cb.dataset.target;
+                const others = document.querySelectorAll(`input[name="${target}"]`);
+                others.forEach(o => {
+                    o.disabled = cb.checked;
+                    if (cb.checked) o.checked = false;
+                });
+            });
+        });
+
+        const deadlineRadios = document.querySelectorAll('input[name="s4-deadline"]');
+        const dateRow = document.getElementById('s4-date-row');
+        function syncDateRow() {
+            const isDate = !!document.querySelector('input[name="s4-deadline"][value="date"]:checked');
+            dateRow.classList.toggle('hidden', !isDate);
+        }
+        deadlineRadios.forEach(r => r.addEventListener('change', syncDateRow));
+        syncDateRow();
+
+        function updateSummary() {
+            const rows = [
+                ['Site type', getLabel('s1-type', getRadio('s1-type'))],
+                ['What needs to be done', getLabel('s1-what', getRadio('s1-what'))],
+                ['Platform', getLabel('s3-platform', getRadio('s3-platform'))],
+                ['Budget', getLabel('s4-budget', getRadio('s4-budget'))],
+                ['Deadlines', getLabel('s4-deadline', getRadio('s4-deadline'))],
+                ['Payment model', getLabel('s4-payment', getRadio('s4-payment'))]
+            ];
+
+            const grid = document.getElementById('summary-grid');
+            grid.innerHTML = rows.map(([k, v]) =>
+                `<div class="summary-item"><div class="summary-item-label">${k}</div><div class="summary-item-value${v ? '' : ' empty'}">${v || 'not selected'}</div></div>`
+            ).join('');
+        }
+
+        const { Document, Packer, Paragraph, TextRun, AlignmentType, Table, TableRow, TableCell, WidthType, BorderStyle } = docx;
+
+        function sectionTitle(num, text) {
+            return new Paragraph({
+                spacing: { before: 400, after: 200 },
+                border: { bottom: { style: BorderStyle.SINGLE, size: 6, color: 'C1440E', space: 6 } },
+                children: [new TextRun({ text: num + '  ', bold: true, color: 'C1440E', size: 24 }), new TextRun({ text: text, bold: true, size: 28, color: '0E0E0E' })]
+            });
+        }
+        function kv(key, value) {
+            return new Paragraph({
+                spacing: { after: 140 },
+                children: [new TextRun({ text: key + ': ', bold: true, color: '0E0E0E' }), new TextRun({ text: value || '—', color: '333333' })]
+            });
+        }
+        function bullet(text) {
+            return new Paragraph({ bullet: { level: 0 }, spacing: { after: 80 }, children: [new TextRun({ text: text, color: '333333' })] });
+        }
+        function subheading(text) {
+            return new Paragraph({ spacing: { before: 200, after: 100 }, children: [new TextRun({ text: text, bold: true, color: '0E0E0E' })] });
+        }
+        function listOrEmpty(items, emptyText) {
+            if (!items || !items.length) {
+                return [new Paragraph({ spacing: { after: 140 }, children: [new TextRun({ text: emptyText || '—', color: '333333', italics: true })] })];
+            }
+            return items.map(bullet);
+        }
+        function cell(text, opts) {
+            opts = opts || {};
+            return new TableCell({
+                width: { size: opts.width || 50, type: WidthType.PERCENTAGE },
+                shading: opts.head ? { fill: 'EFEBE3' } : undefined,
+                margins: { top: 100, bottom: 100, left: 140, right: 140 },
+                children: [new Paragraph({ children: [new TextRun({ text: text, bold: !!opts.head, size: 20, color: opts.head ? '0E0E0E' : '333333' })] })]
+            });
+        }
+
+        function buildDocument() {
+            const today = new Date().toLocaleDateString('en-US', { day: '2-digit', month: 'long', year: 'numeric' });
+            const clientName = getVal('contact-name') || 'Client';
+            const children = [];
+
+            children.push(new Paragraph({ spacing: { after: 80 }, children: [new TextRun({ text: 'TECHNICAL SPECIFICATION', bold: true, size: 16, color: 'C1440E', characterSpacing: 40 })] }));
+            children.push(new Paragraph({ spacing: { after: 120 }, children: [new TextRun({ text: 'for website development', bold: true, size: 40, color: '0E0E0E' })] }));
+            children.push(new Paragraph({ spacing: { after: 400 }, border: { bottom: { style: BorderStyle.SINGLE, size: 6, color: '0E0E0E', space: 8 } }, children: [new TextRun({ text: 'Date: ' + today + '  ·  Client: ' + clientName, size: 20, color: '666666' })] }));
+
+            children.push(sectionTitle('01', 'About the project'));
+            children.push(kv('Site type', getLabel('s1-type', getRadio('s1-type'))));
+            children.push(kv('What needs to be done', getLabel('s1-what', getRadio('s1-what'))));
+            const goals = getChecked('s1-goals');
+            const goalsOther = getVal('s1-goals-other');
+            if (goalsOther) goals.push(goalsOther);
+            children.push(kv('Site goal', goals.length ? goals.join(', ') : ''));
+            children.push(kv('Target audience', getVal('s1-audience')));
+            children.push(kv('Current site', getVal('s1-url')));
+            children.push(kv('What is not satisfactory', getVal('s1-problems')));
+            children.push(kv('Special wishes', getVal('s1-wishes')));
+
+            children.push(sectionTitle('02', 'Project vision'));
+            children.push(kv('Design', getLabel('s2-design', getRadio('s2-design'))));
+            children.push(kv('Style', getLabel('s2-style', getRadio('s2-style'))));
+            children.push(kv('Mood and associations', getVal('s2-mood')));
+            children.push(kv('Color scheme', getLabel('s2-color', getRadio('s2-color'))));
+            children.push(kv('What you like in references', getVal('s2-refs-like')));
+            children.push(kv('What you don\'t like', getVal('s2-refs-dislike')));
+            children.push(kv('Animations and interactivity', getLabel('s2-anim', getRadio('s2-anim'))));
+            children.push(kv('Texts', getLabel('s2-copy', getRadio('s2-copy'))));
+            children.push(kv('Photos and images', getLabel('s2-photo', getRadio('s2-photo'))));
+            children.push(kv('Who fills the site', getLabel('s2-fill', getRadio('s2-fill'))));
+
+            const pages = getChecked('s2-pages');
+            const pagesOther = getVal('s2-pages-other');
+            if (pages.length || pagesOther) {
+                children.push(new Paragraph({ spacing: { before: 200, after: 140 }, children: [new TextRun({ text: 'Site pages', bold: true, size: 24, color: '0E0E0E' })] }));
+                children.push(new Table({
+                    width: { size: 100, type: WidthType.PERCENTAGE },
+                    borders: { top: { style: BorderStyle.SINGLE, size: 4, color: 'CCCCCC' }, bottom: { style: BorderStyle.SINGLE, size: 4, color: 'CCCCCC' }, left: { style: BorderStyle.SINGLE, size: 4, color: 'CCCCCC' }, right: { style: BorderStyle.SINGLE, size: 4, color: 'CCCCCC' }, insideHorizontal: { style: BorderStyle.SINGLE, size: 4, color: 'CCCCCC' }, insideVertical: { style: BorderStyle.SINGLE, size: 4, color: 'CCCCCC' } },
+                    rows: (function () {
+                        const rows = [new TableRow({ tableHeader: true, children: [cell('Page', { head: true, width: 70 }), cell('Included', { head: true, width: 30 })] })];
+                        Object.keys(LABELS['s2-pages']).forEach(key => {
+                            const label = LABELS['s2-pages'][key];
+                            rows.push(new TableRow({ children: [cell(label), cell(pages.includes(label) ? 'Yes' : '—')] }));
+                        });
+                        if (pagesOther) pagesOther.split('\n').filter(s => s.trim()).forEach(line => { rows.push(new TableRow({ children: [cell(line.trim()), cell('Yes')] })); });
+                        return rows;
+                    })()
+                }));
+            }
+
+            children.push(sectionTitle('03', 'Technical solutions'));
+            children.push(kv('Platform', getLabel('s3-platform', getRadio('s3-platform'))));
+            children.push(kv('Responsiveness', getChecked('s3-devices').join(', ')));
+            children.push(kv('Cross-browser compatibility', getChecked('s3-browsers').join(', ')));
+            children.push(kv('Loading speed', getLabel('s3-speed', getRadio('s3-speed'))));
+
+            children.push(subheading('Required plugins and modules:'));
+            if (isDelegate('s3-plugins')) children.push(bullet('I trust the performer\'s choice — a specialist will select the optimal set'));
+            else listOrEmpty(getChecked('s3-plugins'), 'Not specified').forEach(p => children.push(p));
+
+            children.push(subheading('Additional modules:'));
+            if (isDelegate('s3-modules')) children.push(bullet('I trust the performer\'s choice — a specialist will select the optimal set'));
+            else listOrEmpty(getChecked('s3-modules'), 'Not specified').forEach(p => children.push(p));
+
+            children.push(kv('Premium licenses', getLabel('s3-premium', getRadio('s3-premium'))));
+
+            const integrations = getChecked('s3-integrations');
+            const integOther = getVal('s3-integrations-other');
+            if (integOther) integrations.push(integOther);
+            if (integrations.length) { children.push(subheading('Integrations:')); integrations.forEach(item => children.push(bullet(item))); }
+
+            const security = getChecked('s3-security');
+            if (security.length) { children.push(subheading('Security:')); security.forEach(item => children.push(bullet(item))); }
+
+            children.push(kv('Special technical requirements', getVal('s3-special')));
+
+            children.push(sectionTitle('04', 'Organization and payment'));
+            children.push(kv('Hosting and domain', getLabel('s4-hosting', getRadio('s4-hosting'))));
+            children.push(kv('Deadlines', getLabel('s4-deadline', getRadio('s4-deadline'))));
+            const dateVal = getVal('s4-date');
+            if (dateVal) children.push(kv('Desired launch date', dateVal));
+            children.push(kv('Budget', getLabel('s4-budget', getRadio('s4-budget'))));
+            children.push(kv('Payment model', getLabel('s4-payment', getRadio('s4-payment'))));
+            children.push(kv('Transfer of access and source files', getLabel('s4-access', getRadio('s4-access'))));
+            children.push(kv('Post-launch support', getLabel('s4-support', getRadio('s4-support'))));
+
+            children.push(subheading('Acceptance criteria:'));
+            const accept = getChecked('s4-accept');
+            const acceptOther = getVal('s4-accept-other');
+            if (acceptOther) accept.push(acceptOther);
+            listOrEmpty(accept, 'Not specified').forEach(p => children.push(p));
+
+            children.push(subheading('What to fix in the contract:'));
+            listOrEmpty(getChecked('s4-contract'), 'Not specified').forEach(p => children.push(p));
+
+            const tg = getVal('contact-telegram');
+            const phone = getVal('contact-phone');
+            const comment = getVal('contact-comment');
+            if (tg || phone || comment) {
+                children.push(sectionTitle('05', 'Contacts'));
+                if (tg) children.push(kv('Telegram', tg));
+                if (phone) children.push(kv('Phone', phone));
+                if (comment) children.push(kv('Comment', comment));
+            }
+
+            children.push(new Paragraph({ spacing: { before: 600, after: 100 }, border: { top: { style: BorderStyle.SINGLE, size: 4, color: 'CCCCCC', space: 8 } }, alignment: AlignmentType.CENTER, children: [new TextRun({ text: 'Generated on vitwill.github.io  ·  ' + today, size: 16, color: '999999' })] }));
+            children.push(new Paragraph({ alignment: AlignmentType.CENTER, children: [new TextRun({ text: 'This is a working document for discussing the project. Use it as a basis for dialogue with the performer.', italics: true, size: 16, color: '999999' })] }));
+
+            return new Document({
+                creator: 'Viktor Willmann', title: 'Technical Specification for Website Development', description: 'Generated on vitwill.github.io',
+                styles: { default: { document: { run: { font: 'Calibri', size: 22, color: '333333' }, paragraph: { spacing: { line: 300 } } } } },
+                sections: [{ properties: { page: { margin: { top: 1134, bottom: 1134, left: 1134, right: 1134 } } }, children: children }]
+            });
+        }
+
+        document.getElementById('download-btn').addEventListener('click', async function () {
+            const btn = this;
+            const status = document.getElementById('status');
+            status.className = 'status';
+            status.textContent = '';
+
+            const name = getVal('contact-name');
+            const email = getVal('contact-email');
+            const consent = document.getElementById('contact-consent').checked;
+            const errors = [];
+            if (!name) errors.push('name');
+            if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) errors.push('valid email');
+            if (!consent) errors.push('consent');
+
+            if (errors.length) {
+                status.className = 'status err';
+                status.textContent = '✗ Missing: ' + errors.join(', ');
+                return;
+            }
+
+            btn.disabled = true;
+            status.textContent = 'Generating...';
+
+            try {
+                const doc = buildDocument();
+                const blob = await Packer.toBlob(doc);
+                const typeMap = { landing: 'landing', vizitka: 'business_card', corporate: 'corporate', shop: 'ecommerce', hybrid: 'hybrid', unknown: 'site' };
+                const typeLabel = typeMap[getRadio('s1-type')] || 'site';
+                const dateStr = new Date().toISOString().slice(0, 10);
+                const filename = 'Spec_' + typeLabel + '_' + dateStr + '.docx';
+
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url; a.download = filename;
+                document.body.appendChild(a); a.click(); document.body.removeChild(a);
+                setTimeout(() => URL.revokeObjectURL(url), 1000);
+
+                status.className = 'status ok';
+                status.textContent = '✓ File downloaded';
+            } catch (err) {
+                console.error(err);
+                status.className = 'status err';
+                status.textContent = '✗ Error: ' + err.message;
+            } finally {
+                btn.disabled = false;
+            }
+        });
+    })();
+</script>
+
+</body>
+</html>
