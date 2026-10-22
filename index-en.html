@@ -1248,4 +1248,655 @@
 
             .stats { grid-template-columns: 1fr; }
             .stat { border-right: none; border-bottom: 1px solid var(--line); padding: 40px 24px; }
-            .stat:last-child { border-bottom:
+            .stat:last-child { border-bottom: none; }
+
+            .contact-form { padding: 32px 24px 28px; }
+            .form-group input,
+            .form-group textarea,
+            .form-group select { padding: 12px 14px; font-size: 15px; }
+            .form-group select { background-position: right 14px center; padding-right: 36px; }
+            .form-submit { flex-direction: column; align-items: stretch; }
+            .form-submit .btn { justify-content: center; }
+
+            .modal { padding: 40px 24px; }
+            .modal h2 { font-size: 28px; }
+            .skills-grid { grid-template-columns: 1fr; }
+
+            .site-footer .container { flex-direction: column; text-align: center; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                transition-duration: 0.01ms !important;
+            }
+            .marquee-track { animation: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- SIDE NAV -->
+    <nav class="side-nav" id="side-nav">
+        <div class="side-nav-item active" data-target="hero" data-label="Home"></div>
+        <div class="side-nav-item" data-target="about" data-label="About"></div>
+        <div class="side-nav-item" data-target="portfolio" data-label="Work"></div>
+        <div class="side-nav-item" data-target="ai" data-label="AI"></div>
+        <div class="side-nav-item" data-target="software" data-label="Software"></div>
+        <div class="side-nav-item" data-target="services" data-label="Services"></div>
+        <div class="side-nav-item" data-target="contact" data-label="Contact"></div>
+    </nav>
+
+    <!-- HEADER -->
+    <header class="site-header" id="main-header">
+        <div class="container">
+            <a href="#" class="logo">Viktor <em>Willmann</em></a>
+            <div class="header-actions">
+                <a href="tools.html" class="btn-tools">Client Tools</a>
+                <a href="index.html" class="lang-switch">RU</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- HERO -->
+    <section id="hero" class="hero">
+        <div class="container">
+            <div class="hero-top">
+                <span class="eyebrow">Senior WordPress Developer</span>
+                <div class="hero-loc">
+                    USA · Germany · United Kingdom<br>
+                    Italy · Hong Kong · Australia and more
+                </div>
+            </div>
+
+            <h1 class="hero-name">
+                Viktor<br>
+                Willmann<span class="hero-dot"></span>
+            </h1>
+
+            <div class="hero-bottom">
+                <p class="hero-role">
+                    <span class="hero-hl">Business automation</span> and web development: delivery of digital projects of any complexity.
+                </p>
+
+                <div class="hero-meta">
+                    <div class="hero-meta-row"><span>Experience</span><span>10+ years</span></div>
+                    <div class="hero-meta-row"><span>Projects</span><span>100+</span></div>
+                    <div class="hero-meta-row"><span>Stack</span><span>WordPress · PHP · MySQL · JS</span></div>
+                </div>
+
+                <div class="hero-meta">
+                    <div class="hero-meta-row"><span>Focus</span><span>Web · AI · SEO</span></div>
+                    <div class="hero-meta-row"><span>Languages</span><span>EN · RU · DE</span></div>
+                    <div class="hero-meta-row"><span>Status</span><span>● Available for projects</span></div>
+                </div>
+            </div>
+        </div>
+
+        <a href="#portfolio" class="hero-scroll">Scroll</a>
+    </section>
+
+    <!-- MARQUEE -->
+    <div class="marquee">
+        <div class="marquee-track">
+            <span>WordPress</span><span>PHP</span><span>React</span><span>TypeScript</span>
+            <span>MySQL</span><span>Python</span><span>AI Integration</span><span>SEO</span>
+            <span>REST API</span><span>WooCommerce</span><span>Elementor</span><span>Core Web Vitals</span>
+            <span>WordPress</span><span>PHP</span><span>React</span><span>TypeScript</span>
+            <span>MySQL</span><span>Python</span><span>AI Integration</span><span>SEO</span>
+            <span>REST API</span><span>WooCommerce</span><span>Elementor</span><span>Core Web Vitals</span>
+        </div>
+    </div>
+
+    <!-- FEATURED -->
+    <section class="featured" id="featured">
+        <div class="container">
+            <div class="featured-head">
+                <span class="eyebrow">Featured project</span>
+                <span class="featured-index">01 / 06 · 2024</span>
+            </div>
+
+            <div class="featured-body">
+                <div class="featured-visual">
+                    <img src="images/project3-thumb.jpg" alt="Pocketful of Dreams — luxury wedding studio website">
+                    <span class="featured-visual-tag">United Kingdom · Luxury</span>
+                    <div class="featured-visual-inner">
+                        <div class="featured-visual-title">Pocketful<br>of Dreams</div>
+                    </div>
+                </div>
+
+                <div class="featured-meta">
+                    <div class="featured-meta-list">
+                        <div class="featured-meta-row"><span>Client</span><span>Pocketful of Dreams</span></div>
+                        <div class="featured-meta-row"><span>Industry</span><span>Luxury weddings</span></div>
+                        <div class="featured-meta-row"><span>Geography</span><span>England · Europe</span></div>
+                        <div class="featured-meta-row"><span>Stack</span><span>WP · Custom Theme</span></div>
+                        <div class="featured-meta-row"><span>Featured in</span><span>Vogue · Tatler</span></div>
+                    </div>
+
+                    <p class="featured-quote">
+                        A studio that organises multi-day weddings in private estates across England and Europe. 15+ years of experience — and a website that conveys that atmosphere from the very first screen.
+                    </p>
+
+                    <a href="project3-pocketful-en.html" class="featured-cta">
+                        View case
+                        <span>→</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="featured-strip">
+                <div class="featured-strip-item active">01 · Pocketful of Dreams</div>
+                <div class="featured-strip-item">02 · Bio Planète</div>
+                <div class="featured-strip-item">03 · Get Full Care</div>
+                <div class="featured-strip-item">04 · The Blonde Abroad</div>
+                <div class="featured-strip-item">05 · Kanzlei Vees</div>
+                <div class="featured-strip-item">06 · Silver Circle</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about" class="about">
+        <div class="container">
+            <div class="about-grid">
+                <div class="about-image">
+                    <img src="images/about-photo.jpg" alt="Viktor Willmann">
+                </div>
+                <div class="about-content">
+                    <span class="eyebrow">About</span>
+                    <h2>Viktor Willmann <em>— a developer</em><br>who thinks about business</h2>
+                    <p class="about-role">Fullstack Developer · AI Integration Specialist</p>
+                    <p class="about-text">
+                        I lead projects on WordPress and custom PHP: from landing pages to online stores and web services with integrations. 10+ years in commercial development, 100% of projects — for clients in the USA, Germany, Italy, Hong Kong, Australia, and other countries.
+                    </p>
+                    <p class="about-text">
+                        Beyond development, I automate business processes: Telegram bots, parsers, CRM and payment system integrations, AI tools. I work with a focus on results: a website should not just look good, it should bring in clients.
+                    </p>
+                    <div class="about-buttons">
+                        <a href="#contact" class="btn btn-dark">Get in touch</a>
+                        <button class="btn btn-outline" id="open-modal">More about me →</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- STATS -->
+    <section class="stats">
+        <div class="stat">
+            <div class="num">10<sup>+</sup></div>
+            <div class="lbl">years of commercial development</div>
+        </div>
+        <div class="stat">
+            <div class="num">10<sup>+</sup></div>
+            <div class="lbl">countries · international experience</div>
+        </div>
+        <div class="stat">
+            <div class="num">100<sup>+</sup></div>
+            <div class="lbl">projects launched</div>
+        </div>
+        <div class="stat">
+            <div class="num">100<sup>%</sup></div>
+            <div class="lbl">projects delivered on time</div>
+        </div>
+    </section>
+
+    <!-- PORTFOLIO -->
+    <section id="portfolio" class="portfolio">
+        <div class="container">
+            <div class="section-head">
+                <div>
+                    <span class="eyebrow">Portfolio</span>
+                    <h2>Selected work <em>— 2022 / 2026</em></h2>
+                </div>
+                <span class="count">06 · Selected work</span>
+            </div>
+
+            <div class="work-list">
+                <a class="work-row" href="project1-getfullcare-en.html">
+                    <div class="num">01</div>
+                    <div class="name">Get Full <em>Care</em></div>
+                    <div class="cat">Elderly care agency</div>
+                    <div class="geo">USA · 2024</div>
+                    <div class="arrow">→</div>
+                </a>
+                <a class="work-row" href="project2-bioplanete-en.html">
+                    <div class="num">02</div>
+                    <div class="name">Bio <em>Planète</em></div>
+                    <div class="cat">Organic oils</div>
+                    <div class="geo">Germany · 2023</div>
+                    <div class="arrow">→</div>
+                </a>
+                <a class="work-row" href="project3-pocketful-en.html">
+                    <div class="num">03</div>
+                    <div class="name">Pocketful of <em>Dreams</em></div>
+                    <div class="cat">Luxury weddings</div>
+                    <div class="geo">United Kingdom · 2024</div>
+                    <div class="arrow">→</div>
+                </a>
+                <a class="work-row" href="project4-blondeabroad-en.html">
+                    <div class="num">04</div>
+                    <div class="name">The Blonde <em>Abroad</em></div>
+                    <div class="cat">Travel blog</div>
+                    <div class="geo">USA · 2022</div>
+                    <div class="arrow">→</div>
+                </a>
+                <a class="work-row" href="project5-serebryanyikrug-en.html">
+                    <div class="num">05</div>
+                    <div class="name">Silver <em>Circle</em></div>
+                    <div class="cat">Community portal</div>
+                    <div class="geo">USA · 2024</div>
+                    <div class="arrow">→</div>
+                </a>
+                <a class="work-row" href="project6-kanzlei-en.html">
+                    <div class="num">06</div>
+                    <div class="name">Kanzlei <em>Vees</em></div>
+                    <div class="cat">Law firm</div>
+                    <div class="geo">Germany · 2025</div>
+                    <div class="arrow">→</div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- AI PROJECTS -->
+    <section id="ai" class="ai-projects">
+        <div class="container">
+            <div class="section-head">
+                <div>
+                    <span class="eyebrow">AI projects</span>
+                    <h2>Automation <em>and AI</em></h2>
+                </div>
+                <span class="count">03 · Open source</span>
+            </div>
+
+            <div class="ai-grid">
+                <div class="ai-item">
+                    <div class="ai-num">01 / 03</div>
+                    <h3>SmartParser</h3>
+                    <p>Automated data collection from websites with export to structured Excel tables. Saves hours of manual work.</p>
+                    <a href="https://github.com/Vitwill/smart-parser" class="ai-link" target="_blank" rel="noopener">GitHub →</a>
+                </div>
+
+                <div class="ai-item">
+                    <div class="ai-num">02 / 03</div>
+                    <h3>WB SEO Generator</h3>
+                    <p>AI-powered generation of SEO descriptions for Wildberries and Ozon. Bulk creation of optimised product cards.</p>
+                    <a href="https://github.com/Vitwill/wb-seo-generator" class="ai-link" target="_blank" rel="noopener">GitHub →</a>
+                </div>
+
+                <div class="ai-item">
+                    <div class="ai-num">03 / 03</div>
+                    <h3>TG Content Planner</h3>
+                    <p>Automated content plan for Telegram channels with RSS parsing and AI generation. Plan publications weeks in advance.</p>
+                    <a href="https://github.com/Vitwill/tg-content-planner" class="ai-link" target="_blank" rel="noopener">GitHub →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SOFTWARE -->
+    <section id="software" class="software">
+        <div class="container">
+            <div class="section-head">
+                <div>
+                    <span class="eyebrow">Software</span>
+                    <h2>Desktop <em>applications</em></h2>
+                </div>
+                <span class="count">03 · Products</span>
+            </div>
+
+            <div class="software-grid">
+                <a href="software-dashbook.html" class="software-item">
+                    <div class="software-preview">
+                        <img src="images/software-dashbook-thumb.jpg" alt="DashBook" loading="lazy">
+                    </div>
+                    <div class="software-num">01</div>
+                    <h3>DashBook</h3>
+                    <p class="software-category">Personal organiser with AI</p>
+                    <p class="software-desc">Web application for managing tasks, projects, and a personal diary. AI assistant with voice input, multilingual support, 4 themes.</p>
+                    <div class="software-tech">
+                        <span>React</span>
+                        <span>TypeScript</span>
+                        <span>Tailwind</span>
+                        <span>AI</span>
+                    </div>
+                    <span class="software-link">Learn more →</span>
+                </a>
+
+                <a href="software-fb-leads.html" class="software-item">
+                    <div class="software-preview">
+                        <img src="images/software-fb-leads-thumb.jpg" alt="FB Leads" loading="lazy">
+                    </div>
+                    <div class="software-num">02</div>
+                    <h3>FB Leads</h3>
+                    <p class="software-category">CRM for lead management</p>
+                    <p class="software-desc">Automated collection, validation, and scoring of leads from Meta Ads, Google Sheets, and Excel. VIP scoring, deduplication, analytics.</p>
+                    <div class="software-tech">
+                        <span>React</span>
+                        <span>TypeScript</span>
+                        <span>Tailwind</span>
+                        <span>Meta API</span>
+                    </div>
+                    <span class="software-link">Learn more →</span>
+                </a>
+
+                <a href="software-youtube-analyzer.html" class="software-item">
+                    <div class="software-preview">
+                        <img src="images/software-youtube-analyzer-thumb.jpg" alt="YouTube Analyzer" loading="lazy">
+                    </div>
+                    <div class="software-num">03</div>
+                    <h3>YouTube Analyzer</h3>
+                    <p class="software-category">Analytics for YouTube</p>
+                    <p class="software-desc">Search and analysis of YouTube channels by niche and region. Profitability estimation, publishing frequency, competitor analysis. Export to Excel.</p>
+                    <div class="software-tech">
+                        <span>React</span>
+                        <span>TypeScript</span>
+                        <span>YouTube API</span>
+                        <span>Electron</span>
+                    </div>
+                    <span class="software-link">Learn more →</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section id="services" class="services">
+        <div class="container">
+            <div class="section-head">
+                <div>
+                    <span class="eyebrow">Services</span>
+                    <h2>How I can <em>help</em></h2>
+                </div>
+                <span class="count">05 · Areas</span>
+            </div>
+
+            <div class="service-list">
+                <div class="service-row">
+                    <div class="num">01</div>
+                    <h3>Turnkey <em>websites</em></h3>
+                    <p>Development of landing pages, corporate websites, and online stores from scratch — from design to launch. Full cycle: UI/UX design, front-end, back-end, SEO optimisation.</p>
+                </div>
+                <div class="service-row">
+                    <div class="num">02</div>
+                    <h3>Comprehensive <em>Website Audit</em></h3>
+                    <p>Website performance diagnostics, SEO audit, and checking key performance indicators. Identification of critical errors and recommendations for their resolution.</p>
+                </div>
+                <div class="service-row">
+                    <div class="num">03</div>
+                    <h3>Improvement <em>and optimisation</em></h3>
+                    <p>Speed-up, bug fixes, and new features on existing websites. Work with WordPress, custom themes, and plugins.</p>
+                </div>
+                <div class="service-row">
+                    <div class="num">04</div>
+                    <h3>Automation <em>and AI</em></h3>
+                    <p>Chatbots, AI integrations, and business process automation to save time and resources. Python scripts, API integrations, Telegram bots.</p>
+                </div>
+                <div class="service-row">
+                    <div class="num">05</div>
+                    <h3>Consultation <em>and support</em></h3>
+                    <p>Technical consultations on your project and retainer support — monitoring, updates, bug fixes, and ongoing development.</p>
+                </div>
+            </div>
+
+            <div class="pricing-info">
+                <p>Pricing is discussed individually after reviewing the task. Get in touch — and I will prepare a proposal within 24 hours.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <div class="contact-head">
+                <div>
+                    <span class="eyebrow">Contact</span>
+                    <h2>Let's discuss <em>your project</em></h2>
+                </div>
+                <p>I respond within 24 hours. Describe your task in as much detail as possible — so I can suggest a solution and estimate timelines right away.</p>
+            </div>
+
+            <form class="contact-form" id="contact-form">
+                <div class="form-group">
+                    <label for="name">Your name *</label>
+                    <input type="text" id="name" name="name" required placeholder="John Smith" autocomplete="name">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email *</label>
+                    <input type="email" id="email" name="email" required placeholder="john@example.com" autocomplete="email">
+                </div>
+                <div class="form-group">
+                    <label for="telegram">Telegram (optional)</label>
+                    <input type="text" id="telegram" name="telegram" placeholder="@username" autocomplete="off">
+                </div>
+
+                <div class="form-group">
+                    <label for="task-type">Task type</label>
+                    <select id="task-type" name="task_type">
+                        <option value="">— Select task type —</option>
+                        <option value="Создание сайта с нуля">Website from scratch</option>
+                        <option value="Доработка существующего сайта">Improvement of existing website</option>
+                        <option value="Автоматизация / AI-интеграция">Automation / AI integration</option>
+                        <option value="Консультация">Consultation</option>
+                        <option value="Другое">Other</option>
+                    </select>
+                    <input type="text" id="task-other-text" name="task_other" class="task-other-text" placeholder="Please specify...">
+                </div>
+
+                <div class="form-group">
+                    <label for="message">Message *</label>
+                    <textarea id="message" name="message" required placeholder="Tell me about your project..."></textarea>
+                </div>
+
+                <div class="hp-field" aria-hidden="true">
+                    <label for="_honey">Do not fill this field</label>
+                    <input type="text" id="_honey" name="_honey" tabindex="-1" autocomplete="off">
+                </div>
+
+                <div class="form-submit">
+                    <span class="form-submit-note">Reply within 24 hours</span>
+                    <button type="submit" class="btn btn-dark">Send message →</button>
+                </div>
+
+                <div class="form-message" id="form-message"></div>
+            </form>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="site-footer">
+        <div class="container">
+            <span>© 2026 Viktor Willmann</span>
+            <span>Made with care · Germany</span>
+            <a href="#hero">Back to top ↑</a>
+        </div>
+    </footer>
+
+    <!-- MODAL -->
+    <div class="modal-overlay" id="modal-overlay">
+        <div class="modal">
+            <button class="modal-close" id="modal-close" aria-label="Close">×</button>
+
+            <span class="eyebrow">Information</span>
+            <h2>Viktor Willmann</h2>
+            <p class="modal-role">Senior WordPress Developer · Full-Stack & SEO</p>
+
+            <div class="modal-divider"></div>
+
+            <p class="modal-text"><strong>Experience:</strong> 10+ years of commercial development</p>
+            <p class="modal-text"><strong>Project geography:</strong> USA, Germany, Italy, Hong Kong, Australia, Saudi Arabia, Russia, France, etc.</p>
+            <p class="modal-text">100% of experience gained on the international market. I build websites end-to-end: from UI/UX design to custom PHP development, API integrations, and deep SEO optimisation.</p>
+
+            <h3 class="modal-section-title">Key skills</h3>
+            <div class="skills-grid">
+                <div class="skill-category"><h4>CMS & Builders</h4><p>WordPress, Elementor, WPBakery, Divi</p></div>
+                <div class="skill-category"><h4>Frontend</h4><p>HTML5, CSS3, JS (ES6+), UI/UX</p></div>
+                <div class="skill-category"><h4>Backend & DB</h4><p>PHP, MySQL, REST API, Webhooks</p></div>
+                <div class="skill-category"><h4>SEO & Speed</h4><p>Yoast, RankMath, Core Web Vitals</p></div>
+            </div>
+
+            <h3 class="modal-section-title">Main areas of work</h3>
+            <p class="modal-text"><strong>Turnkey websites:</strong> landing pages, corporate portals, online stores (WooCommerce), and web services with thought-through UI/UX.</p>
+            <p class="modal-text"><strong>Complex improvements and customisation:</strong> custom plugins and PHP functionality, integrations with external APIs.</p>
+            <p class="modal-text"><strong>SEO & Speed optimisation:</strong> technical SEO, structured data, optimisation for Google PageSpeed and Core Web Vitals.</p>
+
+            <h3 class="modal-section-title">Advantages of working with me</h3>
+            <ul class="modal-list">
+                <li><strong>Delivery guarantee:</strong> projects completed 100% in strict accordance with the brief.</li>
+                <li><strong>Transparency:</strong> regular reports and constant communication at every stage.</li>
+                <li><strong>Code quality:</strong> clean and maintainable code for easy scaling.</li>
+            </ul>
+
+            <div class="modal-contact">
+                <a href="#contact" class="btn btn-dark" id="modal-contact-btn">Get in touch</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- SCRIPTS -->
+    <script>
+        // Header scroll
+        const header = document.getElementById('main-header');
+        window.addEventListener('scroll', () => {
+            header.classList.toggle('scrolled', window.scrollY > 40);
+        }, { passive: true });
+
+        // Side nav
+        const sideNavItems = document.querySelectorAll('.side-nav-item');
+        const sections = document.querySelectorAll('section[id]');
+
+        sideNavItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const targetId = item.getAttribute('data-target');
+                const targetSection = document.getElementById(targetId);
+                if (targetSection) {
+                    targetSection.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        const sectionObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const id = entry.target.getAttribute('id');
+                    sideNavItems.forEach(item => {
+                        item.classList.toggle('active', item.getAttribute('data-target') === id);
+                    });
+                }
+            });
+        }, {
+            rootMargin: '-45% 0px -45% 0px',
+            threshold: 0
+        });
+        sections.forEach(section => sectionObserver.observe(section));
+
+        // Modal
+        const modalOverlay = document.getElementById('modal-overlay');
+        const openModalBtn = document.getElementById('open-modal');
+        const closeModalBtn = document.getElementById('modal-close');
+        const modalContactBtn = document.getElementById('modal-contact-btn');
+
+        function openModal() {
+            modalOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        function closeModal() {
+            modalOverlay.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        openModalBtn.addEventListener('click', openModal);
+        closeModalBtn.addEventListener('click', closeModal);
+        modalContactBtn.addEventListener('click', () => {
+            closeModal();
+            document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
+        });
+        modalOverlay.addEventListener('click', (e) => {
+            if (e.target === modalOverlay) closeModal();
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modalOverlay.classList.contains('active')) closeModal();
+        });
+
+        // "Other" field
+        const taskTypeSelect = document.getElementById('task-type');
+        const taskOtherText = document.getElementById('task-other-text');
+
+        taskTypeSelect.addEventListener('change', () => {
+            if (taskTypeSelect.value === 'Другое') {
+                taskOtherText.classList.add('visible');
+                taskOtherText.focus();
+            } else {
+                taskOtherText.classList.remove('visible');
+                taskOtherText.value = '';
+            }
+        });
+
+        // Featured strip
+        document.querySelectorAll('.featured-strip-item').forEach(item => {
+            item.addEventListener('click', () => {
+                document.querySelectorAll('.featured-strip-item').forEach(i => i.classList.remove('active'));
+                item.classList.add('active');
+            });
+        });
+
+        // Contact form via Cloudflare Worker
+        const contactForm = document.getElementById('contact-form');
+        const formMessage = document.getElementById('form-message');
+        const WORKER_URL = 'https://telegram-form-proxy.my-scrapers-app.workers.dev';
+
+        contactForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const submitBtn = contactForm.querySelector('button[type="submit"]');
+            const originalBtnText = submitBtn.textContent;
+            submitBtn.textContent = 'Sending...';
+            submitBtn.disabled = true;
+
+            const formData = new FormData(contactForm);
+            const payload = {
+                name: formData.get('name'),
+                email: formData.get('email'),
+                telegram: formData.get('telegram'),
+                message: formData.get('message'),
+                task_type: formData.get('task_type'),
+                task_other: formData.get('task_other'),
+                _honey: formData.get('_honey'),
+            };
+
+            try {
+                const response = await fetch(WORKER_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload),
+                });
+
+                const result = await response.json();
+
+                if (response.ok && result.success) {
+                    formMessage.textContent = '✅ Thank you! Your message has been sent successfully. I will get back to you shortly.';
+                    formMessage.className = 'form-message success visible';
+                    contactForm.reset();
+                    taskOtherText.classList.remove('visible');
+
+                    setTimeout(() => {
+                        formMessage.className = 'form-message';
+                        setTimeout(() => { formMessage.textContent = ''; }, 400);
+                    }, 6000);
+                } else {
+                    throw new Error(result.error || 'Send error');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                formMessage.textContent = '❌ Something went wrong. Please message me directly on Telegram.';
+                formMessage.className = 'form-message error visible';
+            } finally {
+                submitBtn.textContent = originalBtnText;
+                submitBtn.disabled = false;
+            }
+        });
+    </script>
+</body>
+</html>
