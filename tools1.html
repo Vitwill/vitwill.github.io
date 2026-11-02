@@ -1,0 +1,1823 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Бесплатный аудит SMM: оцените продвижение вашего товара или услуги в социальных сетях. Получите персональный отчёт с рекомендациями за 5 минут.">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://vitwill.github.io/tools-smm-audit.html">
+
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Аудит SMM — оценка продвижения в соцсетях">
+    <meta property="og:description" content="Оцените контент, визуал, вовлечённость, рекламу и аналитику ваших соцсетей. Персональный отчёт с рекомендациями.">
+    <meta property="og:locale" content="ru_RU">
+
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="images/favicon.png">
+
+    <title>Аудит SMM — проверка продвижения в соцсетях | Viktor Willmann</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" defer></script>
+
+    <style>
+        /* ============================================================
+           ТОКЕНЫ (совпадают с главной)
+           ============================================================ */
+        :root {
+            --paper: #F5F2EC;
+            --paper-2: #EFEBE3;
+            --ink: #0E0E0E;
+            --muted: rgba(14, 14, 14, .68);
+            --muted-2: rgba(14, 14, 14, .45);
+            --line: rgba(14, 14, 14, .14);
+            --line-strong: rgba(14, 14, 14, .22);
+            --accent: #C1440E;
+            --accent-soft: #E8A87C;
+            --success: #2f7d3f;
+            --warning: #b47518;
+
+            --f-display: 'Inter Tight', sans-serif;
+            --f-text: 'Inter', sans-serif;
+            --f-serif: 'Instrument Serif', serif;
+            --f-mono: 'JetBrains Mono', monospace;
+
+            --ease: cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: var(--f-text);
+            font-size: 15px;
+            line-height: 1.6;
+            color: var(--ink);
+            background: var(--paper);
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+        img { max-width: 100%; display: block; }
+        a { color: inherit; }
+        button { font-family: inherit; }
+        ::selection { background: var(--ink); color: var(--paper); }
+
+        .container { max-width: 1440px; margin: 0 auto; padding: 0 40px; }
+        .container-narrow { max-width: 960px; margin: 0 auto; padding: 0 40px; }
+
+        /* ============================================================
+           ОБЩИЕ ЛЕЙБЛЫ
+           ============================================================ */
+        .eyebrow {
+            font-family: var(--f-mono);
+            font-size: 11px;
+            letter-spacing: .18em;
+            text-transform: uppercase;
+            color: var(--accent);
+            display: inline-flex;
+            align-items: center;
+            gap: 14px;
+        }
+        .eyebrow::before {
+            content: "";
+            display: inline-block;
+            width: 32px;
+            height: 1px;
+            background: var(--accent);
+        }
+
+        /* ============================================================
+           ХЕДЕР
+           ============================================================ */
+        .site-header {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+            background: rgba(245, 242, 236, .85);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border-bottom: 1px solid var(--line);
+        }
+        .site-header .container {
+            display: flex; justify-content: space-between; align-items: center;
+            padding-top: 20px; padding-bottom: 20px;
+        }
+        .logo {
+            font-family: var(--f-display);
+            font-size: 17px; font-weight: 600;
+            letter-spacing: -.02em;
+            text-decoration: none;
+            color: var(--ink);
+        }
+        .logo em {
+            font-family: var(--f-serif);
+            font-style: italic; font-weight: 400;
+            color: var(--accent);
+        }
+        .header-actions { display: flex; align-items: center; gap: 16px; }
+        .btn-tools {
+            display: inline-flex; align-items: center;
+            font-family: var(--f-mono);
+            font-size: 11px; letter-spacing: .16em;
+            text-transform: uppercase;
+            text-decoration: none;
+            background: var(--accent);
+            color: var(--paper);
+            border: 1px solid var(--accent);
+            padding: 12px 20px;
+            border-radius: 2px;
+            transition: all .3s var(--ease);
+        }
+        .btn-tools:hover { background: var(--ink); border-color: var(--ink); }
+
+        /* ============================================================
+           HERO / INTRO
+           ============================================================ */
+        .tool-hero {
+            padding: 160px 0 70px;
+            border-bottom: 1px solid var(--line);
+            position: relative;
+            background: var(--paper);
+        }
+        .tool-hero::before {
+            content: "";
+            position: absolute; inset: 0;
+            background-image: linear-gradient(90deg, var(--line) 1px, transparent 1px);
+            background-size: 25% 100%;
+            opacity: .4;
+            pointer-events: none;
+        }
+        .tool-hero .container-narrow { position: relative; z-index: 1; }
+        .tool-hero h1 {
+            font-family: var(--f-display);
+            font-size: clamp(38px, 6vw, 72px);
+            font-weight: 500;
+            letter-spacing: -.045em;
+            line-height: 1;
+            margin: 24px 0 24px;
+        }
+        .tool-hero h1 em {
+            font-family: var(--f-serif);
+            font-style: italic;
+            font-weight: 400;
+            color: var(--accent);
+        }
+        .tool-hero p.lead {
+            font-size: 17px;
+            line-height: 1.7;
+            color: var(--muted);
+            max-width: 640px;
+            margin-bottom: 40px;
+        }
+        .tool-meta {
+            display: flex; gap: 40px; flex-wrap: wrap;
+            padding-top: 30px;
+            border-top: 1px solid var(--line);
+            margin-top: 30px;
+        }
+        .tool-meta-item {
+            display: flex; flex-direction: column; gap: 6px;
+        }
+        .tool-meta-item span:first-child {
+            font-family: var(--f-mono);
+            font-size: 10px;
+            letter-spacing: .16em;
+            text-transform: uppercase;
+            color: var(--muted-2);
+        }
+        .tool-meta-item span:last-child {
+            font-family: var(--f-display);
+            font-size: 18px;
+            font-weight: 500;
+            letter-spacing: -.02em;
+        }
+
+        /* ============================================================
+           MODE SELECTOR
+           ============================================================ */
+        .mode-section {
+            padding: 70px 0;
+            border-bottom: 1px solid var(--line);
+            background: var(--paper-2);
+        }
+        .mode-section h2 {
+            font-family: var(--f-display);
+            font-size: clamp(24px, 3vw, 34px);
+            font-weight: 500;
+            letter-spacing: -.03em;
+            margin-bottom: 30px;
+            line-height: 1.15;
+        }
+        .mode-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+        .mode-card {
+            padding: 36px 32px;
+            background: var(--paper);
+            border: 1px solid var(--line-strong);
+            border-radius: 2px;
+            cursor: pointer;
+            transition: all .3s var(--ease);
+            position: relative;
+            text-align: left;
+            display: flex; flex-direction: column;
+            min-height: 220px;
+        }
+        .mode-card:hover {
+            border-color: var(--ink);
+            transform: translateY(-2px);
+        }
+        .mode-card.active {
+            border-color: var(--accent);
+            background: var(--paper);
+            box-shadow: 0 0 0 1px var(--accent);
+        }
+        .mode-card.active::after {
+            content: "✓";
+            position: absolute;
+            top: 20px; right: 24px;
+            width: 28px; height: 28px;
+            border-radius: 50%;
+            background: var(--accent);
+            color: var(--paper);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 15px;
+            font-weight: 700;
+        }
+        .mode-num {
+            font-family: var(--f-mono);
+            font-size: 11px;
+            letter-spacing: .16em;
+            color: var(--muted-2);
+            margin-bottom: 16px;
+        }
+        .mode-card h3 {
+            font-family: var(--f-display);
+            font-size: 24px;
+            font-weight: 500;
+            letter-spacing: -.025em;
+            margin-bottom: 12px;
+            line-height: 1.15;
+        }
+        .mode-card h3 em {
+            font-family: var(--f-serif);
+            font-style: italic;
+            font-weight: 400;
+            color: var(--accent);
+        }
+        .mode-card p {
+            font-size: 14px;
+            line-height: 1.65;
+            color: var(--muted);
+            margin-bottom: 20px;
+            flex: 1;
+        }
+        .mode-card .mode-hint {
+            font-family: var(--f-mono);
+            font-size: 10px;
+            letter-spacing: .14em;
+            text-transform: uppercase;
+            color: var(--muted-2);
+        }
+
+        .intro-actions {
+            margin-top: 40px;
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        /* ============================================================
+           КНОПКИ
+           ============================================================ */
+        .btn {
+            display: inline-flex; align-items: center; gap: 12px;
+            font-family: var(--f-mono);
+            font-size: 12px; letter-spacing: .16em;
+            text-transform: uppercase;
+            text-decoration: none;
+            padding: 16px 28px;
+            border: 1px solid transparent;
+            border-radius: 2px;
+            cursor: pointer;
+            transition: all .3s var(--ease);
+            background: none;
+        }
+        .btn-dark { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+        .btn-dark:hover { background: var(--accent); border-color: var(--accent); }
+        .btn-accent { background: var(--accent); color: var(--paper); border-color: var(--accent); }
+        .btn-accent:hover { background: var(--ink); border-color: var(--ink); }
+        .btn-outline { background: transparent; color: var(--ink); border-color: var(--line-strong); }
+        .btn-outline:hover { border-color: var(--ink); }
+        .btn:disabled { opacity: .4; cursor: not-allowed; }
+        .btn-arrow { transition: transform .3s var(--ease); }
+        .btn:hover .btn-arrow { transform: translateX(4px); }
+
+        /* ============================================================
+           WIZARD
+           ============================================================ */
+        .wizard-section {
+            padding: 60px 0 100px;
+            min-height: 70vh;
+        }
+        .wizard-progress-wrap {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 44px;
+        }
+        .wizard-progress-label {
+            font-family: var(--f-mono);
+            font-size: 11px;
+            letter-spacing: .14em;
+            text-transform: uppercase;
+            color: var(--muted);
+            white-space: nowrap;
+        }
+        .wizard-progress-bar {
+            flex: 1;
+            height: 2px;
+            background: var(--line-strong);
+            border-radius: 1px;
+            overflow: hidden;
+            position: relative;
+        }
+        .wizard-progress-fill {
+            height: 100%;
+            background: var(--accent);
+            transition: width .5s var(--ease);
+        }
+
+        .wizard-step-head {
+            margin-bottom: 40px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid var(--line);
+        }
+        .wizard-step-head h2 {
+            font-family: var(--f-display);
+            font-size: clamp(28px, 4vw, 42px);
+            font-weight: 500;
+            letter-spacing: -.04em;
+            line-height: 1.1;
+            margin: 14px 0 10px;
+        }
+        .wizard-step-head h2 em {
+            font-family: var(--f-serif);
+            font-style: italic;
+            font-weight: 400;
+        }
+        .wizard-step-head p {
+            font-size: 15px;
+            color: var(--muted);
+            max-width: 640px;
+        }
+
+        /* ============================================================
+           ФОРМА
+           ============================================================ */
+        .form-section {
+            margin-bottom: 40px;
+            padding-bottom: 32px;
+            border-bottom: 1px solid var(--line);
+        }
+        .form-section:last-of-type { border-bottom: none; }
+        .form-section-title {
+            font-family: var(--f-mono);
+            font-size: 11px;
+            letter-spacing: .16em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 20px;
+            display: flex; align-items: center; gap: 12px;
+        }
+        .form-section-title::before {
+            content: "";
+            width: 20px; height: 1px;
+            background: var(--accent);
+        }
+
+        .form-row { margin-bottom: 20px; }
+        .form-row:last-child { margin-bottom: 0; }
+        .form-label {
+            display: block;
+            font-family: var(--f-mono);
+            font-size: 10px;
+            letter-spacing: .14em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 10px;
+        }
+        .form-input,
+        .form-select,
+        .form-textarea {
+            width: 100%;
+            padding: 14px 18px;
+            font-family: var(--f-text);
+            font-size: 16px;
+            color: var(--ink);
+            background: var(--paper);
+            border: 1px solid var(--line-strong);
+            border-radius: 2px;
+            transition: border-color .3s var(--ease), background .3s var(--ease), box-shadow .3s var(--ease);
+            appearance: none;
+            -webkit-appearance: none;
+        }
+        .form-input:hover,
+        .form-select:hover,
+        .form-textarea:hover { border-color: rgba(14,14,14,.35); }
+        .form-input:focus,
+        .form-select:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(193, 68, 14, .08);
+            background: var(--paper);
+        }
+        .form-input::placeholder,
+        .form-textarea::placeholder { color: var(--muted-2); }
+        .form-select {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23C1440E' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 18px center;
+            cursor: pointer;
+            padding-right: 42px;
+        }
+        .form-textarea { min-height: 100px; resize: vertical; }
+
+        /* Chip checkbox (возраст, платформы) */
+        .chip-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 16px;
+            background: var(--paper);
+            border: 1px solid var(--line-strong);
+            border-radius: 2px;
+            font-family: var(--f-mono);
+            font-size: 12px;
+            letter-spacing: .06em;
+            cursor: pointer;
+            transition: all .25s var(--ease);
+            user-select: none;
+        }
+        .chip:hover { border-color: var(--ink); }
+        .chip input { display: none; }
+        .chip:has(input:checked) {
+            background: var(--ink);
+            color: var(--paper);
+            border-color: var(--ink);
+        }
+        .chip:has(input:checked)::before {
+            content: "✓";
+            font-size: 11px;
+        }
+
+        /* ============================================================
+           ВОПРОСЫ
+           ============================================================ */
+        .question-block {
+            padding: 28px 0;
+            border-bottom: 1px solid var(--line);
+        }
+        .question-block:last-child { border-bottom: none; }
+        .question-text {
+            font-family: var(--f-display);
+            font-size: 19px;
+            font-weight: 500;
+            letter-spacing: -.015em;
+            line-height: 1.35;
+            margin-bottom: 18px;
+            display: flex; gap: 14px;
+        }
+        .question-num {
+            font-family: var(--f-mono);
+            font-size: 11px;
+            letter-spacing: .14em;
+            color: var(--accent);
+            padding-top: 4px;
+            flex-shrink: 0;
+        }
+        .option-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            padding-left: 26px;
+        }
+        .option-btn {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 14px 18px;
+            background: var(--paper);
+            border: 1px solid var(--line-strong);
+            border-radius: 2px;
+            font-family: var(--f-text);
+            font-size: 15px;
+            line-height: 1.5;
+            text-align: left;
+            color: var(--ink);
+            cursor: pointer;
+            transition: all .2s var(--ease);
+            width: 100%;
+        }
+        .option-btn:hover {
+            border-color: var(--ink);
+            background: rgba(14,14,14,.02);
+        }
+        .option-btn.selected {
+            border-color: var(--accent);
+            background: rgba(193, 68, 14, .06);
+        }
+        .option-dot {
+            width: 16px; height: 16px;
+            border-radius: 50%;
+            border: 1.5px solid var(--line-strong);
+            flex-shrink: 0;
+            margin-top: 3px;
+            position: relative;
+            transition: all .2s var(--ease);
+        }
+        .option-btn.selected .option-dot {
+            border-color: var(--accent);
+            background: var(--accent);
+        }
+        .option-btn.selected .option-dot::after {
+            content: "";
+            position: absolute;
+            inset: 3px;
+            border-radius: 50%;
+            background: var(--paper);
+        }
+
+        /* ============================================================
+           НАВИГАЦИЯ
+           ============================================================ */
+        .wizard-nav {
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 1px solid var(--line);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .wizard-nav-hint {
+            font-family: var(--f-mono);
+            font-size: 11px;
+            letter-spacing: .14em;
+            text-transform: uppercase;
+            color: var(--muted-2);
+        }
+        .wizard-nav-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+
+        /* ============================================================
+           РЕЗУЛЬТАТЫ
+           ============================================================ */
+        .results-hero {
+            text-align: center;
+            padding: 20px 0 50px;
+            border-bottom: 1px solid var(--line);
+            margin-bottom: 50px;
+        }
+        .results-score {
+            font-family: var(--f-display);
+            font-size: clamp(80px, 14vw, 160px);
+            font-weight: 600;
+            letter-spacing: -.06em;
+            line-height: .9;
+            color: var(--ink);
+            margin: 20px 0;
+        }
+        .results-score sup {
+            font-size: .35em;
+            color: var(--muted-2);
+            vertical-align: super;
+            letter-spacing: 0;
+            margin-left: 4px;
+        }
+        .results-level {
+            display: inline-block;
+            padding: 8px 18px;
+            border-radius: 2px;
+            font-family: var(--f-mono);
+            font-size: 11px;
+            letter-spacing: .14em;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+        .level-high { background: rgba(47, 125, 63, .12); color: var(--success); }
+        .level-medium { background: rgba(180, 117, 24, .12); color: var(--warning); }
+        .level-low { background: rgba(193, 68, 14, .1); color: var(--accent); }
+
+        .results-summary {
+            font-family: var(--f-serif);
+            font-style: italic;
+            font-size: 22px;
+            line-height: 1.5;
+            color: var(--ink);
+            max-width: 620px;
+            margin: 0 auto;
+        }
+
+        .category-bars {
+            margin-bottom: 60px;
+        }
+        .category-bar {
+            display: grid;
+            grid-template-columns: 220px 1fr 80px;
+            gap: 24px;
+            align-items: center;
+            padding: 18px 0;
+            border-bottom: 1px solid var(--line);
+        }
+        .category-bar:first-child { border-top: 1px solid var(--line); }
+        .category-bar-label {
+            font-family: var(--f-display);
+            font-size: 17px;
+            font-weight: 500;
+            letter-spacing: -.015em;
+        }
+        .category-bar-track {
+            height: 6px;
+            background: var(--line);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+        .category-bar-fill {
+            height: 100%;
+            background: var(--accent);
+            border-radius: 3px;
+            transition: width 1s var(--ease);
+        }
+        .category-bar-fill.high { background: var(--success); }
+        .category-bar-fill.medium { background: var(--warning); }
+        .category-bar-value {
+            font-family: var(--f-mono);
+            font-size: 12px;
+            letter-spacing: .1em;
+            text-align: right;
+            color: var(--muted);
+        }
+
+        .report-section {
+            margin-bottom: 50px;
+        }
+        .report-section h3 {
+            font-family: var(--f-display);
+            font-size: 26px;
+            font-weight: 500;
+            letter-spacing: -.03em;
+            margin-bottom: 24px;
+            padding-bottom: 14px;
+            border-bottom: 1px solid var(--line);
+        }
+        .report-section h3 em {
+            font-family: var(--f-serif);
+            font-style: italic;
+            font-weight: 400;
+            color: var(--accent);
+        }
+
+        .rec-card {
+            padding: 28px 32px;
+            background: var(--paper-2);
+            border-left: 2px solid var(--accent);
+            margin-bottom: 20px;
+        }
+        .rec-card-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            gap: 16px;
+            margin-bottom: 14px;
+            flex-wrap: wrap;
+        }
+        .rec-card-title {
+            font-family: var(--f-display);
+            font-size: 19px;
+            font-weight: 500;
+            letter-spacing: -.015em;
+        }
+        .rec-card-badge {
+            font-family: var(--f-mono);
+            font-size: 10px;
+            letter-spacing: .14em;
+            text-transform: uppercase;
+            padding: 4px 10px;
+            border-radius: 2px;
+            background: rgba(193, 68, 14, .1);
+            color: var(--accent);
+            white-space: nowrap;
+        }
+        .rec-card-badge.high { background: rgba(47, 125, 63, .12); color: var(--success); }
+        .rec-card-badge.medium { background: rgba(180, 117, 24, .12); color: var(--warning); }
+        .rec-card p.rec-problem {
+            font-size: 14px;
+            color: var(--muted);
+            margin-bottom: 16px;
+            line-height: 1.65;
+        }
+        .rec-fixes {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .rec-fixes li {
+            position: relative;
+            padding-left: 22px;
+            padding-bottom: 10px;
+            font-size: 14px;
+            line-height: 1.6;
+            color: var(--ink);
+        }
+        .rec-fixes li::before {
+            content: "";
+            position: absolute;
+            left: 0; top: 10px;
+            width: 10px; height: 1px;
+            background: var(--accent);
+        }
+
+        .strengths-list {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .strength-item {
+            padding: 24px;
+            border: 1px solid var(--line);
+            border-radius: 2px;
+            background: var(--paper);
+        }
+        .strength-item h4 {
+            font-family: var(--f-display);
+            font-size: 17px;
+            font-weight: 500;
+            letter-spacing: -.01em;
+            margin-bottom: 8px;
+        }
+        .strength-item p {
+            font-size: 13px;
+            color: var(--muted);
+            line-height: 1.6;
+        }
+
+        .results-actions {
+            margin-top: 50px;
+            padding-top: 40px;
+            border-top: 1px solid var(--line);
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .results-cta {
+            margin-top: 60px;
+            padding: 40px 44px;
+            background: var(--ink);
+            color: var(--paper);
+            border-radius: 2px;
+            text-align: center;
+        }
+        .results-cta h3 {
+            font-family: var(--f-display);
+            font-size: 28px;
+            font-weight: 500;
+            letter-spacing: -.025em;
+            margin-bottom: 12px;
+        }
+        .results-cta h3 em {
+            font-family: var(--f-serif);
+            font-style: italic;
+            font-weight: 400;
+            color: var(--accent-soft);
+        }
+        .results-cta p {
+            color: rgba(245, 242, 236, .68);
+            margin-bottom: 24px;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.7;
+        }
+        .results-cta .btn-accent {
+            background: var(--accent);
+            border-color: var(--accent);
+        }
+        .results-cta .btn-accent:hover {
+            background: var(--paper);
+            color: var(--ink);
+            border-color: var(--paper);
+        }
+
+        /* ============================================================
+           FOOTER
+           ============================================================ */
+        .site-footer {
+            padding: 40px 0;
+            background: var(--ink);
+            color: rgba(245,242,236,.65);
+            margin-top: 80px;
+        }
+        .site-footer .container {
+            display: flex; justify-content: space-between; align-items: center;
+            gap: 20px; flex-wrap: wrap;
+            font-family: var(--f-mono);
+            font-size: 11px;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+        }
+        .site-footer a {
+            text-decoration: none;
+            color: rgba(245,242,236,.65);
+            transition: color .2s;
+        }
+        .site-footer a:hover { color: var(--paper); }
+
+        /* ============================================================
+           УТИЛИТЫ
+           ============================================================ */
+        .hidden { display: none !important; }
+
+        /* ============================================================
+           АДАПТИВНОСТЬ
+           ============================================================ */
+        @media (max-width: 900px) {
+            .mode-grid { grid-template-columns: 1fr; }
+            .category-bar { grid-template-columns: 1fr; gap: 8px; }
+            .category-bar-value { text-align: left; }
+            .strengths-list { grid-template-columns: 1fr; }
+            .results-cta { padding: 32px 24px; }
+        }
+
+        @media (max-width: 720px) {
+            .container, .container-narrow { padding: 0 20px; }
+            .tool-hero { padding: 120px 0 50px; }
+            .wizard-section { padding: 40px 0 70px; }
+            .wizard-step-head h2 { font-size: 26px; }
+            .question-text { font-size: 17px; }
+            .option-list { padding-left: 0; }
+            .rec-card { padding: 22px 22px; }
+            .btn-tools { padding: 10px 14px; font-size: 10px; }
+            .wizard-nav { flex-direction: column; align-items: stretch; }
+            .wizard-nav-hint { text-align: center; }
+            .wizard-nav-actions { flex-direction: column; }
+            .wizard-nav-actions .btn { justify-content: center; }
+            .results-actions { flex-direction: column; }
+            .results-actions .btn { justify-content: center; }
+        }
+
+        /* ============================================================
+           ПЕЧАТЬ (резервный вариант для PDF)
+           ============================================================ */
+        @media print {
+            .site-header, .site-footer, .results-actions, .results-cta, .mode-section, .tool-hero { display: none !important; }
+            body { background: #fff; }
+            .wizard-section { padding: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ХЕДЕР -->
+    <header class="site-header">
+        <div class="container">
+            <a href="index.html" class="logo">Viktor <em>Willmann</em></a>
+            <div class="header-actions">
+                <a href="tools.html" class="btn-tools">Инструменты заказчика</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- HERO -->
+    <section class="tool-hero" id="intro-section">
+        <div class="container-narrow">
+            <span class="eyebrow">Инструмент · Аудит SMM</span>
+            <h1>Проверьте продвижение <em>в соцсетях</em></h1>
+            <p class="lead">
+                Ответьте на вопросы о вашем товаре или услуге — и получите персональный отчёт:
+                оценку по 5 категориям, сильные стороны, зоны роста и конкретные рекомендации.
+                Без регистрации, без сбора данных. Результат можно скачать в PDF.
+            </p>
+
+            <div class="tool-meta">
+                <div class="tool-meta-item">
+                    <span>Время</span>
+                    <span>5–7 минут</span>
+                </div>
+                <div class="tool-meta-item">
+                    <span>Вопросов</span>
+                    <span>10–20</span>
+                </div>
+                <div class="tool-meta-item">
+                    <span>Категорий</span>
+                    <span>5</span>
+                </div>
+                <div class="tool-meta-item">
+                    <span>Стоимость</span>
+                    <span>Бесплатно</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ВЫБОР РЕЖИМА -->
+    <section class="mode-section">
+        <div class="container-narrow">
+            <h2>Выберите режим прохождения</h2>
+            <div class="mode-grid">
+                <button class="mode-card" data-mode="extended" type="button">
+                    <span class="mode-num">01 · Расширенный</span>
+                    <h3>Я <em>маркетолог</em></h3>
+                    <p>Глубокая диагностика по 5 категориям: контент, визуал, вовлечённость, реклама, аналитика. 20 вопросов, детальный отчёт с приоритезацией.</p>
+                    <span class="mode-hint">Для специалистов →</span>
+                </button>
+                <button class="mode-card" data-mode="simple" type="button">
+                    <span class="mode-num">02 · Упрощённый</span>
+                    <h3>Я <em>владелец бизнеса</em></h3>
+                    <p>Понятные вопросы без терминов. 10 вопросов, конкретные пошаговые советы. Подходит, если вы только начинаете разбираться в SMM.</p>
+                    <span class="mode-hint">Для новичков →</span>
+                </button>
+            </div>
+
+            <div class="intro-actions">
+                <button class="btn btn-accent" id="start-btn" disabled>
+                    Начать аудит <span class="btn-arrow">→</span>
+                </button>
+                <span class="wizard-nav-hint" id="mode-hint">Сначала выберите режим</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- WIZARD -->
+    <section class="wizard-section hidden" id="wizard-section">
+        <div class="container-narrow">
+            <div class="wizard-progress-wrap">
+                <span class="wizard-progress-label" id="progress-label">Шаг 1 из 7</span>
+                <div class="wizard-progress-bar">
+                    <div class="wizard-progress-fill" id="progress-fill" style="width: 0%"></div>
+                </div>
+            </div>
+
+            <div id="wizard-content"></div>
+
+            <div class="wizard-nav" id="wizard-nav">
+                <span class="wizard-nav-hint" id="nav-hint">Выберите вариант, чтобы продолжить</span>
+                <div class="wizard-nav-actions">
+                    <button class="btn btn-outline" id="back-btn" type="button">← Назад</button>
+                    <button class="btn btn-accent" id="next-btn" type="button" disabled>
+                        Далее <span class="btn-arrow">→</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="site-footer">
+        <div class="container">
+            <span>© 2026 Viktor Willmann</span>
+            <span>Аудит SMM · Инструмент</span>
+            <a href="index.html">На главную ↑</a>
+        </div>
+    </footer>
+
+    <script>
+        // ============================================================
+        // ДАННЫЕ: КАТЕГОРИИ И ВОПРОСЫ
+        // ============================================================
+        const CATEGORIES = [
+            { id: 'content', num: '01', title: 'Контент-стратегия', desc: 'План, tone of voice, работа с UGC' },
+            { id: 'visual', num: '02', title: 'Визуальное оформление', desc: 'Качество фото, единый стиль, адаптация' },
+            { id: 'engagement', num: '03', title: 'Вовлечённость и коммуникация', desc: 'Скорость ответа, негатив, конкурсы' },
+            { id: 'ads', num: '04', title: 'Таргетированная реклама', desc: 'Бюджет, настройки, A/B тесты' },
+            { id: 'analytics', num: '05', title: 'Аналитика и метрики', desc: 'KPI, отчётность, LTV и CAC' }
+        ];
+
+        const QUESTIONS = {
+            content: {
+                extended: [
+                    { id: 'content_plan', text: 'Есть ли у вас утверждённый контент-план на месяц?', options: [
+                        { text: 'Нет, публикуем спонтанно', value: 0 },
+                        { text: 'Есть примерный список идей', value: 2 },
+                        { text: 'Да, но соблюдаем не всегда', value: 3 },
+                        { text: 'Да, есть подробный план на 1–3 месяца вперёд', value: 5 }
+                    ]},
+                    { id: 'content_ratio', text: 'Какое соотношение продающего и полезного/развлекательного контента?', options: [
+                        { text: 'Только продающий', value: 0 },
+                        { text: 'В основном продающий', value: 2 },
+                        { text: 'Примерно 50/50', value: 3 },
+                        { text: 'Сбалансировано: ~30% продающий, 70% полезный', value: 5 }
+                    ]},
+                    { id: 'content_voice', text: 'Описан ли ваш tone of voice (единый стиль общения с аудиторией)?', options: [
+                        { text: 'Нет, пишем как получается', value: 0 },
+                        { text: 'Есть общее понимание', value: 2 },
+                        { text: 'Есть документ, но не все следуют', value: 3 },
+                        { text: 'Да, есть гайд и все ему следуют', value: 5 }
+                    ]},
+                    { id: 'content_ugc', text: 'Используете ли вы UGC (контент пользователей: отзывы, обзоры)?', options: [
+                        { text: 'Нет', value: 0 },
+                        { text: 'Иногда репостим', value: 2 },
+                        { text: 'Регулярно собираем и публикуем', value: 3 },
+                        { text: 'Системно работаем с UGC (конкурсы, отзывы, обзоры)', value: 5 }
+                    ]}
+                ],
+                simple: [
+                    { id: 'content_plan_s', text: 'Вы заранее планируете, что будете публиковать?', options: [
+                        { text: 'Нет, публикуем как получится', value: 0 },
+                        { text: 'Иногда планируем', value: 4 },
+                        { text: 'Да, всегда есть план', value: 10 }
+                    ]},
+                    { id: 'content_ratio_s', text: 'Публикуете ли вы не только продающий, но и полезный контент?', options: [
+                        { text: 'Только продающий — подписчикам неинтересно', value: 0 },
+                        { text: 'Иногда что-то полезное', value: 4 },
+                        { text: 'Да, стараемся балансировать', value: 10 }
+                    ]}
+                ]
+            },
+            visual: {
+                extended: [
+                    { id: 'visual_quality', text: 'Насколько качественные фото и видео в ваших публикациях?', options: [
+                        { text: 'Снимаем на телефон без обработки', value: 0 },
+                        { text: 'Обрабатываем, но не системно', value: 2 },
+                        { text: 'Стараемся делать хорошо', value: 3 },
+                        { text: 'Профессиональная съёмка и обработка', value: 5 }
+                    ]},
+                    { id: 'visual_style', text: 'Есть ли единый визуальный стиль (цвета, шрифты, фильтры)?', options: [
+                        { text: 'Нет', value: 0 },
+                        { text: 'Иногда стараемся', value: 2 },
+                        { text: 'Есть, но не всегда соблюдаем', value: 3 },
+                        { text: 'Да, есть брендбук и все ему следуют', value: 5 }
+                    ]},
+                    { id: 'visual_profile', text: 'Как оформлены обложки, аватары, шапки профиля?', options: [
+                        { text: 'Не оформлены', value: 0 },
+                        { text: 'Есть базовое оформление', value: 2 },
+                        { text: 'Всё оформлено в едином стиле', value: 5 }
+                    ]},
+                    { id: 'visual_adapt', text: 'Адаптируете ли визуал под каждую платформу?', options: [
+                        { text: 'Используем одинаковый контент везде', value: 0 },
+                        { text: 'Иногда адаптируем', value: 2 },
+                        { text: 'Стараемся адаптировать', value: 3 },
+                        { text: 'Всегда адаптируем под формат площадки', value: 5 }
+                    ]}
+                ],
+                simple: [
+                    { id: 'visual_quality_s', text: 'Как вы оцениваете качество фото и видео в соцсетях?', options: [
+                        { text: 'Так себе, снимаем на телефон', value: 0 },
+                        { text: 'Нормально, но можно лучше', value: 4 },
+                        { text: 'Отлично — профессиональная съёмка', value: 10 }
+                    ]},
+                    { id: 'visual_style_s', text: 'Выглядит ли ваш профиль единообразно и узнаваемо?', options: [
+                        { text: 'Нет, всё вразнобой', value: 0 },
+                        { text: 'Частично', value: 4 },
+                        { text: 'Да, есть свой стиль', value: 10 }
+                    ]}
+                ]
+            },
+            engagement: {
+                extended: [
+                    { id: 'eng_speed', text: 'Как быстро вы отвечаете на комментарии и сообщения?', options: [
+                        { text: 'Не отвечаем или через неделю', value: 0 },
+                        { text: 'В течение 1–2 дней', value: 2 },
+                        { text: 'В течение дня', value: 3 },
+                        { text: 'В течение 1–2 часов', value: 5 }
+                    ]},
+                    { id: 'eng_neg', text: 'Как вы работаете с негативными отзывами?', options: [
+                        { text: 'Удаляем или игнорируем', value: 0 },
+                        { text: 'Отвечаем шаблонно', value: 2 },
+                        { text: 'Стараемся разобраться в каждой ситуации', value: 3 },
+                        { text: 'Есть регламент работы с негативом', value: 5 }
+                    ]},
+                    { id: 'eng_contests', text: 'Проводите ли конкурсы и активности?', options: [
+                        { text: 'Нет', value: 0 },
+                        { text: 'Редко, раз в полгода', value: 2 },
+                        { text: 'Регулярно, 1–2 раза в квартал', value: 3 },
+                        { text: 'Ежемесячно, с продуманной механикой', value: 5 }
+                    ]},
+                    { id: 'eng_influencers', text: 'Работаете ли с лидерами мнений (блогерами, экспертами)?', options: [
+                        { text: 'Нет', value: 0 },
+                        { text: 'Пробовали 1–2 раза', value: 2 },
+                        { text: 'Регулярно работаем', value: 3 },
+                        { text: 'Есть долгосрочные партнёрства', value: 5 }
+                    ]}
+                ],
+                simple: [
+                    { id: 'eng_speed_s', text: 'Как быстро вы отвечаете подписчикам?', options: [
+                        { text: 'Долго или не отвечаем', value: 0 },
+                        { text: 'В течение дня', value: 4 },
+                        { text: 'Быстро, в течение часа', value: 10 }
+                    ]},
+                    { id: 'eng_activity_s', text: 'Проводите ли вы конкурсы, опросы, активности?', options: [
+                        { text: 'Нет', value: 0 },
+                        { text: 'Иногда', value: 4 },
+                        { text: 'Регулярно', value: 10 }
+                    ]}
+                ]
+            },
+            ads: {
+                extended: [
+                    { id: 'ads_budget', text: 'Используете ли вы платное продвижение?', options: [
+                        { text: 'Нет, только органика', value: 0 },
+                        { text: 'Иногда, ситуативно', value: 2 },
+                        { text: 'Регулярно, есть бюджет', value: 3 },
+                        { text: 'Есть стратегия и постоянный бюджет', value: 5 }
+                    ]},
+                    { id: 'ads_targeting', text: 'Насколько глубоко настраиваете таргетинг?', options: [
+                        { text: 'Не настраиваем', value: 0 },
+                        { text: 'Базовые настройки', value: 2 },
+                        { text: 'Глубокие настройки по аудиториям', value: 3 },
+                        { text: 'Мультиканальные кампании с оптимизацией', value: 5 }
+                    ]},
+                    { id: 'ads_ab', text: 'Проводите ли A/B тесты рекламных креативов?', options: [
+                        { text: 'Нет', value: 0 },
+                        { text: 'Редко', value: 2 },
+                        { text: 'Регулярно', value: 5 }
+                    ]},
+                    { id: 'ads_retarget', text: 'Используете ли ретаргетинг?', options: [
+                        { text: 'Нет', value: 0 },
+                        { text: 'Пробовали', value: 2 },
+                        { text: 'Да, регулярно', value: 5 }
+                    ]}
+                ],
+                simple: [
+                    { id: 'ads_budget_s', text: 'Используете ли вы платную рекламу в соцсетях?', options: [
+                        { text: 'Нет, только бесплатные публикации', value: 0 },
+                        { text: 'Иногда запускаем', value: 4 },
+                        { text: 'Да, регулярно', value: 10 }
+                    ]},
+                    { id: 'ads_setup_s', text: 'Насколько продуманы настройки рекламы?', options: [
+                        { text: 'Не разбираемся, запускаем «как есть»', value: 0 },
+                        { text: 'Базово настраиваем', value: 4 },
+                        { text: 'Хорошо разбираемся в настройках', value: 10 }
+                    ]}
+                ]
+            },
+            analytics: {
+                extended: [
+                    { id: 'an_kpi', text: 'Отслеживаете ли вы KPI (CTR, ER, конверсия)?', options: [
+                        { text: 'Нет, не знаем этих метрик', value: 0 },
+                        { text: 'Знаем, но не отслеживаем', value: 2 },
+                        { text: 'Отслеживаем основные', value: 3 },
+                        { text: 'Ведём полную аналитику по воронке', value: 5 }
+                    ]},
+                    { id: 'an_competitors', text: 'Анализируете ли вы конкурентов?', options: [
+                        { text: 'Нет', value: 0 },
+                        { text: 'Иногда смотрим', value: 2 },
+                        { text: 'Регулярно мониторим', value: 3 },
+                        { text: 'Есть системный конкурентный анализ', value: 5 }
+                    ]},
+                    { id: 'an_reports', text: 'Есть ли у вас отчётность по соцсетям?', options: [
+                        { text: 'Нет', value: 0 },
+                        { text: 'Иногда смотрим статистику', value: 2 },
+                        { text: 'Ежемесячные отчёты', value: 3 },
+                        { text: 'Полноценные дашборды', value: 5 }
+                    ]},
+                    { id: 'an_ltv', text: 'Знаете ли вы LTV и CAC ваших клиентов?', options: [
+                        { text: 'Нет', value: 0 },
+                        { text: 'Слышали, но не считаем', value: 2 },
+                        { text: 'Считаем примерно', value: 3 },
+                        { text: 'Точно знаем и оптимизируем', value: 5 }
+                    ]}
+                ],
+                simple: [
+                    { id: 'an_kpi_s', text: 'Смотрите ли вы статистику своих публикаций?', options: [
+                        { text: 'Нет, не смотрим', value: 0 },
+                        { text: 'Иногда заглядываем', value: 4 },
+                        { text: 'Да, регулярно анализируем', value: 10 }
+                    ]},
+                    { id: 'an_results_s', text: 'Понимаете ли вы, какие публикации приводят клиентов?', options: [
+                        { text: 'Нет, не отслеживаем', value: 0 },
+                        { text: 'Примерно догадываемся', value: 4 },
+                        { text: 'Да, точно знаем', value: 10 }
+                    ]}
+                ]
+            }
+        };
+
+        const RECOMMENDATIONS = {
+            content: {
+                low: { problem: 'Контент публикуется бессистемно. Аудитория не понимает, чего ждать от блога, а вы не можете планировать ресурсы.', fixes: [
+                    'Составьте контент-план на месяц вперёд (Notion, Trello или Google Sheets)',
+                    'Определите 3–4 рубрики и распределите посты по ним',
+                    'Заведите гайд tone of voice — как вы общаетесь с аудиторией',
+                    'Начните собирать и публиковать отзывы клиентов (UGC)'
+                ]},
+                medium: { problem: 'Контент есть, но ему не хватает системы и баланса. Часть аудитории не вовлекается.', fixes: [
+                    'Пересмотрите соотношение контента: 70% полезного, 30% продающего',
+                    'Формализуйте tone of voice и закрепите его в гайде',
+                    'Добавьте рубрику с UGC: отзывы, кейсы, обзоры',
+                    'Запланируйте контент на 2–3 месяца вперёд'
+                ]},
+                high: { problem: 'Контент-стратегия выстроена хорошо. Задача — удерживать уровень и масштабировать.', fixes: [
+                    'Внедрите A/B тесты форматов (карусель, видео, сторис)',
+                    'Добавьте долгосрочные рубрики с сериями публикаций',
+                    'Усильте работу с UGC: конкурсы, обзоры, клиентские истории',
+                    'Тестируйте новые площадки для расширения охвата'
+                ]}
+            },
+            visual: {
+                low: { problem: 'Визуал не формирует узнаваемость бренда. Профиль выглядит как набор случайных публикаций.', fixes: [
+                    'Создайте простой брендбук: 2–3 цвета, шрифты, фильтр для фото',
+                    'Оформите обложки, аватары и шапки в едином стиле',
+                    'Начните с базовой обработки фото (свет, кадрирование, единый фильтр)',
+                    'Адаптируйте визуал под каждую площадку (размеры, форматы)'
+                ]},
+                medium: { problem: 'Стиль есть, но соблюдается не всегда. Часть публикаций выбивается из общей картины.', fixes: [
+                    'Закрепите визуальные правила в мини-гайде для всех, кто готовит контент',
+                    'Внедрите шаблоны для типовых публикаций (Canva или Figma)',
+                    'Проведите аудит последних 20 постов — что выбивается из стиля?',
+                    'Добавьте фирменные элементы: рамки, плашки, шрифтовые акценты'
+                ]},
+                high: { problem: 'Визуал сильный, узнаваемый. Стоит поддерживать и экспериментировать аккуратно.', fixes: [
+                    'Тестируйте новые форматы: Reels, карусели, короткие видео',
+                    'Добавьте премиальные элементы: профессиональная съёмка, motion-дизайн',
+                    'Следите за трендами и адаптируйте их под бренд',
+                    'Собирайте метрики: какие визуалы дают больше охвата'
+                ]}
+            },
+            engagement: {
+                low: { problem: 'Коммуникация с аудиторией почти не выстроена. Подписчики не чувствуют отклика.', fixes: [
+                    'Установите регламент: отвечать на комментарии в течение 2–4 часов',
+                    'Разработайте скрипты ответов на частые вопросы и негатив',
+                    'Запустите простую активность: опрос или конкурс с призом',
+                    'Назначьте ответственного за коммуникацию в соцсетях'
+                ]},
+                medium: { problem: 'Диалог с аудиторией есть, но не хватает системы и регулярности.', fixes: [
+                    'Введите KPI по скорости ответа и вовлечённости',
+                    'Проводите активности ежемесячно (опросы, конкурсы, прямые эфиры)',
+                    'Начните работать с 2–3 микро-инфлюенсерами в вашей нише',
+                    'Собирайте обратную связь от подписчиков и внедряйте её'
+                ]},
+                high: { problem: 'Коммуникация выстроена отлично. Аудитория вовлечена и лояльна.', fixes: [
+                    'Развивайте комьюнити: чат, закрытый клуб, регулярные активности',
+                    'Углубляйте работу с лидерами мнений — долгосрочные контракты',
+                    'Внедряйте программы лояльности для активных подписчиков',
+                    'Используйте амбассадоров бренда из числа клиентов'
+                ]}
+            },
+            ads: {
+                low: { problem: 'Платное продвижение не используется или используется хаотично. Рост зависит только от органики.', fixes: [
+                    'Определите минимальный бюджет для теста (например, 10–15 тыс. руб. в месяц)',
+                    'Запустите 2–3 тестовые кампании с разными креативами',
+                    'Настройте базовый пиксель и ретаргетинг',
+                    'Изучите основы таргетинга: аудитории, интересы, look-alike'
+                ]},
+                medium: { problem: 'Реклама есть, но без глубокой оптимизации. Бюджет расходуется неэффективно.', fixes: [
+                    'Настройте A/B тесты: минимум 2 варианта креатива на кампанию',
+                    'Добавьте ретаргетинг на посетителей сайта и подписчиков',
+                    'Сегментируйте аудитории: холодная, тёплая, горячая',
+                    'Ведите таблицу кампаний с метриками (CTR, CPC, CR)'
+                ]},
+                high: { problem: 'Реклама работает системно. Задача — масштабировать и снижать стоимость заявки.', fixes: [
+                    'Тестируйте новые каналы: Telegram Ads, Дзен, Rutube',
+                    'Внедрите сквозную аналитику для оценки ROI',
+                    'Оптимизируйте воронку: от клика до покупки',
+                    'Работайте с look-alike аудиториями на основе покупателей'
+                ]}
+            },
+            analytics: {
+                low: { problem: 'Вы не отслеживаете результаты. Решения принимаются интуитивно, а бюджеты расходуются вслепую.', fixes: [
+                    'Начните смотреть встроенную статистику каждой площадки',
+                    'Заведите простую таблицу: дата, публикация, охват, вовлечённость',
+                    'Определите 3–5 ключевых метрик для отслеживания',
+                    'Раз в месяц анализируйте, что сработало, а что нет'
+                ]},
+                medium: { problem: 'Часть метрик отслеживается, но нет единой картины и системной отчётности.', fixes: [
+                    'Соберите дашборд (Google Sheets или Looker Studio)',
+                    'Отслеживайте воронку: охват → вовлечение → переход → заявка',
+                    'Введите ежемесячную отчётность по KPI',
+                    'Добавьте анализ конкурентов в регулярный процесс'
+                ]},
+                high: { problem: 'Аналитика выстроена хорошо. Есть данные для принятия решений.', fixes: [
+                    'Внедрите сквозную аналитику (CRM + соцсети)',
+                    'Считайте LTV и CAC по каналам — оптимизируйте самый прибыльный',
+                    'Используйте атрибуцию для точной оценки каналов',
+                    'Автоматизируйте отчёты и настройте алерты по метрикам'
+                ]}
+            }
+        };
+
+        // ============================================================
+        // СОСТОЯНИЕ
+        // ============================================================
+        const state = {
+            mode: null,
+            step: 0,
+            basic: { product: '', category: '', price: '', usp: '', ages: [], geo: '', btype: '', platforms: [] },
+            answers: {}
+        };
+
+        const STEPS = ['basic', 'content', 'visual', 'engagement', 'ads', 'analytics', 'results'];
+
+        // ============================================================
+        // DOM
+        // ============================================================
+        const introSection = document.getElementById('intro-section');
+        const modeSection = document.querySelector('.mode-section');
+        const wizardSection = document.getElementById('wizard-section');
+        const wizardContent = document.getElementById('wizard-content');
+        const progressLabel = document.getElementById('progress-label');
+        const progressFill = document.getElementById('progress-fill');
+        const backBtn = document.getElementById('back-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const navHint = document.getElementById('nav-hint');
+        const startBtn = document.getElementById('start-btn');
+        const modeHint = document.getElementById('mode-hint');
+
+        // ============================================================
+        // ВЫБОР РЕЖИМА
+        // ============================================================
+        document.querySelectorAll('.mode-card').forEach(card => {
+            card.addEventListener('click', () => {
+                document.querySelectorAll('.mode-card').forEach(c => c.classList.remove('active'));
+                card.classList.add('active');
+                state.mode = card.getAttribute('data-mode');
+                startBtn.disabled = false;
+                modeHint.textContent = state.mode === 'extended' ? 'Выбран расширенный режим' : 'Выбран упрощённый режим';
+            });
+        });
+
+        startBtn.addEventListener('click', () => {
+            if (!state.mode) return;
+            state.step = 0;
+            modeSection.classList.add('hidden');
+            introSection.classList.add('hidden');
+            wizardSection.classList.remove('hidden');
+            renderStep();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        backBtn.addEventListener('click', () => {
+            if (state.step === 0) {
+                wizardSection.classList.add('hidden');
+                modeSection.classList.remove('hidden');
+                introSection.classList.remove('hidden');
+                return;
+            }
+            state.step--;
+            renderStep();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        nextBtn.addEventListener('click', () => {
+            if (state.step < STEPS.length - 1) {
+                state.step++;
+                renderStep();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        });
+
+        // ============================================================
+        // РЕНДЕР ШАГА
+        // ============================================================
+        function renderStep() {
+            const stepId = STEPS[state.step];
+            const totalSteps = STEPS.length;
+            const stepNum = state.step + 1;
+
+            progressLabel.textContent = `Шаг ${stepNum} из ${totalSteps}`;
+            progressFill.style.width = `${(stepNum / totalSteps) * 100}%`;
+            backBtn.textContent = state.step === 0 ? '← К выбору режима' : '← Назад';
+            backBtn.disabled = false;
+
+            if (stepId === 'results') {
+                nextBtn.classList.add('hidden');
+                navHint.textContent = '';
+                renderResults();
+                return;
+            }
+
+            nextBtn.classList.remove('hidden');
+            nextBtn.disabled = true;
+            navHint.textContent = stepId === 'basic' ? 'Заполните информацию о товаре' : 'Ответьте на все вопросы';
+
+            if (stepId === 'basic') {
+                renderBasic();
+            } else {
+                const category = CATEGORIES.find(c => c.id === stepId);
+                renderCategory(category);
+            }
+        }
+
+        // ============================================================
+        // РЕНДЕР: BASIC
+        // ============================================================
+        function renderBasic() {
+            wizardContent.innerHTML = `
+                <div class="wizard-step-head">
+                    <span class="eyebrow">Информация о продукте</span>
+                    <h2>Расскажите <em>о товаре или услуге</em></h2>
+                    <p>Эти данные помогут сделать отчёт более персональным. Всё остаётся в вашем браузере.</p>
+                </div>
+
+                <div class="form-section">
+                    <div class="form-section-title">Основное</div>
+                    <div class="form-row">
+                        <label class="form-label" for="basic-product">Название товара или услуги</label>
+                        <input type="text" id="basic-product" class="form-input" placeholder="Например: онлайн-школа английского" value="${escapeHtml(state.basic.product)}">
+                    </div>
+                    <div class="form-row">
+                        <label class="form-label" for="basic-category">Категория</label>
+                        <select id="basic-category" class="form-select">
+                            <option value="">— Выберите —</option>
+                            <option value="Товар" ${state.basic.category === 'Товар' ? 'selected' : ''}>Товар</option>
+                            <option value="Услуга" ${state.basic.category === 'Услуга' ? 'selected' : ''}>Услуга</option>
+                            <option value="Информационный продукт" ${state.basic.category === 'Информационный продукт' ? 'selected' : ''}>Информационный продукт</option>
+                            <option value="Личный бренд" ${state.basic.category === 'Личный бренд' ? 'selected' : ''}>Личный бренд</option>
+                        </select>
+                    </div>
+                    <div class="form-row">
+                        <label class="form-label" for="basic-price">Ценовой сегмент</label>
+                        <select id="basic-price" class="form-select">
+                            <option value="">— Выберите —</option>
+                            <option value="Эконом" ${state.basic.price === 'Эконом' ? 'selected' : ''}>Эконом</option>
+                            <option value="Средний" ${state.basic.price === 'Средний' ? 'selected' : ''}>Средний</option>
+                            <option value="Премиум" ${state.basic.price === 'Премиум' ? 'selected' : ''}>Премиум</option>
+                            <option value="Люкс" ${state.basic.price === 'Люкс' ? 'selected' : ''}>Люкс</option>
+                        </select>
+                    </div>
+                    <div class="form-row">
+                        <label class="form-label" for="basic-usp">УТП — чем вы отличаетесь от конкурентов</label>
+                        <textarea id="basic-usp" class="form-textarea" placeholder="Например: единственная школа с носителями языка и гарантией результата за 3 месяца">${escapeHtml(state.basic.usp)}</textarea>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <div class="form-section-title">Целевая аудитория</div>
+                    <div class="form-row">
+                        <label class="form-label">Возрастные группы (можно несколько)</label>
+                        <div class="chip-group">
+                            ${['13–17', '18–24', '25–34', '35–44', '45–54', '55+'].map(age => `
+                                <label class="chip">
+                                    <input type="checkbox" data-age="${age}" ${state.basic.ages.includes(age) ? 'checked' : ''}>
+                                    ${age}
+                                </label>
+                            `).join('')}
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <label class="form-label" for="basic-geo">География</label>
+                        <select id="basic-geo" class="form-select">
+                            <option value="">— Выберите —</option>
+                            <option value="Город" ${state.basic.geo === 'Город' ? 'selected' : ''}>Город</option>
+                            <option value="Регион" ${state.basic.geo === 'Регион' ? 'selected' : ''}>Регион</option>
+                            <option value="Страна" ${state.basic.geo === 'Страна' ? 'selected' : ''}>Страна</option>
+                            <option value="Международный" ${state.basic.geo === 'Международный' ? 'selected' : ''}>Международный</option>
+                        </select>
+                    </div>
+                    <div class="form-row">
+                        <label class="form-label" for="basic-btype">Тип аудитории</label>
+                        <select id="basic-btype" class="form-select">
+                            <option value="">— Выберите —</option>
+                            <option value="B2C" ${state.basic.btype === 'B2C' ? 'selected' : ''}>B2C — конечные потребители</option>
+                            <option value="B2B" ${state.basic.btype === 'B2B' ? 'selected' : ''}>B2B — компании</option>
+                            <option value="B2G" ${state.basic.btype === 'B2G' ? 'selected' : ''}>B2G — госсектор</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <div class="form-section-title">Платформы</div>
+                    <div class="form-row">
+                        <label class="form-label">Где вы присутствуете (можно несколько)</label>
+                        <div class="chip-group">
+                            ${['ВКонтакте', 'Telegram', 'YouTube', 'Дзен', 'Pinterest', 'Rutube', 'Одноклассники', 'Instagram', 'TikTok'].map(p => `
+                                <label class="chip">
+                                    <input type="checkbox" data-platform="${p}" ${state.basic.platforms.includes(p) ? 'checked' : ''}>
+                                    ${p}
+                                </label>
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            wizardContent.querySelector('#basic-product').addEventListener('input', e => {
+                state.basic.product = e.target.value;
+                validateBasic();
+            });
+            wizardContent.querySelector('#basic-category').addEventListener('change', e => {
+                state.basic.category = e.target.value;
+                validateBasic();
+            });
+            wizardContent.querySelector('#basic-price').addEventListener('change', e => {
+                state.basic.price = e.target.value;
+                validateBasic();
+            });
+            wizardContent.querySelector('#basic-usp').addEventListener('input', e => {
+                state.basic.usp = e.target.value;
+            });
+            wizardContent.querySelector('#basic-geo').addEventListener('change', e => {
+                state.basic.geo = e.target.value;
+            });
+            wizardContent.querySelector('#basic-btype').addEventListener('change', e => {
+                state.basic.btype = e.target.value;
+            });
+
+            wizardContent.querySelectorAll('[data-age]').forEach(cb => {
+                cb.addEventListener('change', () => {
+                    const age = cb.getAttribute('data-age');
+                    if (cb.checked) {
+                        if (!state.basic.ages.includes(age)) state.basic.ages.push(age);
+                    } else {
+                        state.basic.ages = state.basic.ages.filter(a => a !== age);
+                    }
+                });
+            });
+
+            wizardContent.querySelectorAll('[data-platform]').forEach(cb => {
+                cb.addEventListener('change', () => {
+                    const p = cb.getAttribute('data-platform');
+                    if (cb.checked) {
+                        if (!state.basic.platforms.includes(p)) state.basic.platforms.push(p);
+                    } else {
+                        state.basic.platforms = state.basic.platforms.filter(x => x !== p);
+                    }
+                });
+            });
+
+            validateBasic();
+        }
+
+        function validateBasic() {
+            const valid = state.basic.product.trim().length > 1 && state.basic.category !== '';
+            nextBtn.disabled = !valid;
+            navHint.textContent = !valid ? 'Заполните название и категорию' : 'Можно переходить к вопросам';
+        }
+
+        // ============================================================
+        // РЕНДЕР: КАТЕГОРИЯ С ВОПРОСАМИ
+        // ============================================================
+        function renderCategory(category) {
+            const questions = QUESTIONS[category.id][state.mode];
+
+            wizardContent.innerHTML = `
+                <div class="wizard-step-head">
+                    <span class="eyebrow">Категория ${category.num} · ${questions.length} ${plural(questions.length, ['вопрос', 'вопроса', 'вопросов'])}</span>
+                    <h2>${category.title.replace(/(\S+)$/, '<em>$1</em>')}</h2>
+                    <p>${category.desc}</p>
+                </div>
+
+                <div id="questions-container">
+                    ${questions.map((q, idx) => `
+                        <div class="question-block" data-qid="${q.id}">
+                            <div class="question-text">
+                                <span class="question-num">${String(idx + 1).padStart(2, '0')}</span>
+                                <span>${q.text}</span>
+                            </div>
+                            <div class="option-list">
+                                ${q.options.map(opt => {
+                                    const isSelected = state.answers[q.id] === opt.value;
+                                    return `
+                                        <button type="button" class="option-btn ${isSelected ? 'selected' : ''}"
+                                            data-qid="${q.id}" data-value="${opt.value}">
+                                            <span class="option-dot"></span>
+                                            <span>${opt.text}</span>
+                                        </button>
+                                    `;
+                                }).join('')}
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+
+            wizardContent.querySelectorAll('.option-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const qid = btn.getAttribute('data-qid');
+                    const value = parseInt(btn.getAttribute('data-value'), 10);
+                    state.answers[qid] = value;
+                    wizardContent.querySelectorAll(`.option-btn[data-qid="${qid}"]`).forEach(b => b.classList.remove('selected'));
+                    btn.classList.add('selected');
+                    validateCategory(questions);
+                });
+            });
+
+            validateCategory(questions);
+        }
+
+        function validateCategory(questions) {
+            const allAnswered = questions.every(q => state.answers[q.id] !== undefined);
+            nextBtn.disabled = !allAnswered;
+            navHint.textContent = allAnswered
+                ? 'Отлично, можно продолжать'
+                : `Осталось ответить: ${questions.filter(q => state.answers[q.id] === undefined).length}`;
+        }
+
+        // ============================================================
+        // РАСЧЁТ
+        // ============================================================
+        function calculateResults() {
+            const categoryScores = {};
+            CATEGORIES.forEach(cat => {
+                const questions = QUESTIONS[cat.id][state.mode];
+                let earned = 0, max = 0;
+                questions.forEach(q => {
+                    const maxVal = Math.max(...q.options.map(o => o.value));
+                    max += maxVal;
+                    earned += state.answers[q.id] || 0;
+                });
+                const percent = max > 0 ? Math.round((earned / max) * 100) : 0;
+                categoryScores[cat.id] = {
+                    earned, max, percent,
+                    level: percent < 40 ? 'low' : percent < 75 ? 'medium' : 'high'
+                };
+            });
+            const totalPercent = Math.round(
+                CATEGORIES.reduce((sum, cat) => sum + categoryScores[cat.id].percent, 0) / CATEGORIES.length
+            );
+            return { categoryScores, totalPercent };
+        }
+
+        // ============================================================
+        // РЕНДЕР: РЕЗУЛЬТАТЫ
+        // ============================================================
+        function renderResults() {
+            const { categoryScores, totalPercent } = calculateResults();
+            const score10 = Math.round(totalPercent / 10);
+            const level = totalPercent < 40 ? 'low' : totalPercent < 75 ? 'medium' : 'high';
+            const levelLabels = { low: 'Требуется работа', medium: 'Есть куда расти', high: 'Хороший уровень' };
+
+            const sorted = [...CATEGORIES].sort((a, b) => categoryScores[a.id].percent - categoryScores[b.id].percent);
+            const weakest = sorted.slice(0, 3);
+            const strongest = sorted.slice(-2).reverse();
+
+            const summaryText = level === 'low'
+                ? 'Базовые процессы SMM пока не выстроены. Начните с главного — это даст быстрый эффект.'
+                : level === 'medium'
+                    ? 'Основа заложена, но есть заметные зоны роста. Точечные улучшения дадут ощутимый результат.'
+                    : 'Уровень выше среднего. Стоит удерживать стандарт и масштабировать то, что работает.';
+
+            wizardContent.innerHTML = `
+                <div class="results-hero">
+                    <span class="eyebrow">Аудит завершён</span>
+                    <div class="results-score">${score10}<sup>/10</sup></div>
+                    <span class="results-level level-${level}">${levelLabels[level]}</span>
+                    <p class="results-summary">${summaryText}</p>
+                </div>
+
+                <div class="report-section">
+                    <h3>Оценка <em>по категориям</em></h3>
+                    <div class="category-bars">
+                        ${CATEGORIES.map(cat => {
+                            const s = categoryScores[cat.id];
+                            return `
+                                <div class="category-bar">
+                                    <div class="category-bar-label">${cat.title}</div>
+                                    <div class="category-bar-track">
+                                        <div class="category-bar-fill ${s.level}" style="width: ${s.percent}%"></div>
+                                    </div>
+                                    <div class="category-bar-value">${s.percent}%</div>
+                                </div>
+                            `;
+                        }).join('')}
+                    </div>
+                </div>
+
+                <div class="report-section">
+                    <h3>Что уже <em>работает хорошо</em></h3>
+                    <div class="strengths-list">
+                        ${strongest.map(cat => {
+                            const s = categoryScores[cat.id];
+                            return `
+                                <div class="strength-item">
+                                    <h4>${cat.title}</h4>
+                                    <p>${s.percent}% — ${s.level === 'high' ? 'сильная сторона, поддерживайте стандарт' : 'уверенная позиция, можно усилить'}</p>
+                                </div>
+                            `;
+                        }).join('')}
+                    </div>
+                </div>
+
+                <div class="report-section">
+                    <h3>Зоны роста <em>и рекомендации</em></h3>
+                    ${weakest.map(cat => {
+                        const s = categoryScores[cat.id];
+                        const rec = RECOMMENDATIONS[cat.id][s.level];
+                        const badgeLabel = s.level === 'low' ? 'Высокий приоритет' : s.level === 'medium' ? 'Средний приоритет' : 'Поддерживать';
+                        const badgeClass = s.level === 'high' ? 'high' : s.level === 'medium' ? 'medium' : '';
+                        return `
+                            <div class="rec-card">
+                                <div class="rec-card-head">
+                                    <div class="rec-card-title">${cat.title}</div>
+                                    <span class="rec-card-badge ${badgeClass}">${badgeLabel} · ${s.percent}%</span>
+                                </div>
+                                <p class="rec-problem">${rec.problem}</p>
+                                <ul class="rec-fixes">
+                                    ${rec.fixes.map(fix => `<li>${fix}</li>`).join('')}
+                                </ul>
+                            </div>
+                        `;
+                    }).join('')}
+                </div>
+
+                <div class="results-actions">
+                    <button class="btn btn-accent" id="download-pdf-btn" type="button">
+                        Скачать PDF <span class="btn-arrow">↓</span>
+                    </button>
+                    <button class="btn btn-outline" id="print-btn" type="button">Печать</button>
+                    <button class="btn btn-outline" id="restart-btn" type="button">Пройти заново</button>
+                </div>
+
+                <div class="results-cta">
+                    <h3>Нужна помощь <em>с внедрением?</em></h3>
+                    <p>Я делаю аудиты, стратегии и помогаю выстроить SMM-процессы с измеримым результатом. Обсудим ваш проект?</p>
+                    <a href="index.html#contact" class="btn btn-accent">Связаться со мной <span class="btn-arrow">→</span></a>
+                </div>
+            `;
+
+            document.getElementById('download-pdf-btn').addEventListener('click', downloadPDF);
+            document.getElementById('print-btn').addEventListener('click', () => window.print());
+            document.getElementById('restart-btn').addEventListener('click', () => {
+                state.step = 0;
+                state.answers = {};
+                state.basic = { product: '', category: '', price: '', usp: '', ages: [], geo: '', btype: '', platforms: [] };
+                state.mode = null;
+                document.querySelectorAll('.mode-card').forEach(c => c.classList.remove('active'));
+                startBtn.disabled = true;
+                modeHint.textContent = 'Сначала выберите режим';
+                wizardSection.classList.add('hidden');
+                modeSection.classList.remove('hidden');
+                introSection.classList.remove('hidden');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        }
+
+        // ============================================================
+        // PDF
+        // ============================================================
+        function downloadPDF() {
+            const btn = document.getElementById('download-pdf-btn');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = 'Готовим PDF...';
+            btn.disabled = true;
+
+            const element = document.querySelector('.wizard-section .container-narrow');
+            const actionsEl = element.querySelector('.results-actions');
+            const ctaEl = element.querySelector('.results-cta');
+            if (actionsEl) actionsEl.style.display = 'none';
+            if (ctaEl) ctaEl.style.display = 'none';
+
+            const date = new Date().toLocaleDateString('ru-RU');
+            const safeName = (state.basic.product || 'smm-audit')
+                .toLowerCase()
+                .replace(/[^a-zа-я0-9]+/gi, '-')
+                .replace(/^-|-$/g, '')
+                .slice(0, 40) || 'smm-audit';
+
+            const opt = {
+                margin: [10, 10, 10, 10],
+                filename: `smm-audit-${safeName}-${date.replace(/\./g, '-')}.pdf`,
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2, useCORS: true, logging: false },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+                pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
+            };
+
+            html2pdf().set(opt).from(element).save().then(() => {
+                if (actionsEl) actionsEl.style.display = '';
+                if (ctaEl) ctaEl.style.display = '';
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            }).catch(err => {
+                console.error('PDF error:', err);
+                if (actionsEl) actionsEl.style.display = '';
+                if (ctaEl) ctaEl.style.display = '';
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+                alert('Не удалось создать PDF. Попробуйте кнопку «Печать» и сохраните как PDF.');
+            });
+        }
+
+        // ============================================================
+        // УТИЛИТЫ
+        // ============================================================
+        function escapeHtml(str) {
+            if (!str) return '';
+            return String(str)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
+        }
+
+        function plural(n, forms) {
+            const n10 = n % 10, n100 = n % 100;
+            if (n10 === 1 && n100 !== 11) return forms[0];
+            if (n10 >= 2 && n10 <= 4 && (n100 < 10 || n100 >= 20)) return forms[1];
+            return forms[2];
+        }
+    </script>
+</body>
+</html>
