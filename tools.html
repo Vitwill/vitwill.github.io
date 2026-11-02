@@ -11,9 +11,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
     <style>
-        /* ============================================================
-           ТОКЕНЫ
-           ============================================================ */
         :root {
             --paper: #F5F2EC;
             --paper-2: #EFEBE3;
@@ -44,9 +41,7 @@
         ::selection { background: var(--ink); color: var(--paper); }
         .container { max-width: 1440px; margin: 0 auto; padding: 0 40px; }
 
-        /* ============================================================
-           ХЕДЕР
-           ============================================================ */
+        /* Header */
         .site-header {
             position: sticky; top: 0; z-index: 100;
             background: rgba(245, 242, 236, .88);
@@ -65,7 +60,6 @@
             text-decoration: none; color: var(--ink);
         }
         .logo em { font-family: var(--f-serif); font-style: italic; font-weight: 400; color: var(--accent); }
-
         .header-actions {
             display: grid;
             grid-auto-flow: column;
@@ -90,14 +84,9 @@
             white-space: nowrap;
             transition: all .3s var(--ease);
         }
-        .btn-tools:hover {
-            background: var(--accent);
-            border-color: var(--accent);
-        }
+        .btn-tools:hover { background: var(--accent); border-color: var(--accent); }
 
-        /* ============================================================
-           HERO
-           ============================================================ */
+        /* Hero */
         .tools-hero {
             position: relative; padding: 100px 0 80px;
             border-bottom: 1px solid var(--line); background: var(--paper);
@@ -107,15 +96,11 @@
             background-image: linear-gradient(90deg, var(--line) 1px, transparent 1px);
             background-size: 25% 100%; opacity: .5; pointer-events: none;
         }
-        .tools-hero .container { 
+        .tools-hero .container {
             position: relative; z-index: 1;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 60px;
+            display: flex; justify-content: space-between; align-items: center; gap: 60px;
         }
         .tools-hero-content { max-width: 800px; flex: 1; }
-        
         .tools-hero-top {
             display: flex; justify-content: space-between; align-items: baseline;
             gap: 40px; margin-bottom: 40px;
@@ -133,65 +118,36 @@
             font-size: clamp(15px, 1.3vw, 18px); line-height: 1.7;
             color: var(--muted); max-width: 640px;
         }
-
-        /* Обновленный сайдбар в Hero */
         .hero-aside-nav {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
+            display: flex; flex-direction: column; gap: 12px;
             border-left: 1px solid var(--line-strong);
-            padding-left: 30px;
-            min-width: 280px;
-            margin-top: 20px;
+            padding-left: 30px; min-width: 280px; margin-top: 20px;
         }
         .aside-nav-label {
-            font-family: var(--f-mono);
-            font-size: 11px;
-            letter-spacing: .16em;
-            text-transform: uppercase;
-            color: var(--accent);
-            margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding-bottom: 12px;
-            border-bottom: 1px solid var(--line);
+            font-family: var(--f-mono); font-size: 11px; letter-spacing: .16em;
+            text-transform: uppercase; color: var(--accent); margin-bottom: 12px;
+            display: flex; align-items: center; gap: 10px;
+            padding-bottom: 12px; border-bottom: 1px solid var(--line);
         }
         .aside-nav-label::before {
-            content: "";
-            display: inline-block;
-            width: 6px; height: 6px;
-            background: var(--accent);
-            border-radius: 50%;
+            content: ""; display: inline-block;
+            width: 6px; height: 6px; background: var(--accent); border-radius: 50%;
         }
         .aside-nav-btn {
-            background: none;
-            border: none;
-            text-align: left;
-            font-family: var(--f-mono);
-            font-size: 13px;
-            letter-spacing: .05em;
-            color: var(--ink);
-            cursor: pointer;
-            transition: color 0.2s, padding-left 0.2s;
-            padding: 4px 0;
+            background: none; border: none; text-align: left;
+            font-family: var(--f-mono); font-size: 13px; letter-spacing: .05em;
+            color: var(--ink); cursor: pointer;
+            transition: color 0.2s, padding-left 0.2s; padding: 4px 0;
         }
-        .aside-nav-btn:hover, .aside-nav-btn.active {
-            color: var(--accent);
-            padding-left: 8px;
-        }
+        .aside-nav-btn:hover, .aside-nav-btn.active { color: var(--accent); padding-left: 8px; }
 
-        /* ============================================================
-           ГЛАВНЫЕ ТАБЫ (Растянутые)
-           ============================================================ */
+        /* Tabs nav */
         .tabs-nav {
             position: sticky; top: var(--header-height, 73px); z-index: 90;
             background: var(--paper-2); border-bottom: 1px solid var(--line);
         }
-        .tabs-nav .container { 
-            display: grid; 
-            grid-template-columns: repeat(3, 1fr);
-            padding: 0 40px;
+        .tabs-nav .container {
+            display: grid; grid-template-columns: repeat(3, 1fr); padding: 0 40px;
         }
         .tab-btn {
             flex-shrink: 0; padding: 22px 20px;
@@ -211,15 +167,10 @@
         .tab-btn.active { color: var(--paper); background: var(--ink); }
         .tab-btn.active::before { background: var(--accent-soft); border-color: var(--accent-soft); }
 
-        /* ============================================================
-           ПАНЕЛИ
-           ============================================================ */
         .tab-panel { display: none; padding: 70px 0 100px; }
         .tab-panel.active { display: block; }
 
-        /* ============================================================
-           КАЛЬКУЛЯТОР
-           ============================================================ */
+        /* Calculator */
         .calc-layout { display: grid; grid-template-columns: 1.4fr 1fr; gap: 70px; align-items: start; }
         .calc-form fieldset { border: none; padding: 0; margin-bottom: 40px; }
         .calc-form legend {
@@ -269,8 +220,8 @@
 
         .calc-result {
             position: sticky; top: calc(var(--header-height, 73px) + 90px);
-            background: var(--paper-2);
-            border: 1px solid var(--line-strong); border-radius: 2px; padding: 32px 32px 28px;
+            background: var(--paper-2); border: 1px solid var(--line-strong);
+            border-radius: 2px; padding: 32px 32px 28px;
         }
         .result-header { display: flex; justify-content: space-between; align-items: center; padding-bottom: 18px; margin-bottom: 24px; border-bottom: 1px solid var(--line); }
         .result-eyebrow { font-family: var(--f-mono); font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--accent); }
@@ -299,9 +250,7 @@
         .result-includes { margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--line); font-size: 12px; line-height: 1.65; color: var(--muted); }
         .result-includes strong { display: block; font-family: var(--f-mono); font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: var(--ink); margin-bottom: 6px; font-weight: 500; }
 
-        /* ============================================================
-           АНАТОМИЯ, VS, РАСХОДЫ, ЧЕКЛИСТ
-           ============================================================ */
+        /* Anatomy, VS, Costs, Checklist */
         .anatomy-intro { max-width: 680px; font-size: 16px; line-height: 1.75; color: var(--muted); margin-bottom: 60px; }
         .anatomy-intro strong { color: var(--ink); font-weight: 500; }
         .anatomy-list { margin-top: 20px; }
@@ -350,9 +299,7 @@
         .checklist-progress-bar { flex: 1; height: 4px; background: var(--paper-2); border-radius: 2px; overflow: hidden; margin: 0 24px; max-width: 320px; }
         .checklist-progress-fill { height: 100%; background: var(--accent); width: 0%; transition: width .5s var(--ease); border-radius: 2px; }
 
-        /* ============================================================
-           ФОРМА ТЗ (внутри таба)
-           ============================================================ */
+        /* TZ form */
         .step-nav { display: grid; grid-template-columns: repeat(5, 1fr); border-bottom: 1px solid var(--line-strong); margin-bottom: 50px; background: var(--paper-2); }
         .step-nav-item { display: flex; align-items: baseline; gap: 12px; padding: 22px 16px; background: none; border: none; border-right: 1px solid var(--line); cursor: pointer; text-align: left; transition: all .3s var(--ease); position: relative; font-size: 15px; font-family: inherit; color: inherit; }
         .step-nav-item:last-child { border-right: none; }
@@ -437,20 +384,15 @@
         .status.ok { color: #1e5c2a; }
         .status.err { color: #8b1f29; }
 
-        /* ============================================================
-           FOOTER & БАЗОВЫЕ КНОПКИ
-           ============================================================ */
         .btn { display: inline-flex; align-items: center; gap: 12px; font-family: var(--f-mono); font-size: 12px; letter-spacing: .16em; text-transform: uppercase; text-decoration: none; padding: 16px 28px; border: 1px solid transparent; border-radius: 2px; cursor: pointer; transition: all .3s var(--ease); background: none; font-weight: 500; }
         .btn-dark { background: var(--ink); color: var(--paper); border-color: var(--ink); }
         .btn-dark:hover { background: var(--accent); border-color: var(--accent); }
+
         .site-footer { padding: 40px 0; background: var(--ink); color: rgba(245,242,236,.65); }
         .site-footer .container { display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap; font-family: var(--f-mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; }
         .site-footer a { text-decoration: none; color: rgba(245,242,236,.65); transition: color .2s; }
         .site-footer a:hover { color: var(--paper); }
 
-        /* ============================================================
-           АДАПТИВНОСТЬ
-           ============================================================ */
         @media (max-width: 1100px) {
             .container { padding: 0 30px; }
             .calc-layout { grid-template-columns: 1fr; gap: 50px; }
@@ -463,11 +405,9 @@
             .step-nav-item:nth-child(2), .step-nav-item:nth-child(4) { border-right: none; }
             .step-nav-item { border-bottom: 1px solid var(--line); }
             .summary-grid { grid-template-columns: 1fr; }
-            
             .tools-hero .container { flex-direction: column; align-items: flex-start; }
             .hero-aside-nav { border-left: none; border-top: 1px solid var(--line-strong); padding-left: 0; padding-top: 30px; width: 100%; flex-direction: row; flex-wrap: wrap; gap: 20px; }
             .aside-nav-label { width: 100%; margin-bottom: 0; }
-
             .header-actions { gap: 10px; }
             .btn-tools { padding: 10px 14px; font-size: 10px; letter-spacing: .1em; }
         }
@@ -490,14 +430,8 @@
             .step-nav-item.active .step-nav-label { font-size: 14px; }
             .download-block { padding: 24px; }
             .site-footer .container { flex-direction: column; text-align: center; }
-
             .site-header .container { flex-wrap: wrap; gap: 10px; }
-            .header-actions {
-                width: 100%;
-                grid-auto-flow: row;
-                grid-auto-columns: 1fr;
-                gap: 8px;
-            }
+            .header-actions { width: 100%; grid-auto-flow: row; grid-auto-columns: 1fr; gap: 8px; }
             .btn-tools { padding: 10px 12px; font-size: 10px; letter-spacing: .08em; }
         }
         @media (prefers-reduced-motion: reduce) {
@@ -519,7 +453,6 @@
 
 <section class="tools-hero">
     <div class="container">
-        <!-- Левая часть (Заголовок) -->
         <div class="tools-hero-content">
             <div class="tools-hero-top">
                 <span class="eyebrow">Инструменты заказчика</span>
@@ -537,7 +470,6 @@
             </p>
         </div>
 
-        <!-- Правая часть (Вертикальное меню) -->
         <div class="hero-aside-nav">
             <div class="aside-nav-label">Полезно знать</div>
             <button class="aside-nav-btn" data-tab="anatomy">01 · Анатомия цены</button>
@@ -548,7 +480,6 @@
     </div>
 </section>
 
-<!-- ГЛАВНОЕ МЕНЮ (3 таба, растянутое) -->
 <nav class="tabs-nav" id="tabs-nav">
     <div class="container">
         <button class="tab-btn active" data-tab="calc">01 · Калькулятор</button>
@@ -557,13 +488,10 @@
     </div>
 </nav>
 
-<!-- ============================================================
-     ТАБ 1: КАЛЬКУЛЯТОР
-     ============================================================ -->
+<!-- TAB: Калькулятор -->
 <section class="tab-panel active" data-panel="calc">
     <div class="container">
         <div class="calc-layout">
-            <!-- ФОРМА -->
             <form class="calc-form" id="calc-form" onsubmit="return false;">
                 <fieldset>
                     <legend><span class="legend-num">01</span> Тип сайта</legend>
@@ -614,7 +542,6 @@
                 </fieldset>
             </form>
 
-            <!-- РЕЗУЛЬТАТ -->
             <aside class="calc-result" id="calc-result">
                 <div class="result-header">
                     <span class="result-eyebrow">Смета</span>
@@ -654,11 +581,7 @@
     </div>
 </section>
 
-<!-- ============================================================
-     ПАНЕЛИ ДЛЯ БОКОВОГО МЕНЮ
-     ============================================================ -->
-
-<!-- Анатомия цены -->
+<!-- PANEL: Анатомия -->
 <section class="tab-panel" data-panel="anatomy">
     <div class="container">
         <span class="eyebrow">Анатомия цены</span>
@@ -668,7 +591,6 @@
         <p class="anatomy-intro">
             Любая цена сайта — это не «магия». Это сумма часов и компетенций. Ниже — типичная структура сметы для сайта на WordPress. <strong>Проценты могут меняться в зависимости от проекта</strong>, но общая логика остаётся неизменной.
         </p>
-
         <div class="anatomy-list">
             <div class="anatomy-row"><span class="anatomy-num">01</span><span class="anatomy-name">Программирование и интеграции</span><div class="anatomy-bar"><div class="anatomy-fill" style="width:30%"></div></div><span class="anatomy-pct">30%</span></div>
             <div class="anatomy-row"><span class="anatomy-num">02</span><span class="anatomy-name">Дизайн</span><div class="anatomy-bar"><div class="anatomy-fill" style="width:20%"></div></div><span class="anatomy-pct">20%</span></div>
@@ -677,14 +599,13 @@
             <div class="anatomy-row"><span class="anatomy-num">05</span><span class="anatomy-name">SEO и оптимизация</span><div class="anatomy-bar"><div class="anatomy-fill" style="width:10%"></div></div><span class="anatomy-pct">10%</span></div>
             <div class="anatomy-row"><span class="anatomy-num">06</span><span class="anatomy-name">Тестирование и запуск</span><div class="anatomy-bar"><div class="anatomy-fill" style="width:10%"></div></div><span class="anatomy-pct">10%</span></div>
         </div>
-
         <p class="anatomy-note">
             Если подрядчик называет цену «за сайт» без разбивки — попросите показать структуру. Так вы поймёте, что именно входит в работу, а что придётся заказывать отдельно.
         </p>
     </div>
 </section>
 
-<!-- Студия vs Фрилансер -->
+<!-- PANEL: Студия vs Фрилансер -->
 <section class="tab-panel" data-panel="vs">
     <div class="container">
         <span class="eyebrow">Сравнение</span>
@@ -694,7 +615,6 @@
         <p class="anatomy-intro">
             Оба варианта рабочие. Разница — в цене, скорости, уровне контроля и рисках. Вот честное сравнение без маркетинга.
         </p>
-
         <div class="vs-grid">
             <div class="vs-card">
                 <h3>Студия / агентство</h3>
@@ -719,14 +639,13 @@
                 </ul>
             </div>
         </div>
-
         <p class="anatomy-note">
             Главный совет: не выбирайте по цене. Выбирайте по <strong>портфолио и прозрачности процесса</strong>. Если исполнитель не может объяснить структуру сметы — это тревожный сигнал, независимо от того, студия это или фрилансер.
         </p>
     </div>
 </section>
 
-<!-- Скрытые расходы -->
+<!-- PANEL: Скрытые расходы -->
 <section class="tab-panel" data-panel="costs">
     <div class="container">
         <span class="eyebrow">Скрытые расходы</span>
@@ -736,53 +655,21 @@
         <p class="anatomy-intro">
             Разработка — это разовые вложения. Дальше сайт нужно содержать. Вот регулярные расходы, которые большинство клиентов не закладывают в бюджет — и потом удивляются.
         </p>
-
         <div class="costs-grid">
-            <div class="cost-card">
-                <span class="cost-num">01</span>
-                <h3>Хостинг</h3>
-                <p>Место, где физически живёт сайт. От качества хостинга зависит скорость и стабильность.</p>
-                <div class="cost-price">5 000 – 25 000 ₽<small>в год</small></div>
-            </div>
-            <div class="cost-card">
-                <span class="cost-num">02</span>
-                <h3>Домен</h3>
-                <p>Адрес сайта. Для .ru — дешевле, для международных проектов .com / .de — дороже.</p>
-                <div class="cost-price">600 – 3 000 ₽<small>в год</small></div>
-            </div>
-            <div class="cost-card">
-                <span class="cost-num">03</span>
-                <h3>Премиум-плагины</h3>
-                <p>SEO, кеширование, безопасность, бэкапы. Без лицензий сайт работает, но менее надёжно.</p>
-                <div class="cost-price">15 000 – 30 000 ₽<small>в год</small></div>
-            </div>
-            <div class="cost-card">
-                <span class="cost-num">04</span>
-                <h3>Поддержка</h3>
-                <p>Обновления CMS и плагинов, исправления, мониторинг. Нужна, если сайт активно используется.</p>
-                <div class="cost-price">10 000 – 50 000 ₽<small>в месяц</small></div>
-            </div>
-            <div class="cost-card">
-                <span class="cost-num">05</span>
-                <h3>Контент-редактор</h3>
-                <p>Если планируете публиковать новости или статьи самостоятельно — понадобится обучение или помощь.</p>
-                <div class="cost-price">5 000 – 20 000 ₽<small>в месяц</small></div>
-            </div>
-            <div class="cost-card">
-                <span class="cost-num">06</span>
-                <h3>Ускорение (PageSpeed)</h3>
-                <p>Разовые работы по оптимизации скорости и Core Web Vitals. Часто требуется через 6–12 месяцев.</p>
-                <div class="cost-price">15 000 – 40 000 ₽<small>разово</small></div>
-            </div>
+            <div class="cost-card"><span class="cost-num">01</span><h3>Хостинг</h3><p>Место, где физически живёт сайт. От качества хостинга зависит скорость и стабильность.</p><div class="cost-price">5 000 – 25 000 ₽<small>в год</small></div></div>
+            <div class="cost-card"><span class="cost-num">02</span><h3>Домен</h3><p>Адрес сайта. Для .ru — дешевле, для международных проектов .com / .de — дороже.</p><div class="cost-price">600 – 3 000 ₽<small>в год</small></div></div>
+            <div class="cost-card"><span class="cost-num">03</span><h3>Премиум-плагины</h3><p>SEO, кеширование, безопасность, бэкапы. Без лицензий сайт работает, но менее надёжно.</p><div class="cost-price">15 000 – 30 000 ₽<small>в год</small></div></div>
+            <div class="cost-card"><span class="cost-num">04</span><h3>Поддержка</h3><p>Обновления CMS и плагинов, исправления, мониторинг. Нужна, если сайт активно используется.</p><div class="cost-price">10 000 – 50 000 ₽<small>в месяц</small></div></div>
+            <div class="cost-card"><span class="cost-num">05</span><h3>Контент-редактор</h3><p>Если планируете публиковать новости или статьи самостоятельно — понадобится обучение или помощь.</p><div class="cost-price">5 000 – 20 000 ₽<small>в месяц</small></div></div>
+            <div class="cost-card"><span class="cost-num">06</span><h3>Ускорение (PageSpeed)</h3><p>Разовые работы по оптимизации скорости и Core Web Vitals. Часто требуется через 6–12 месяцев.</p><div class="cost-price">15 000 – 40 000 ₽<small>разово</small></div></div>
         </div>
-
         <p class="anatomy-note">
             Итого: даже «простой» сайт-визитка требует <strong>5–10 тысяч рублей в год</strong> только на хостинг и домен. Если подрядчик об этом не предупредил — спросите сами. Это признак зрелого исполнителя.
         </p>
     </div>
 </section>
 
-<!-- Чек-лист -->
+<!-- PANEL: Чек-лист -->
 <section class="tab-panel" data-panel="checklist">
     <div class="container">
         <span class="eyebrow">Чек-лист</span>
@@ -792,7 +679,6 @@
         <p class="checklist-intro">
             Хорошее ТЗ защищает обе стороны: вы получаете то, что заказывали, а исполнитель — адекватные сроки и оплату. Отметьте пункты, которые уже есть в вашем ТЗ — и увидите, что осталось уточнить.
         </p>
-
         <div class="checklist-wrap">
             <div class="checklist" id="checklist">
                 <label class="checklist-item"><input type="checkbox"><span class="checklist-text">Описана цель сайта и целевая аудитория</span></label>
@@ -804,23 +690,19 @@
                 <label class="checklist-item"><input type="checkbox"><span class="checklist-text">Понятно, что входит в поддержку после запуска</span></label>
                 <label class="checklist-item"><input type="checkbox"><span class="checklist-text">Есть резервный план на случай форс-мажора</span></label>
             </div>
-
             <div class="checklist-progress">
                 <span class="checklist-progress-label">Готовность ТЗ</span>
                 <div class="checklist-progress-bar"><div class="checklist-progress-fill" id="check-fill"></div></div>
                 <span class="checklist-progress-count"><span id="check-current">0</span><span class="total"> / 8</span></span>
             </div>
         </div>
-
         <p class="anatomy-note">
             Если больше половины пунктов не отмечено — ТЗ пока сырое. Это нормально. Используйте эти вопросы как основу для брифа — и обсудите их с подрядчиком до старта работ.
         </p>
     </div>
 </section>
 
-<!-- ============================================================
-     ТАБ: ЗАЯВКА / ТЗ
-     ============================================================ -->
+<!-- TAB: Заявка / ТЗ -->
 <section class="tab-panel" data-panel="tz">
     <div class="container">
         <div class="page-intro" style="padding-top: 0; border: none; margin-bottom: 30px;">
@@ -838,7 +720,7 @@
             <button class="step-nav-item" data-step="5"><span class="step-nav-num">05</span><span class="step-nav-label">Скачать ТЗ</span></button>
         </nav>
 
-        <!-- ШАГ 1 -->
+        <!-- Step 1 -->
         <section class="step active" data-step="1">
             <div class="field">
                 <div class="field-head"><span class="field-num">01</span><h3 class="field-title">Тип сайта</h3></div>
@@ -878,7 +760,6 @@
                     <label>Своя цель</label>
                     <input type="text" id="s1-goals-other" placeholder="Например: рекламный ролик на действующем сайте, воронка продаж, нестандартный запрос">
                 </div>
-                <p class="field-hint">Цель определяет структуру. Если ваш запрос не подпадает под категории — напишите своими словами.</p>
             </div>
 
             <div class="field">
@@ -886,7 +767,6 @@
                 <div class="form-group" style="margin-bottom:0;">
                     <textarea id="s1-audience" placeholder="Кто ваши клиенты: возраст, роль, что для них важно. Например: «владельцы малого бизнеса 30–45 лет, ценят надёжность и скорость»"></textarea>
                 </div>
-                <p class="field-hint">Помогает выбрать тон, визуал и структуру. Чем точнее портрет, тем меньше правок.</p>
             </div>
 
             <div class="field">
@@ -914,7 +794,7 @@
             </div>
         </section>
 
-        <!-- ШАГ 2 -->
+        <!-- Step 2 -->
         <section class="step" data-step="2">
             <div class="field">
                 <div class="field-head"><span class="field-num">01</span><h3 class="field-title">Дизайн</h3></div>
@@ -943,7 +823,6 @@
                 <div class="form-group" style="margin-bottom:0;">
                     <textarea id="s2-mood" placeholder="3–5 слов, с которыми должен ассоциироваться сайт: надёжность, скорость, роскошь, тепло, технологичность..."></textarea>
                 </div>
-                <p class="field-hint">Это помогает дизайнеру попасть в тон с первого раза.</p>
             </div>
 
             <div class="field">
@@ -965,7 +844,6 @@
                     <label>Что не нравится</label>
                     <textarea id="s2-refs-dislike" placeholder="Сайты, которые не нравятся, и что именно отталкивает"></textarea>
                 </div>
-                <p class="field-hint">Изображения и скриншоты можно приложить отдельным файлом к ТЗ.</p>
             </div>
 
             <div class="field">
@@ -1023,7 +901,6 @@
                     <label>Другие страницы</label>
                     <textarea id="s2-pages-other" placeholder="По одной на строку"></textarea>
                 </div>
-                <p class="field-hint">Карта сайта — основа сметы. Чем точнее список, тем точнее оценка.</p>
             </div>
 
             <div class="step-actions">
@@ -1032,7 +909,7 @@
             </div>
         </section>
 
-        <!-- ШАГ 3 -->
+        <!-- Step 3 -->
         <section class="step" data-step="3">
             <div class="field">
                 <div class="field-head"><span class="field-num">01</span><h3 class="field-title">Платформа</h3></div>
@@ -1042,7 +919,6 @@
                     <label class="pill"><input type="radio" name="s3-platform" value="hybrid"><span>Гибрид<small>HTML + WP</small></span></label>
                     <label class="pill"><input type="radio" name="s3-platform" value="unknown"><span>Не знаю<small>нужен совет</small></span></label>
                 </div>
-                <p class="field-hint">WordPress — если планируете сами обновлять контент. HTML — если сайт статичный и меняется редко.</p>
             </div>
 
             <div class="field">
@@ -1073,7 +949,6 @@
                     <label class="pill"><input type="radio" name="s3-speed" value="90"><span>PageSpeed 90+<small>отлично</small></span></label>
                     <label class="pill"><input type="radio" name="s3-speed" value="none"><span>Не критично<small>как получится</small></span></label>
                 </div>
-                <p class="field-hint">Влияет на конверсию и SEO. 90+ — хороший ориентир для бизнес-сайта.</p>
             </div>
 
             <div class="field">
@@ -1087,7 +962,6 @@
                     <label class="check-item"><input type="checkbox" name="s3-plugins" value="forms"><span class="check-label">Формы</span></label>
                     <label class="check-item"><input type="checkbox" name="s3-plugins" value="backup"><span class="check-label">Резервное копирование (на хостинге)</span></label>
                 </div>
-                <p class="field-hint">Не разбираетесь в плагинах? Отметьте «Доверяю выбор исполнителю» — остальные пункты заблокируются.</p>
             </div>
 
             <div class="field">
@@ -1145,7 +1019,6 @@
                 <div class="form-group" style="margin-bottom:0;">
                     <textarea id="s3-special" placeholder="Нестандартная логика, требования к нагрузке, API, интеграции с внутренними системами..."></textarea>
                 </div>
-                <p class="field-hint">Всё, что не вписалось в чек-листы. Лучше указать сразу, чем вспомнить на середине.</p>
             </div>
 
             <div class="step-actions">
@@ -1154,7 +1027,7 @@
             </div>
         </section>
 
-        <!-- ШАГ 4 -->
+        <!-- Step 4 -->
         <section class="step" data-step="4">
             <div class="field">
                 <div class="field-head"><span class="field-num">01</span><h3 class="field-title">Хостинг и домен</h3></div>
@@ -1163,7 +1036,6 @@
                     <label class="pill"><input type="radio" name="s4-hosting" value="help"><span>Нужна помощь<small>с выбором</small></span></label>
                     <label class="pill"><input type="radio" name="s4-hosting" value="turnkey"><span>Под ключ<small>исполнитель решает</small></span></label>
                 </div>
-                <p class="field-hint">Регулярные расходы: хостинг — от 5 000 ₽/год, домен — от 600 ₽/год.</p>
             </div>
 
             <div class="field">
@@ -1181,7 +1053,6 @@
                         <input type="date" id="s4-date">
                     </div>
                 </div>
-                <p class="field-hint">Срочность влияет на цену. Реалистичный срок — залог качества.</p>
             </div>
 
             <div class="field">
@@ -1194,7 +1065,6 @@
                     <label class="pill"><input type="radio" name="s4-budget" value="gt500"><span>Более 500 тыс. ₽<small>магазин, сервис</small></span></label>
                     <label class="pill"><input type="radio" name="s4-budget" value="unknown"><span>Не определён<small>нужен совет</small></span></label>
                 </div>
-                <p class="field-hint">Честный диапазон помогает предложить подходящее решение, а не «поторговаться».</p>
             </div>
 
             <div class="field">
@@ -1202,4 +1072,15 @@
                 <div class="pay-list">
                     <label class="pay-option"><input type="radio" name="s4-payment" value="prepay"><span class="pay-option-head"><span class="pay-option-marker"></span><span class="pay-option-title">Полная предоплата</span></span><span class="pay-option-desc">Подходит для небольших задач или при полном доверии исполнителю. <strong>Риск для заказчика:</strong> платите до получения результата.</span></label>
                     <label class="pay-option"><input type="radio" name="s4-payment" value="half" checked><span class="pay-option-head"><span class="pay-option-marker"></span><span class="pay-option-title">Аванс + финальный расчёт</span></span><span class="pay-option-desc">Например, 50/50. Стандарт для небольших проектов: аванс покрывает старт, остаток — после сдачи.</span></label>
-                    <label class="pay-option"><input type="radio" name="s4-payment" value="stages"><span class="pay-option-head"><span class="pay-option-marker
+                    <label class="pay-option"><input type="radio" name="s4-payment" value="stages"><span class="pay-option-head"><span class="pay-option-marker"></span><span class="pay-option-title">Поэтапная оплата (транши)</span></span><span class="pay-option-desc">Оплата после каждого этапа: дизайн → вёрстка → запуск. <strong>Снижает риск для обеих сторон</strong>, но требует больше согласований.</span></label>
+                    <label class="pay-option"><input type="radio" name="s4-payment" value="postpay"><span class="pay-option-head"><span class="pay-option-marker"></span><span class="pay-option-title">Оплата по факту (постоплата)</span></span><span class="pay-option-desc">Исполнитель работает без аванса. <strong>Риск для исполнителя:</strong> высокий — многие на это не соглашаются.</span></label>
+                    <label class="pay-option"><input type="radio" name="s4-payment" value="discuss"><span class="pay-option-head"><span class="pay-option-marker"></span><span class="pay-option-title">Обсудить</span></span><span class="pay-option-desc">Готов обсудить модель, которая устроит обе стороны.</span></label>
+                </div>
+            </div>
+
+            <div class="field">
+                <div class="field-head"><span class="field-num">05</span><h3 class="field-title">Передача доступов и исходников</h3></div>
+                <div class="pay-list">
+                    <label class="pay-option"><input type="radio" name="s4-access" value="own-hosting" checked><span class="pay-option-head"><span class="pay-option-marker"></span><span class="pay-option-title">Работа на хостинге исполнителя</span></span><span class="pay-option-desc">Сайт разрабатывается на сервере исполнителя. Вы видите прогресс по временной ссылке. После оплаты сайт переносится на ваш хостинг. <strong>Защищает исполнителя</strong> от потери доступа до оплаты. Риск заказчика: нужно доверять исполнителю.</span></label>
+                    <label class="pay-option"><input type="radio" name="s4-access" value="full-access"><span class="pay-option-head"><span class="pay-option-marker"></span><span class="pay-option-title">Полный доступ к вашему хостингу на время работ</span></span><span class="pay-option-desc">Вы предоставляете исполнителю полный доступ к хостингу и админке. После оплаты он передаёт все права вам. <strong>Защищает исполнителя</strong> от внезапного отзыва доступа без оплаты. Риск заказчика: исполнитель контролирует сайт до расчёта.</span></label>
+                    <label class="pay-option"><input type="radio" name="s4-access" value="by-stage"><span class
