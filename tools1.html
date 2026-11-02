@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Бесплатный аудит SMM: оцените продвижение вашего товара или услуги в социальных сетях. Получите персональный отчёт с рекомендациями за 5 минут.">
     <meta name="robots" content="index, follow">
-    <link rel="canonical" href="https://vitwill.github.io/tools-smm-audit.html">
+    <link rel="canonical" href="https://vitwill.github.io/tools1.html">
 
     <meta property="og:type" content="website">
     <meta property="og:title" content="Аудит SMM — оценка продвижения в соцсетях">
@@ -114,11 +114,20 @@
             font-style: italic; font-weight: 400;
             color: var(--accent);
         }
-        .header-actions { display: flex; align-items: center; gap: 16px; }
+        .header-actions {
+            display: grid;
+            grid-auto-flow: column;
+            grid-auto-columns: 1fr;
+            gap: 12px;
+            align-items: stretch;
+        }
         .btn-tools {
-            display: inline-flex; align-items: center;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
             font-family: var(--f-mono);
-            font-size: 11px; letter-spacing: .16em;
+            font-size: 11px;
+            letter-spacing: .16em;
             text-transform: uppercase;
             text-decoration: none;
             background: var(--accent);
@@ -126,6 +135,7 @@
             border: 1px solid var(--accent);
             padding: 12px 20px;
             border-radius: 2px;
+            white-space: nowrap;
             transition: all .3s var(--ease);
         }
         .btn-tools:hover { background: var(--ink); border-color: var(--ink); }
@@ -868,13 +878,33 @@
             .question-text { font-size: 17px; }
             .option-list { padding-left: 0; }
             .rec-card { padding: 22px 22px; }
-            .btn-tools { padding: 10px 14px; font-size: 10px; }
+            .header-actions { gap: 8px; }
+            .btn-tools {
+                padding: 9px 12px;
+                font-size: 9px;
+                letter-spacing: .06em;
+            }
             .wizard-nav { flex-direction: column; align-items: stretch; }
             .wizard-nav-hint { text-align: center; }
             .wizard-nav-actions { flex-direction: column; }
             .wizard-nav-actions .btn { justify-content: center; }
             .results-actions { flex-direction: column; }
             .results-actions .btn { justify-content: center; }
+        }
+
+        @media (max-width: 450px) {
+            .site-header .container { flex-wrap: wrap; gap: 10px; }
+            .header-actions {
+                width: 100%;
+                grid-auto-flow: row;
+                grid-auto-columns: 1fr;
+                gap: 6px;
+            }
+            .btn-tools {
+                padding: 10px 12px;
+                font-size: 10px;
+                letter-spacing: .08em;
+            }
         }
 
         /* ============================================================
@@ -894,6 +924,7 @@
         <div class="container">
             <a href="index.html" class="logo">Viktor <em>Willmann</em></a>
             <div class="header-actions">
+                <a href="index.html" class="btn-tools">На главную</a>
                 <a href="tools.html" class="btn-tools">Инструменты заказчика</a>
             </div>
         </div>
