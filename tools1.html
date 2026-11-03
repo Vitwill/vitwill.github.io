@@ -579,7 +579,7 @@
                         <div class="chat-avatar">VW</div>
                         <div class="chat-header-info">
                             <h3>Viktor Willmann</h3>
-                            <p>Senior WordPress Developer· Онлайн</p>
+                            <p>Senior WordPress Developer · Онлайн</p>
                         </div>
                     </div>
                     <div class="chat-messages" id="chat-messages">
@@ -678,19 +678,15 @@
         // ============================================================
         function downloadPDF() {
             const originalTitle = document.title;
-            // Берем название товара и делаем его безопасным для имени файла
             const safeName = (state.basic.product || 'smm-audit')
                 .toLowerCase()
                 .replace(/[^a-zа-я0-9]+/gi, '-')
                 .slice(0, 40) || 'smm-audit';
             
-            // Меняем заголовок на нужный нам (без "ai-")
             document.title = `audit-${safeName}`;
             
-            // Вызываем окно печати
             window.print();
             
-            // Возвращаем исходный заголовок через долю секунды
             setTimeout(() => {
                 document.title = originalTitle;
             }, 100);
