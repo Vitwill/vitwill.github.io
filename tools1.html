@@ -615,18 +615,15 @@
             input.value = '';
             const messagesContainer = document.getElementById('chat-messages');
             
-            // Добавляем сообщение пользователя
             const userMsgEl = document.createElement('div');
             userMsgEl.className = 'chat-message user';
             userMsgEl.textContent = message;
             messagesContainer.appendChild(userMsgEl);
             
-            // Сохраняем в историю (сразу)
             state.chatHistory.push({ role: 'user', text: message });
             
             messagesContainer.scrollTop = messagesContainer.scrollHeight;
             
-            // Добавляем индикатор печати
             const typingEl = document.createElement('div');
             typingEl.className = 'chat-message assistant';
             typingEl.textContent = 'Печатает...';
@@ -640,7 +637,7 @@
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ 
                         action: 'chat',
-                        history: state.chatHistory.slice(-6), // Отправляем историю
+                        history: state.chatHistory.slice(-6),
                         context: state.aiReport
                     })
                 });
@@ -680,7 +677,23 @@
         // СКАЧИВАНИЕ PDF (ЧЕРЕЗ ПЕЧАТЬ БРАУЗЕРА)
         // ============================================================
         function downloadPDF() {
+            const originalTitle = document.title;
+            // Берем название товара и делаем его безопасным для имени файла
+            const safeName = (state.basic.product || 'smm-audit')
+                .toLowerCase()
+                .replace(/[^a-zа-я0-9]+/gi, '-')
+                .slice(0, 40) || 'smm-audit';
+            
+            // Меняем заголовок на нужный нам (без "ai-")
+            document.title = `audit-${safeName}`;
+            
+            // Вызываем окно печати
             window.print();
+            
+            // Возвращаем исходный заголовок через долю секунды
+            setTimeout(() => {
+                document.title = originalTitle;
+            }, 100);
         }
 
         function escapeHtml(str) {
