@@ -3,19 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Бесплатный аудит SMM: оцените продвижение вашего товара или услуги в социальных сетях. Получите персональный отчёт с рекомендациями за 5 минут.">
+    <meta name="description" content="Бесплатный AI-аудит SMM: оцените продвижение вашего товара или услуги в социальных сетях. Получите персональный отчёт с рекомендациями за 5 минут.">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://vitwill.github.io/tools1.html">
 
     <meta property="og:type" content="website">
-    <meta property="og:title" content="Аудит SMM — оценка продвижения в соцсетях">
-    <meta property="og:description" content="Оцените контент, визуал, вовлечённость, рекламу и аналитику ваших соцсетей. Персональный отчёт с рекомендациями.">
+    <meta property="og:title" content="AI-Аудит SMM — оценка продвижения в соцсетях">
+    <meta property="og:description" content="Оцените контент, визуал, вовлечённость, рекламу и аналитику ваших соцсетей. Персональный отчёт с рекомендациями от ИИ.">
     <meta property="og:locale" content="ru_RU">
 
     <link rel="icon" type="image/png" sizes="32x32" href="images/favicon.png">
     <link rel="apple-touch-icon" sizes="180x180" href="images/favicon.png">
 
-    <title>Аудит SMM — проверка продвижения в соцсетях | Viktor Willmann</title>
+    <title>AI-Аудит SMM — проверка продвижения в соцсетях | Viktor Willmann</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -203,7 +203,7 @@
         }
 
         /* ============================================================
-           MODE SELECTOR
+           MODE SELECTOR (4 карточки)
            ============================================================ */
         .mode-section {
             padding: 70px 0;
@@ -221,10 +221,10 @@
         .mode-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 24px;
+            gap: 20px;
         }
         .mode-card {
-            padding: 36px 32px;
+            padding: 28px 24px;
             background: var(--paper);
             border: 1px solid var(--line-strong);
             border-radius: 2px;
@@ -233,7 +233,7 @@
             position: relative;
             text-align: left;
             display: flex; flex-direction: column;
-            min-height: 220px;
+            min-height: 200px;
         }
         .mode-card:hover {
             border-color: var(--ink);
@@ -247,13 +247,13 @@
         .mode-card.active::after {
             content: "✓";
             position: absolute;
-            top: 20px; right: 24px;
-            width: 28px; height: 28px;
+            top: 16px; right: 20px;
+            width: 24px; height: 24px;
             border-radius: 50%;
             background: var(--accent);
             color: var(--paper);
             display: flex; align-items: center; justify-content: center;
-            font-size: 15px;
+            font-size: 13px;
             font-weight: 700;
         }
         .mode-num {
@@ -261,14 +261,14 @@
             font-size: 11px;
             letter-spacing: .16em;
             color: var(--muted-2);
-            margin-bottom: 16px;
+            margin-bottom: 12px;
         }
         .mode-card h3 {
             font-family: var(--f-display);
-            font-size: 24px;
+            font-size: 20px;
             font-weight: 500;
             letter-spacing: -.025em;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
             line-height: 1.15;
         }
         .mode-card h3 em {
@@ -278,10 +278,10 @@
             color: var(--accent);
         }
         .mode-card p {
-            font-size: 14px;
-            line-height: 1.65;
+            font-size: 13px;
+            line-height: 1.55;
             color: var(--muted);
-            margin-bottom: 20px;
+            margin-bottom: 16px;
             flex: 1;
         }
         .mode-card .mode-hint {
@@ -457,7 +457,7 @@
         }
         .form-textarea { min-height: 100px; resize: vertical; }
 
-        /* Chip checkbox (возраст, платформы) */
+        /* Chip checkbox */
         .chip-group {
             display: flex;
             flex-wrap: wrap;
@@ -590,6 +590,38 @@
         .wizard-nav-actions { display: flex; gap: 12px; flex-wrap: wrap; }
 
         /* ============================================================
+           LOADER (Анимация загрузки ИИ)
+           ============================================================ */
+        .ai-loader {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 80px 0;
+            text-align: center;
+        }
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid var(--line-strong);
+            border-top-color: var(--accent);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 24px;
+        }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+        .ai-loader h3 {
+            font-family: var(--f-display);
+            font-size: 24px;
+            font-weight: 500;
+            margin-bottom: 12px;
+        }
+        .ai-loader p {
+            color: var(--muted);
+            font-size: 15px;
+        }
+
+        /* ============================================================
            РЕЗУЛЬТАТЫ
            ============================================================ */
         .results-hero {
@@ -638,46 +670,6 @@
             margin: 0 auto;
         }
 
-        .category-bars {
-            margin-bottom: 60px;
-        }
-        .category-bar {
-            display: grid;
-            grid-template-columns: 220px 1fr 80px;
-            gap: 24px;
-            align-items: center;
-            padding: 18px 0;
-            border-bottom: 1px solid var(--line);
-        }
-        .category-bar:first-child { border-top: 1px solid var(--line); }
-        .category-bar-label {
-            font-family: var(--f-display);
-            font-size: 17px;
-            font-weight: 500;
-            letter-spacing: -.015em;
-        }
-        .category-bar-track {
-            height: 6px;
-            background: var(--line);
-            border-radius: 3px;
-            overflow: hidden;
-        }
-        .category-bar-fill {
-            height: 100%;
-            background: var(--accent);
-            border-radius: 3px;
-            transition: width 1s var(--ease);
-        }
-        .category-bar-fill.high { background: var(--success); }
-        .category-bar-fill.medium { background: var(--warning); }
-        .category-bar-value {
-            font-family: var(--f-mono);
-            font-size: 12px;
-            letter-spacing: .1em;
-            text-align: right;
-            color: var(--muted);
-        }
-
         .report-section {
             margin-bottom: 50px;
         }
@@ -717,19 +709,6 @@
             font-weight: 500;
             letter-spacing: -.015em;
         }
-        .rec-card-badge {
-            font-family: var(--f-mono);
-            font-size: 10px;
-            letter-spacing: .14em;
-            text-transform: uppercase;
-            padding: 4px 10px;
-            border-radius: 2px;
-            background: rgba(193, 68, 14, .1);
-            color: var(--accent);
-            white-space: nowrap;
-        }
-        .rec-card-badge.high { background: rgba(47, 125, 63, .12); color: var(--success); }
-        .rec-card-badge.medium { background: rgba(180, 117, 24, .12); color: var(--warning); }
         .rec-card p.rec-problem {
             font-size: 14px;
             color: var(--muted);
@@ -756,6 +735,10 @@
             width: 10px; height: 1px;
             background: var(--accent);
         }
+        .rec-fixes li strong {
+            font-weight: 600;
+            color: var(--accent);
+        }
 
         .strengths-list {
             display: grid;
@@ -768,17 +751,15 @@
             border-radius: 2px;
             background: var(--paper);
         }
-        .strength-item h4 {
-            font-family: var(--f-display);
-            font-size: 17px;
-            font-weight: 500;
-            letter-spacing: -.01em;
-            margin-bottom: 8px;
-        }
         .strength-item p {
-            font-size: 13px;
-            color: var(--muted);
+            font-size: 15px;
+            color: var(--ink);
             line-height: 1.6;
+        }
+        .strength-item p::before {
+            content: "✓ ";
+            color: var(--success);
+            font-weight: bold;
         }
 
         .results-actions {
@@ -864,8 +845,6 @@
            ============================================================ */
         @media (max-width: 900px) {
             .mode-grid { grid-template-columns: 1fr; }
-            .category-bar { grid-template-columns: 1fr; gap: 8px; }
-            .category-bar-value { text-align: left; }
             .strengths-list { grid-template-columns: 1fr; }
             .results-cta { padding: 32px 24px; }
         }
@@ -879,11 +858,7 @@
             .option-list { padding-left: 0; }
             .rec-card { padding: 22px 22px; }
             .header-actions { gap: 8px; }
-            .btn-tools {
-                padding: 9px 12px;
-                font-size: 9px;
-                letter-spacing: .06em;
-            }
+            .btn-tools { padding: 9px 12px; font-size: 9px; letter-spacing: .06em; }
             .wizard-nav { flex-direction: column; align-items: stretch; }
             .wizard-nav-hint { text-align: center; }
             .wizard-nav-actions { flex-direction: column; }
@@ -894,21 +869,12 @@
 
         @media (max-width: 450px) {
             .site-header .container { flex-wrap: wrap; gap: 10px; }
-            .header-actions {
-                width: 100%;
-                grid-auto-flow: row;
-                grid-auto-columns: 1fr;
-                gap: 6px;
-            }
-            .btn-tools {
-                padding: 10px 12px;
-                font-size: 10px;
-                letter-spacing: .08em;
-            }
+            .header-actions { width: 100%; grid-auto-flow: row; grid-auto-columns: 1fr; gap: 6px; }
+            .btn-tools { padding: 10px 12px; font-size: 10px; letter-spacing: .08em; }
         }
 
         /* ============================================================
-           ПЕЧАТЬ (резервный вариант для PDF)
+           ПЕЧАТЬ (PDF)
            ============================================================ */
         @media print {
             .site-header, .site-footer, .results-actions, .results-cta, .mode-section, .tool-hero { display: none !important; }
@@ -933,12 +899,12 @@
     <!-- HERO -->
     <section class="tool-hero" id="intro-section">
         <div class="container-narrow">
-            <span class="eyebrow">Инструмент · Аудит SMM</span>
+            <span class="eyebrow">Инструмент · AI-Аудит SMM</span>
             <h1>Проверьте продвижение <em>в соцсетях</em></h1>
             <p class="lead">
-                Ответьте на вопросы о вашем товаре или услуге — и получите персональный отчёт:
+                Ответьте на вопросы о вашем товаре или услуге — и получите персональный отчёт от нейросети:
                 оценку по 5 категориям, сильные стороны, зоны роста и конкретные рекомендации.
-                Без регистрации, без сбора данных. Результат можно скачать в PDF.
+                Без регистрации. Результат можно скачать в PDF.
             </p>
 
             <div class="tool-meta">
@@ -965,27 +931,44 @@
     <!-- ВЫБОР РЕЖИМА -->
     <section class="mode-section">
         <div class="container-narrow">
-            <h2>Выберите режим прохождения</h2>
+            <h2>Выберите роль</h2>
             <div class="mode-grid">
-                <button class="mode-card" data-mode="extended" type="button">
-                    <span class="mode-num">01 · Расширенный</span>
+                
+                <button class="mode-card" data-mode="marketer" type="button">
+                    <span class="mode-num">01 · Профи</span>
                     <h3>Я <em>маркетолог</em></h3>
-                    <p>Глубокая диагностика по 5 категориям: контент, визуал, вовлечённость, реклама, аналитика. 20 вопросов, детальный отчёт с приоритезацией.</p>
+                    <p>Глубокая диагностика: контент, визуал, вовлечённость, реклама, аналитика. Профессиональные термины и метрики.</p>
                     <span class="mode-hint">Для специалистов →</span>
                 </button>
-                <button class="mode-card" data-mode="simple" type="button">
-                    <span class="mode-num">02 · Упрощённый</span>
+                
+                <button class="mode-card" data-mode="owner" type="button">
+                    <span class="mode-num">02 · Бизнес</span>
                     <h3>Я <em>владелец бизнеса</em></h3>
-                    <p>Понятные вопросы без терминов. 10 вопросов, конкретные пошаговые советы. Подходит, если вы только начинаете разбираться в SMM.</p>
-                    <span class="mode-hint">Для новичков →</span>
+                    <p>Понятные вопросы без сложных терминов. Фокус на окупаемости (ROI) и конкретных шагах для роста.</p>
+                    <span class="mode-hint">Для предпринимателей →</span>
                 </button>
+
+                <button class="mode-card" data-mode="agency" type="button">
+                    <span class="mode-num">03 · Агентство</span>
+                    <h3>Я <em>руководитель</em></h3>
+                    <p>Жесткий стратегический разбор. Фокус на процессах, масштабировании, CAC, LTV и управлении командой.</p>
+                    <span class="mode-hint">Для директоров →</span>
+                </button>
+
+                <button class="mode-card" data-mode="diy" type="button">
+                    <span class="mode-num">04 · Без бюджета</span>
+                    <h3>Сам себе <em>SMM</em></h3>
+                    <p>У вас 0 рублей на рекламу? ИИ подскажет, как выехать на вирусном контенте, коллаборациях и бесплатных промптах.</p>
+                    <span class="mode-hint">Для энтузиастов →</span>
+                </button>
+
             </div>
 
             <div class="intro-actions">
                 <button class="btn btn-accent" id="start-btn" disabled>
                     Начать аудит <span class="btn-arrow">→</span>
                 </button>
-                <span class="wizard-nav-hint" id="mode-hint">Сначала выберите режим</span>
+                <span class="wizard-nav-hint" id="mode-hint">Сначала выберите роль</span>
             </div>
         </div>
     </section>
@@ -1018,12 +1001,17 @@
     <footer class="site-footer">
         <div class="container">
             <span>© 2026 Viktor Willmann</span>
-            <span>Аудит SMM · Инструмент</span>
+            <span>AI-Аудит SMM · Инструмент</span>
             <a href="index.html">На главную ↑</a>
         </div>
     </footer>
 
     <script>
+        // ============================================================
+        // НАСТРОЙКИ (Сюда вставляем URL нашего Worker'а)
+        // ============================================================
+        const WORKER_URL = 'https://smm-audit-proxy.my-scrapers-app.workers.dev';
+
         // ============================================================
         // ДАННЫЕ: КАТЕГОРИИ И ВОПРОСЫ
         // ============================================================
@@ -1035,307 +1023,135 @@
             { id: 'analytics', num: '05', title: 'Аналитика и метрики', desc: 'KPI, отчётность, LTV и CAC' }
         ];
 
+        // (Берем те же вопросы, что у тебя были, но немного адаптируем для ИИ)
         const QUESTIONS = {
-            content: {
-                extended: [
-                    { id: 'content_plan', text: 'Есть ли у вас утверждённый контент-план на месяц?', options: [
-                        { text: 'Нет, публикуем спонтанно', value: 0 },
-                        { text: 'Есть примерный список идей', value: 2 },
-                        { text: 'Да, но соблюдаем не всегда', value: 3 },
-                        { text: 'Да, есть подробный план на 1–3 месяца вперёд', value: 5 }
-                    ]},
-                    { id: 'content_ratio', text: 'Какое соотношение продающего и полезного/развлекательного контента?', options: [
-                        { text: 'Только продающий', value: 0 },
-                        { text: 'В основном продающий', value: 2 },
-                        { text: 'Примерно 50/50', value: 3 },
-                        { text: 'Сбалансировано: ~30% продающий, 70% полезный', value: 5 }
-                    ]},
-                    { id: 'content_voice', text: 'Описан ли ваш tone of voice (единый стиль общения с аудиторией)?', options: [
-                        { text: 'Нет, пишем как получается', value: 0 },
-                        { text: 'Есть общее понимание', value: 2 },
-                        { text: 'Есть документ, но не все следуют', value: 3 },
-                        { text: 'Да, есть гайд и все ему следуют', value: 5 }
-                    ]},
-                    { id: 'content_ugc', text: 'Используете ли вы UGC (контент пользователей: отзывы, обзоры)?', options: [
-                        { text: 'Нет', value: 0 },
-                        { text: 'Иногда репостим', value: 2 },
-                        { text: 'Регулярно собираем и публикуем', value: 3 },
-                        { text: 'Системно работаем с UGC (конкурсы, отзывы, обзоры)', value: 5 }
-                    ]}
-                ],
-                simple: [
-                    { id: 'content_plan_s', text: 'Вы заранее планируете, что будете публиковать?', options: [
-                        { text: 'Нет, публикуем как получится', value: 0 },
-                        { text: 'Иногда планируем', value: 4 },
-                        { text: 'Да, всегда есть план', value: 10 }
-                    ]},
-                    { id: 'content_ratio_s', text: 'Публикуете ли вы не только продающий, но и полезный контент?', options: [
-                        { text: 'Только продающий — подписчикам неинтересно', value: 0 },
-                        { text: 'Иногда что-то полезное', value: 4 },
-                        { text: 'Да, стараемся балансировать', value: 10 }
-                    ]}
-                ]
-            },
-            visual: {
-                extended: [
-                    { id: 'visual_quality', text: 'Насколько качественные фото и видео в ваших публикациях?', options: [
-                        { text: 'Снимаем на телефон без обработки', value: 0 },
-                        { text: 'Обрабатываем, но не системно', value: 2 },
-                        { text: 'Стараемся делать хорошо', value: 3 },
-                        { text: 'Профессиональная съёмка и обработка', value: 5 }
-                    ]},
-                    { id: 'visual_style', text: 'Есть ли единый визуальный стиль (цвета, шрифты, фильтры)?', options: [
-                        { text: 'Нет', value: 0 },
-                        { text: 'Иногда стараемся', value: 2 },
-                        { text: 'Есть, но не всегда соблюдаем', value: 3 },
-                        { text: 'Да, есть брендбук и все ему следуют', value: 5 }
-                    ]},
-                    { id: 'visual_profile', text: 'Как оформлены обложки, аватары, шапки профиля?', options: [
-                        { text: 'Не оформлены', value: 0 },
-                        { text: 'Есть базовое оформление', value: 2 },
-                        { text: 'Всё оформлено в едином стиле', value: 5 }
-                    ]},
-                    { id: 'visual_adapt', text: 'Адаптируете ли визуал под каждую платформу?', options: [
-                        { text: 'Используем одинаковый контент везде', value: 0 },
-                        { text: 'Иногда адаптируем', value: 2 },
-                        { text: 'Стараемся адаптировать', value: 3 },
-                        { text: 'Всегда адаптируем под формат площадки', value: 5 }
-                    ]}
-                ],
-                simple: [
-                    { id: 'visual_quality_s', text: 'Как вы оцениваете качество фото и видео в соцсетях?', options: [
-                        { text: 'Так себе, снимаем на телефон', value: 0 },
-                        { text: 'Нормально, но можно лучше', value: 4 },
-                        { text: 'Отлично — профессиональная съёмка', value: 10 }
-                    ]},
-                    { id: 'visual_style_s', text: 'Выглядит ли ваш профиль единообразно и узнаваемо?', options: [
-                        { text: 'Нет, всё вразнобой', value: 0 },
-                        { text: 'Частично', value: 4 },
-                        { text: 'Да, есть свой стиль', value: 10 }
-                    ]}
-                ]
-            },
-            engagement: {
-                extended: [
-                    { id: 'eng_speed', text: 'Как быстро вы отвечаете на комментарии и сообщения?', options: [
-                        { text: 'Не отвечаем или через неделю', value: 0 },
-                        { text: 'В течение 1–2 дней', value: 2 },
-                        { text: 'В течение дня', value: 3 },
-                        { text: 'В течение 1–2 часов', value: 5 }
-                    ]},
-                    { id: 'eng_neg', text: 'Как вы работаете с негативными отзывами?', options: [
-                        { text: 'Удаляем или игнорируем', value: 0 },
-                        { text: 'Отвечаем шаблонно', value: 2 },
-                        { text: 'Стараемся разобраться в каждой ситуации', value: 3 },
-                        { text: 'Есть регламент работы с негативом', value: 5 }
-                    ]},
-                    { id: 'eng_contests', text: 'Проводите ли конкурсы и активности?', options: [
-                        { text: 'Нет', value: 0 },
-                        { text: 'Редко, раз в полгода', value: 2 },
-                        { text: 'Регулярно, 1–2 раза в квартал', value: 3 },
-                        { text: 'Ежемесячно, с продуманной механикой', value: 5 }
-                    ]},
-                    { id: 'eng_influencers', text: 'Работаете ли с лидерами мнений (блогерами, экспертами)?', options: [
-                        { text: 'Нет', value: 0 },
-                        { text: 'Пробовали 1–2 раза', value: 2 },
-                        { text: 'Регулярно работаем', value: 3 },
-                        { text: 'Есть долгосрочные партнёрства', value: 5 }
-                    ]}
-                ],
-                simple: [
-                    { id: 'eng_speed_s', text: 'Как быстро вы отвечаете подписчикам?', options: [
-                        { text: 'Долго или не отвечаем', value: 0 },
-                        { text: 'В течение дня', value: 4 },
-                        { text: 'Быстро, в течение часа', value: 10 }
-                    ]},
-                    { id: 'eng_activity_s', text: 'Проводите ли вы конкурсы, опросы, активности?', options: [
-                        { text: 'Нет', value: 0 },
-                        { text: 'Иногда', value: 4 },
-                        { text: 'Регулярно', value: 10 }
-                    ]}
-                ]
-            },
-            ads: {
-                extended: [
-                    { id: 'ads_budget', text: 'Используете ли вы платное продвижение?', options: [
-                        { text: 'Нет, только органика', value: 0 },
-                        { text: 'Иногда, ситуативно', value: 2 },
-                        { text: 'Регулярно, есть бюджет', value: 3 },
-                        { text: 'Есть стратегия и постоянный бюджет', value: 5 }
-                    ]},
-                    { id: 'ads_targeting', text: 'Насколько глубоко настраиваете таргетинг?', options: [
-                        { text: 'Не настраиваем', value: 0 },
-                        { text: 'Базовые настройки', value: 2 },
-                        { text: 'Глубокие настройки по аудиториям', value: 3 },
-                        { text: 'Мультиканальные кампании с оптимизацией', value: 5 }
-                    ]},
-                    { id: 'ads_ab', text: 'Проводите ли A/B тесты рекламных креативов?', options: [
-                        { text: 'Нет', value: 0 },
-                        { text: 'Редко', value: 2 },
-                        { text: 'Регулярно', value: 5 }
-                    ]},
-                    { id: 'ads_retarget', text: 'Используете ли ретаргетинг?', options: [
-                        { text: 'Нет', value: 0 },
-                        { text: 'Пробовали', value: 2 },
-                        { text: 'Да, регулярно', value: 5 }
-                    ]}
-                ],
-                simple: [
-                    { id: 'ads_budget_s', text: 'Используете ли вы платную рекламу в соцсетях?', options: [
-                        { text: 'Нет, только бесплатные публикации', value: 0 },
-                        { text: 'Иногда запускаем', value: 4 },
-                        { text: 'Да, регулярно', value: 10 }
-                    ]},
-                    { id: 'ads_setup_s', text: 'Насколько продуманы настройки рекламы?', options: [
-                        { text: 'Не разбираемся, запускаем «как есть»', value: 0 },
-                        { text: 'Базово настраиваем', value: 4 },
-                        { text: 'Хорошо разбираемся в настройках', value: 10 }
-                    ]}
-                ]
-            },
-            analytics: {
-                extended: [
-                    { id: 'an_kpi', text: 'Отслеживаете ли вы KPI (CTR, ER, конверсия)?', options: [
-                        { text: 'Нет, не знаем этих метрик', value: 0 },
-                        { text: 'Знаем, но не отслеживаем', value: 2 },
-                        { text: 'Отслеживаем основные', value: 3 },
-                        { text: 'Ведём полную аналитику по воронке', value: 5 }
-                    ]},
-                    { id: 'an_competitors', text: 'Анализируете ли вы конкурентов?', options: [
-                        { text: 'Нет', value: 0 },
-                        { text: 'Иногда смотрим', value: 2 },
-                        { text: 'Регулярно мониторим', value: 3 },
-                        { text: 'Есть системный конкурентный анализ', value: 5 }
-                    ]},
-                    { id: 'an_reports', text: 'Есть ли у вас отчётность по соцсетям?', options: [
-                        { text: 'Нет', value: 0 },
-                        { text: 'Иногда смотрим статистику', value: 2 },
-                        { text: 'Ежемесячные отчёты', value: 3 },
-                        { text: 'Полноценные дашборды', value: 5 }
-                    ]},
-                    { id: 'an_ltv', text: 'Знаете ли вы LTV и CAC ваших клиентов?', options: [
-                        { text: 'Нет', value: 0 },
-                        { text: 'Слышали, но не считаем', value: 2 },
-                        { text: 'Считаем примерно', value: 3 },
-                        { text: 'Точно знаем и оптимизируем', value: 5 }
-                    ]}
-                ],
-                simple: [
-                    { id: 'an_kpi_s', text: 'Смотрите ли вы статистику своих публикаций?', options: [
-                        { text: 'Нет, не смотрим', value: 0 },
-                        { text: 'Иногда заглядываем', value: 4 },
-                        { text: 'Да, регулярно анализируем', value: 10 }
-                    ]},
-                    { id: 'an_results_s', text: 'Понимаете ли вы, какие публикации приводят клиентов?', options: [
-                        { text: 'Нет, не отслеживаем', value: 0 },
-                        { text: 'Примерно догадываемся', value: 4 },
-                        { text: 'Да, точно знаем', value: 10 }
-                    ]}
-                ]
-            }
-        };
-
-        const RECOMMENDATIONS = {
-            content: {
-                low: { problem: 'Контент публикуется бессистемно. Аудитория не понимает, чего ждать от блога, а вы не можете планировать ресурсы.', fixes: [
-                    'Составьте контент-план на месяц вперёд (Notion, Trello или Google Sheets)',
-                    'Определите 3–4 рубрики и распределите посты по ним',
-                    'Заведите гайд tone of voice — как вы общаетесь с аудиторией',
-                    'Начните собирать и публиковать отзывы клиентов (UGC)'
+            content: [
+                { id: 'content_plan', text: 'Есть ли у вас утверждённый контент-план на месяц?', options: [
+                    { text: 'Нет, публикуем спонтанно', value: 'Нет' },
+                    { text: 'Есть примерный список идей', value: 'Слабый план' },
+                    { text: 'Да, но соблюдаем не всегда', value: 'Средний' },
+                    { text: 'Да, есть подробный план на 1–3 месяца вперёд', value: 'Отличный план' }
                 ]},
-                medium: { problem: 'Контент есть, но ему не хватает системы и баланса. Часть аудитории не вовлекается.', fixes: [
-                    'Пересмотрите соотношение контента: 70% полезного, 30% продающего',
-                    'Формализуйте tone of voice и закрепите его в гайде',
-                    'Добавьте рубрику с UGC: отзывы, кейсы, обзоры',
-                    'Запланируйте контент на 2–3 месяца вперёд'
+                { id: 'content_ratio', text: 'Какое соотношение продающего и полезного контента?', options: [
+                    { text: 'Только продающий', value: '100% продающий' },
+                    { text: 'В основном продающий', value: '70% продающий' },
+                    { text: 'Примерно 50/50', value: '50/50' },
+                    { text: 'Сбалансировано: ~30% продающий, 70% полезный', value: 'Идеальный баланс' }
                 ]},
-                high: { problem: 'Контент-стратегия выстроена хорошо. Задача — удерживать уровень и масштабировать.', fixes: [
-                    'Внедрите A/B тесты форматов (карусель, видео, сторис)',
-                    'Добавьте долгосрочные рубрики с сериями публикаций',
-                    'Усильте работу с UGC: конкурсы, обзоры, клиентские истории',
-                    'Тестируйте новые площадки для расширения охвата'
+                { id: 'content_voice', text: 'Описан ли ваш tone of voice?', options: [
+                    { text: 'Нет, пишем как получается', value: 'Нет' },
+                    { text: 'Есть общее понимание', value: 'Частично' },
+                    { text: 'Есть документ, но не все следуют', value: 'Есть гайд' },
+                    { text: 'Да, есть гайд и все ему следуют', value: 'Строгий ToV' }
+                ]},
+                { id: 'content_ugc', text: 'Используете ли вы UGC (контент пользователей)?', options: [
+                    { text: 'Нет', value: 'Нет' },
+                    { text: 'Иногда репостим', value: 'Редко' },
+                    { text: 'Регулярно собираем и публикуем', value: 'Часто' },
+                    { text: 'Системно работаем с UGC', value: 'Системно' }
                 ]}
-            },
-            visual: {
-                low: { problem: 'Визуал не формирует узнаваемость бренда. Профиль выглядит как набор случайных публикаций.', fixes: [
-                    'Создайте простой брендбук: 2–3 цвета, шрифты, фильтр для фото',
-                    'Оформите обложки, аватары и шапки в едином стиле',
-                    'Начните с базовой обработки фото (свет, кадрирование, единый фильтр)',
-                    'Адаптируйте визуал под каждую площадку (размеры, форматы)'
+            ],
+            visual: [
+                { id: 'visual_quality', text: 'Насколько качественные фото и видео?', options: [
+                    { text: 'Снимаем на телефон без обработки', value: 'Низкое' },
+                    { text: 'Обрабатываем, но не системно', value: 'Среднее' },
+                    { text: 'Стараемся делать хорошо', value: 'Хорошее' },
+                    { text: 'Профессиональная съёмка', value: 'Про' }
                 ]},
-                medium: { problem: 'Стиль есть, но соблюдается не всегда. Часть публикаций выбивается из общей картины.', fixes: [
-                    'Закрепите визуальные правила в мини-гайде для всех, кто готовит контент',
-                    'Внедрите шаблоны для типовых публикаций (Canva или Figma)',
-                    'Проведите аудит последних 20 постов — что выбивается из стиля?',
-                    'Добавьте фирменные элементы: рамки, плашки, шрифтовые акценты'
+                { id: 'visual_style', text: 'Есть ли единый визуальный стиль?', options: [
+                    { text: 'Нет', value: 'Нет' },
+                    { text: 'Иногда стараемся', value: 'Иногда' },
+                    { text: 'Есть, но не всегда соблюдаем', value: 'Частично' },
+                    { text: 'Да, есть брендбук', value: 'Единый стиль' }
                 ]},
-                high: { problem: 'Визуал сильный, узнаваемый. Стоит поддерживать и экспериментировать аккуратно.', fixes: [
-                    'Тестируйте новые форматы: Reels, карусели, короткие видео',
-                    'Добавьте премиальные элементы: профессиональная съёмка, motion-дизайн',
-                    'Следите за трендами и адаптируйте их под бренд',
-                    'Собирайте метрики: какие визуалы дают больше охвата'
+                { id: 'visual_profile', text: 'Как оформлены обложки и шапки профиля?', options: [
+                    { text: 'Не оформлены', value: 'Пусто' },
+                    { text: 'Есть базовое оформление', value: 'Базово' },
+                    { text: 'Всё оформлено в едином стиле', value: 'Профессионально' }
+                ]},
+                { id: 'visual_adapt', text: 'Адаптируете ли визуал под каждую платформу?', options: [
+                    { text: 'Используем одинаковый контент везде', value: 'Не адаптируем' },
+                    { text: 'Иногда адаптируем', value: 'Иногда' },
+                    { text: 'Стараемся адаптировать', value: 'Стараемся' },
+                    { text: 'Всегда адаптируем', value: 'Всегда' }
                 ]}
-            },
-            engagement: {
-                low: { problem: 'Коммуникация с аудиторией почти не выстроена. Подписчики не чувствуют отклика.', fixes: [
-                    'Установите регламент: отвечать на комментарии в течение 2–4 часов',
-                    'Разработайте скрипты ответов на частые вопросы и негатив',
-                    'Запустите простую активность: опрос или конкурс с призом',
-                    'Назначьте ответственного за коммуникацию в соцсетях'
+            ],
+            engagement: [
+                { id: 'eng_speed', text: 'Как быстро вы отвечаете на комментарии?', options: [
+                    { text: 'Не отвечаем или через неделю', value: 'Очень медленно' },
+                    { text: 'В течение 1–2 дней', value: 'Медленно' },
+                    { text: 'В течение дня', value: 'Нормально' },
+                    { text: 'В течение 1–2 часов', value: 'Быстро' }
                 ]},
-                medium: { problem: 'Диалог с аудиторией есть, но не хватает системы и регулярности.', fixes: [
-                    'Введите KPI по скорости ответа и вовлечённости',
-                    'Проводите активности ежемесячно (опросы, конкурсы, прямые эфиры)',
-                    'Начните работать с 2–3 микро-инфлюенсерами в вашей нише',
-                    'Собирайте обратную связь от подписчиков и внедряйте её'
+                { id: 'eng_neg', text: 'Как вы работаете с негативом?', options: [
+                    { text: 'Удаляем или игнорируем', value: 'Игнорируем' },
+                    { text: 'Отвечаем шаблонно', value: 'Шаблонно' },
+                    { text: 'Стараемся разобраться', value: 'Вникаем' },
+                    { text: 'Есть регламент', value: 'По регламенту' }
                 ]},
-                high: { problem: 'Коммуникация выстроена отлично. Аудитория вовлечена и лояльна.', fixes: [
-                    'Развивайте комьюнити: чат, закрытый клуб, регулярные активности',
-                    'Углубляйте работу с лидерами мнений — долгосрочные контракты',
-                    'Внедряйте программы лояльности для активных подписчиков',
-                    'Используйте амбассадоров бренда из числа клиентов'
+                { id: 'eng_contests', text: 'Проводите ли конкурсы и активности?', options: [
+                    { text: 'Нет', value: 'Нет' },
+                    { text: 'Редко', value: 'Редко' },
+                    { text: 'Регулярно', value: 'Регулярно' },
+                    { text: 'Ежемесячно, с продуманной механикой', value: 'Системно' }
+                ]},
+                { id: 'eng_influencers', text: 'Работаете ли с лидерами мнений?', options: [
+                    { text: 'Нет', value: 'Нет' },
+                    { text: 'Пробовали 1–2 раза', value: 'Пробовали' },
+                    { text: 'Регулярно работаем', value: 'Регулярно' },
+                    { text: 'Есть долгосрочные партнёрства', value: 'Долгосрочно' }
                 ]}
-            },
-            ads: {
-                low: { problem: 'Платное продвижение не используется или используется хаотично. Рост зависит только от органики.', fixes: [
-                    'Определите минимальный бюджет для теста (например, 10–15 тыс. руб. в месяц)',
-                    'Запустите 2–3 тестовые кампании с разными креативами',
-                    'Настройте базовый пиксель и ретаргетинг',
-                    'Изучите основы таргетинга: аудитории, интересы, look-alike'
+            ],
+            ads: [
+                { id: 'ads_budget', text: 'Используете ли вы платное продвижение?', options: [
+                    { text: 'Нет, только органика', value: 'Нет бюджета' },
+                    { text: 'Иногда, ситуативно', value: 'Редко' },
+                    { text: 'Регулярно, есть бюджет', value: 'Регулярно' },
+                    { text: 'Есть стратегия и постоянный бюджет', value: 'Стратегически' }
                 ]},
-                medium: { problem: 'Реклама есть, но без глубокой оптимизации. Бюджет расходуется неэффективно.', fixes: [
-                    'Настройте A/B тесты: минимум 2 варианта креатива на кампанию',
-                    'Добавьте ретаргетинг на посетителей сайта и подписчиков',
-                    'Сегментируйте аудитории: холодная, тёплая, горячая',
-                    'Ведите таблицу кампаний с метриками (CTR, CPC, CR)'
+                { id: 'ads_targeting', text: 'Насколько глубоко настраиваете таргетинг?', options: [
+                    { text: 'Не настраиваем', value: 'Никак' },
+                    { text: 'Базовые настройки', value: 'Базово' },
+                    { text: 'Глубокие настройки по аудиториям', value: 'Глубоко' },
+                    { text: 'Мультиканальные кампании', value: 'Профи' }
                 ]},
-                high: { problem: 'Реклама работает системно. Задача — масштабировать и снижать стоимость заявки.', fixes: [
-                    'Тестируйте новые каналы: Telegram Ads, Дзен, Rutube',
-                    'Внедрите сквозную аналитику для оценки ROI',
-                    'Оптимизируйте воронку: от клика до покупки',
-                    'Работайте с look-alike аудиториями на основе покупателей'
+                { id: 'ads_ab', text: 'Проводите ли A/B тесты креативов?', options: [
+                    { text: 'Нет', value: 'Нет' },
+                    { text: 'Редко', value: 'Редко' },
+                    { text: 'Регулярно', value: 'Регулярно' }
+                ]},
+                { id: 'ads_retarget', text: 'Используете ли ретаргетинг?', options: [
+                    { text: 'Нет', value: 'Нет' },
+                    { text: 'Пробовали', value: 'Пробовали' },
+                    { text: 'Да, регулярно', value: 'Регулярно' }
                 ]}
-            },
-            analytics: {
-                low: { problem: 'Вы не отслеживаете результаты. Решения принимаются интуитивно, а бюджеты расходуются вслепую.', fixes: [
-                    'Начните смотреть встроенную статистику каждой площадки',
-                    'Заведите простую таблицу: дата, публикация, охват, вовлечённость',
-                    'Определите 3–5 ключевых метрик для отслеживания',
-                    'Раз в месяц анализируйте, что сработало, а что нет'
+            ],
+            analytics: [
+                { id: 'an_kpi', text: 'Отслеживаете ли вы KPI (CTR, ER)?', options: [
+                    { text: 'Нет, не знаем этих метрик', value: 'Нет' },
+                    { text: 'Знаем, но не отслеживаем', value: 'Знаем, но не смотрим' },
+                    { text: 'Отслеживаем основные', value: 'Базово' },
+                    { text: 'Ведём полную аналитику', value: 'Полная аналитика' }
                 ]},
-                medium: { problem: 'Часть метрик отслеживается, но нет единой картины и системной отчётности.', fixes: [
-                    'Соберите дашборд (Google Sheets или Looker Studio)',
-                    'Отслеживайте воронку: охват → вовлечение → переход → заявка',
-                    'Введите ежемесячную отчётность по KPI',
-                    'Добавьте анализ конкурентов в регулярный процесс'
+                { id: 'an_competitors', text: 'Анализируете ли вы конкурентов?', options: [
+                    { text: 'Нет', value: 'Нет' },
+                    { text: 'Иногда смотрим', value: 'Иногда' },
+                    { text: 'Регулярно мониторим', value: 'Регулярно' },
+                    { text: 'Есть системный анализ', value: 'Системно' }
                 ]},
-                high: { problem: 'Аналитика выстроена хорошо. Есть данные для принятия решений.', fixes: [
-                    'Внедрите сквозную аналитику (CRM + соцсети)',
-                    'Считайте LTV и CAC по каналам — оптимизируйте самый прибыльный',
-                    'Используйте атрибуцию для точной оценки каналов',
-                    'Автоматизируйте отчёты и настройте алерты по метрикам'
+                { id: 'an_reports', text: 'Есть ли у вас отчётность по соцсетям?', options: [
+                    { text: 'Нет', value: 'Нет' },
+                    { text: 'Иногда смотрим статистику', value: 'Редко' },
+                    { text: 'Ежемесячные отчёты', value: 'Ежемесячно' },
+                    { text: 'Полноценные дашборды', value: 'Дашборды' }
+                ]},
+                { id: 'an_ltv', text: 'Знаете ли вы LTV и CAC ваших клиентов?', options: [
+                    { text: 'Нет', value: 'Нет' },
+                    { text: 'Слышали, но не считаем', value: 'Не считаем' },
+                    { text: 'Считаем примерно', value: 'Примерно' },
+                    { text: 'Точно знаем и оптимизируем', value: 'Точно знаем' }
                 ]}
-            }
+            ]
         };
 
         // ============================================================
@@ -1350,9 +1166,7 @@
 
         const STEPS = ['basic', 'content', 'visual', 'engagement', 'ads', 'analytics', 'results'];
 
-        // ============================================================
         // DOM
-        // ============================================================
         const introSection = document.getElementById('intro-section');
         const modeSection = document.querySelector('.mode-section');
         const wizardSection = document.getElementById('wizard-section');
@@ -1374,7 +1188,7 @@
                 card.classList.add('active');
                 state.mode = card.getAttribute('data-mode');
                 startBtn.disabled = false;
-                modeHint.textContent = state.mode === 'extended' ? 'Выбран расширенный режим' : 'Выбран упрощённый режим';
+                modeHint.textContent = 'Режим выбран. Можно начинать!';
             });
         });
 
@@ -1400,11 +1214,18 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         });
 
-        nextBtn.addEventListener('click', () => {
+        nextBtn.addEventListener('click', async () => {
             if (state.step < STEPS.length - 1) {
-                state.step++;
-                renderStep();
-                window.scrollTo({ top: 0, behavior: 'smooth' });
+                // Если это последний шаг перед результатами (Аналитика -> Результаты)
+                if (state.step === STEPS.length - 2) {
+                    state.step++;
+                    renderStep(); // Покажет лоадер
+                    await fetchAIReport(); // Запустит запрос к Cloudflare
+                } else {
+                    state.step++;
+                    renderStep();
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
             }
         });
 
@@ -1416,15 +1237,29 @@
             const totalSteps = STEPS.length;
             const stepNum = state.step + 1;
 
+            // Прогресс-бар
             progressLabel.textContent = `Шаг ${stepNum} из ${totalSteps}`;
             progressFill.style.width = `${(stepNum / totalSteps) * 100}%`;
-            backBtn.textContent = state.step === 0 ? '← К выбору режима' : '← Назад';
+            
+            // Кнопка "Назад"
+            backBtn.textContent = state.step === 0 ? '← К выбору роли' : '← Назад';
             backBtn.disabled = false;
 
+            // Если это шаг с загрузкой ИИ
             if (stepId === 'results') {
                 nextBtn.classList.add('hidden');
                 navHint.textContent = '';
-                renderResults();
+                // Если данных еще нет (ждем ответа от ИИ) - показываем спиннер
+                if (!state.aiReport) {
+                    wizardContent.innerHTML = `
+                        <div class="ai-loader">
+                            <div class="spinner"></div>
+                            <h3>Анализируем ваши ответы...</h3>
+                            <p>Нейросеть Gemini подбирает персональные рекомендации. Это займет около 5-10 секунд.</p>
+                        </div>
+                    `;
+                }
+                // Если данные пришли - рендерим их (вызывается внутри fetchAIReport)
                 return;
             }
 
@@ -1448,7 +1283,7 @@
                 <div class="wizard-step-head">
                     <span class="eyebrow">Информация о продукте</span>
                     <h2>Расскажите <em>о товаре или услуге</em></h2>
-                    <p>Эти данные помогут сделать отчёт более персональным. Всё остаётся в вашем браузере.</p>
+                    <p>Эти данные помогут нейросети сделать отчёт более персональным.</p>
                 </div>
 
                 <div class="form-section">
@@ -1468,52 +1303,8 @@
                         </select>
                     </div>
                     <div class="form-row">
-                        <label class="form-label" for="basic-price">Ценовой сегмент</label>
-                        <select id="basic-price" class="form-select">
-                            <option value="">— Выберите —</option>
-                            <option value="Эконом" ${state.basic.price === 'Эконом' ? 'selected' : ''}>Эконом</option>
-                            <option value="Средний" ${state.basic.price === 'Средний' ? 'selected' : ''}>Средний</option>
-                            <option value="Премиум" ${state.basic.price === 'Премиум' ? 'selected' : ''}>Премиум</option>
-                            <option value="Люкс" ${state.basic.price === 'Люкс' ? 'selected' : ''}>Люкс</option>
-                        </select>
-                    </div>
-                    <div class="form-row">
                         <label class="form-label" for="basic-usp">УТП — чем вы отличаетесь от конкурентов</label>
                         <textarea id="basic-usp" class="form-textarea" placeholder="Например: единственная школа с носителями языка и гарантией результата за 3 месяца">${escapeHtml(state.basic.usp)}</textarea>
-                    </div>
-                </div>
-
-                <div class="form-section">
-                    <div class="form-section-title">Целевая аудитория</div>
-                    <div class="form-row">
-                        <label class="form-label">Возрастные группы (можно несколько)</label>
-                        <div class="chip-group">
-                            ${['13–17', '18–24', '25–34', '35–44', '45–54', '55+'].map(age => `
-                                <label class="chip">
-                                    <input type="checkbox" data-age="${age}" ${state.basic.ages.includes(age) ? 'checked' : ''}>
-                                    ${age}
-                                </label>
-                            `).join('')}
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <label class="form-label" for="basic-geo">География</label>
-                        <select id="basic-geo" class="form-select">
-                            <option value="">— Выберите —</option>
-                            <option value="Город" ${state.basic.geo === 'Город' ? 'selected' : ''}>Город</option>
-                            <option value="Регион" ${state.basic.geo === 'Регион' ? 'selected' : ''}>Регион</option>
-                            <option value="Страна" ${state.basic.geo === 'Страна' ? 'selected' : ''}>Страна</option>
-                            <option value="Международный" ${state.basic.geo === 'Международный' ? 'selected' : ''}>Международный</option>
-                        </select>
-                    </div>
-                    <div class="form-row">
-                        <label class="form-label" for="basic-btype">Тип аудитории</label>
-                        <select id="basic-btype" class="form-select">
-                            <option value="">— Выберите —</option>
-                            <option value="B2C" ${state.basic.btype === 'B2C' ? 'selected' : ''}>B2C — конечные потребители</option>
-                            <option value="B2B" ${state.basic.btype === 'B2B' ? 'selected' : ''}>B2B — компании</option>
-                            <option value="B2G" ${state.basic.btype === 'B2G' ? 'selected' : ''}>B2G — госсектор</option>
-                        </select>
                     </div>
                 </div>
 
@@ -1541,31 +1332,9 @@
                 state.basic.category = e.target.value;
                 validateBasic();
             });
-            wizardContent.querySelector('#basic-price').addEventListener('change', e => {
-                state.basic.price = e.target.value;
-                validateBasic();
-            });
             wizardContent.querySelector('#basic-usp').addEventListener('input', e => {
                 state.basic.usp = e.target.value;
             });
-            wizardContent.querySelector('#basic-geo').addEventListener('change', e => {
-                state.basic.geo = e.target.value;
-            });
-            wizardContent.querySelector('#basic-btype').addEventListener('change', e => {
-                state.basic.btype = e.target.value;
-            });
-
-            wizardContent.querySelectorAll('[data-age]').forEach(cb => {
-                cb.addEventListener('change', () => {
-                    const age = cb.getAttribute('data-age');
-                    if (cb.checked) {
-                        if (!state.basic.ages.includes(age)) state.basic.ages.push(age);
-                    } else {
-                        state.basic.ages = state.basic.ages.filter(a => a !== age);
-                    }
-                });
-            });
-
             wizardContent.querySelectorAll('[data-platform]').forEach(cb => {
                 cb.addEventListener('change', () => {
                     const p = cb.getAttribute('data-platform');
@@ -1590,11 +1359,11 @@
         // РЕНДЕР: КАТЕГОРИЯ С ВОПРОСАМИ
         // ============================================================
         function renderCategory(category) {
-            const questions = QUESTIONS[category.id][state.mode];
+            const questions = QUESTIONS[category.id];
 
             wizardContent.innerHTML = `
                 <div class="wizard-step-head">
-                    <span class="eyebrow">Категория ${category.num} · ${questions.length} ${plural(questions.length, ['вопрос', 'вопроса', 'вопросов'])}</span>
+                    <span class="eyebrow">Категория ${category.num} · ${questions.length} вопросов</span>
                     <h2>${category.title.replace(/(\S+)$/, '<em>$1</em>')}</h2>
                     <p>${category.desc}</p>
                 </div>
@@ -1626,7 +1395,7 @@
             wizardContent.querySelectorAll('.option-btn').forEach(btn => {
                 btn.addEventListener('click', () => {
                     const qid = btn.getAttribute('data-qid');
-                    const value = parseInt(btn.getAttribute('data-value'), 10);
+                    const value = btn.getAttribute('data-value');
                     state.answers[qid] = value;
                     wizardContent.querySelectorAll(`.option-btn[data-qid="${qid}"]`).forEach(b => b.classList.remove('selected'));
                     btn.classList.add('selected');
@@ -1646,117 +1415,87 @@
         }
 
         // ============================================================
-        // РАСЧЁТ
+        // ОТПРАВКА ДАННЫХ В CLOUDFLARE WORKER (ИИ)
         // ============================================================
-        function calculateResults() {
-            const categoryScores = {};
-            CATEGORIES.forEach(cat => {
-                const questions = QUESTIONS[cat.id][state.mode];
-                let earned = 0, max = 0;
-                questions.forEach(q => {
-                    const maxVal = Math.max(...q.options.map(o => o.value));
-                    max += maxVal;
-                    earned += state.answers[q.id] || 0;
+        async function fetchAIReport() {
+            try {
+                const response = await fetch(WORKER_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        mode: state.mode,
+                        basic: state.basic,
+                        answers: state.answers
+                    })
                 });
-                const percent = max > 0 ? Math.round((earned / max) * 100) : 0;
-                categoryScores[cat.id] = {
-                    earned, max, percent,
-                    level: percent < 40 ? 'low' : percent < 75 ? 'medium' : 'high'
-                };
-            });
-            const totalPercent = Math.round(
-                CATEGORIES.reduce((sum, cat) => sum + categoryScores[cat.id].percent, 0) / CATEGORIES.length
-            );
-            return { categoryScores, totalPercent };
+
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+
+                const data = await response.json();
+                state.aiReport = data; // Сохраняем ответ ИИ в стейт
+                renderResults(data); // Отрисовываем результаты
+
+            } catch (error) {
+                console.error('Ошибка при получении отчета:', error);
+                wizardContent.innerHTML = `
+                    <div class="wizard-step-head" style="text-align:center; border:none;">
+                        <h2 style="color:var(--accent);">Упс...</h2>
+                        <p>Не удалось связаться с нейросетью. Проверьте интернет или попробуйте позже.</p>
+                    </div>
+                `;
+            }
         }
 
         // ============================================================
-        // РЕНДЕР: РЕЗУЛЬТАТЫ
+        // РЕНДЕР: РЕЗУЛЬТАТЫ (ИЗ ИИ)
         // ============================================================
-        function renderResults() {
-            const { categoryScores, totalPercent } = calculateResults();
-            const score10 = Math.round(totalPercent / 10);
-            const level = totalPercent < 40 ? 'low' : totalPercent < 75 ? 'medium' : 'high';
-            const levelLabels = { low: 'Требуется работа', medium: 'Есть куда расти', high: 'Хороший уровень' };
-
-            const sorted = [...CATEGORIES].sort((a, b) => categoryScores[a.id].percent - categoryScores[b.id].percent);
-            const weakest = sorted.slice(0, 3);
-            const strongest = sorted.slice(-2).reverse();
-
-            const summaryText = level === 'low'
-                ? 'Базовые процессы SMM пока не выстроены. Начните с главного — это даст быстрый эффект.'
-                : level === 'medium'
-                    ? 'Основа заложена, но есть заметные зоны роста. Точечные улучшения дадут ощутимый результат.'
-                    : 'Уровень выше среднего. Стоит удерживать стандарт и масштабировать то, что работает.';
+        function renderResults(aiData) {
+            // Определяем класс для цвета уровня
+            let levelClass = 'level-medium';
+            if (aiData.level.includes('Требуется')) levelClass = 'level-low';
+            if (aiData.level.includes('Высокий')) levelClass = 'level-high';
 
             wizardContent.innerHTML = `
                 <div class="results-hero">
                     <span class="eyebrow">Аудит завершён</span>
-                    <div class="results-score">${score10}<sup>/10</sup></div>
-                    <span class="results-level level-${level}">${levelLabels[level]}</span>
-                    <p class="results-summary">${summaryText}</p>
-                </div>
-
-                <div class="report-section">
-                    <h3>Оценка <em>по категориям</em></h3>
-                    <div class="category-bars">
-                        ${CATEGORIES.map(cat => {
-                            const s = categoryScores[cat.id];
-                            return `
-                                <div class="category-bar">
-                                    <div class="category-bar-label">${cat.title}</div>
-                                    <div class="category-bar-track">
-                                        <div class="category-bar-fill ${s.level}" style="width: ${s.percent}%"></div>
-                                    </div>
-                                    <div class="category-bar-value">${s.percent}%</div>
-                                </div>
-                            `;
-                        }).join('')}
-                    </div>
+                    <div class="results-score">${Math.round(aiData.total_score / 10)}<sup>/10</sup></div>
+                    <span class="results-level ${levelClass}">${aiData.level}</span>
+                    <p class="results-summary">${aiData.summary}</p>
                 </div>
 
                 <div class="report-section">
                     <h3>Что уже <em>работает хорошо</em></h3>
                     <div class="strengths-list">
-                        ${strongest.map(cat => {
-                            const s = categoryScores[cat.id];
-                            return `
-                                <div class="strength-item">
-                                    <h4>${cat.title}</h4>
-                                    <p>${s.percent}% — ${s.level === 'high' ? 'сильная сторона, поддерживайте стандарт' : 'уверенная позиция, можно усилить'}</p>
-                                </div>
-                            `;
-                        }).join('')}
+                        ${aiData.strengths.map(str => `
+                            <div class="strength-item">
+                                <p>${str}</p>
+                            </div>
+                        `).join('')}
                     </div>
                 </div>
 
                 <div class="report-section">
-                    <h3>Зоны роста <em>и рекомендации</em></h3>
-                    ${weakest.map(cat => {
-                        const s = categoryScores[cat.id];
-                        const rec = RECOMMENDATIONS[cat.id][s.level];
-                        const badgeLabel = s.level === 'low' ? 'Высокий приоритет' : s.level === 'medium' ? 'Средний приоритет' : 'Поддерживать';
-                        const badgeClass = s.level === 'high' ? 'high' : s.level === 'medium' ? 'medium' : '';
-                        return `
-                            <div class="rec-card">
-                                <div class="rec-card-head">
-                                    <div class="rec-card-title">${cat.title}</div>
-                                    <span class="rec-card-badge ${badgeClass}">${badgeLabel} · ${s.percent}%</span>
-                                </div>
-                                <p class="rec-problem">${rec.problem}</p>
-                                <ul class="rec-fixes">
-                                    ${rec.fixes.map(fix => `<li>${fix}</li>`).join('')}
-                                </ul>
+                    <h3>Зоны роста <em>и рекомендации ИИ</em></h3>
+                    ${aiData.priorities.map(prio => `
+                        <div class="rec-card">
+                            <div class="rec-card-head">
+                                <div class="rec-card-title">${prio.category}</div>
                             </div>
-                        `;
-                    }).join('')}
+                            <p class="rec-problem">${prio.finding}</p>
+                            <ul class="rec-fixes">
+                                <li><strong>Быстрое действие:</strong> ${prio.quick_win}</li>
+                                <li><strong>Стратегическое действие:</strong> ${prio.strategic_action}</li>
+                            </ul>
+                        </div>
+                    `).join('')}
                 </div>
 
                 <div class="results-actions">
                     <button class="btn btn-accent" id="download-pdf-btn" type="button">
                         Скачать PDF <span class="btn-arrow">↓</span>
                     </button>
-                    <button class="btn btn-outline" id="print-btn" type="button">Печать</button>
                     <button class="btn btn-outline" id="restart-btn" type="button">Пройти заново</button>
                 </div>
 
@@ -1768,24 +1507,29 @@
             `;
 
             document.getElementById('download-pdf-btn').addEventListener('click', downloadPDF);
-            document.getElementById('print-btn').addEventListener('click', () => window.print());
-            document.getElementById('restart-btn').addEventListener('click', () => {
-                state.step = 0;
-                state.answers = {};
-                state.basic = { product: '', category: '', price: '', usp: '', ages: [], geo: '', btype: '', platforms: [] };
-                state.mode = null;
-                document.querySelectorAll('.mode-card').forEach(c => c.classList.remove('active'));
-                startBtn.disabled = true;
-                modeHint.textContent = 'Сначала выберите режим';
-                wizardSection.classList.add('hidden');
-                modeSection.classList.remove('hidden');
-                introSection.classList.remove('hidden');
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            });
+            document.getElementById('restart-btn').addEventListener('click', resetApp);
         }
 
         // ============================================================
-        // PDF
+        // СБРОС
+        // ============================================================
+        function resetApp() {
+            state.step = 0;
+            state.answers = {};
+            state.basic = { product: '', category: '', price: '', usp: '', ages: [], geo: '', btype: '', platforms: [] };
+            state.mode = null;
+            state.aiReport = null; // Очищаем старый отчет ИИ
+            document.querySelectorAll('.mode-card').forEach(c => c.classList.remove('active'));
+            startBtn.disabled = true;
+            modeHint.textContent = 'Сначала выберите роль';
+            wizardSection.classList.add('hidden');
+            modeSection.classList.remove('hidden');
+            introSection.classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // ============================================================
+        // PDF (Оставляем старую логику генерации)
         // ============================================================
         function downloadPDF() {
             const btn = document.getElementById('download-pdf-btn');
@@ -1808,7 +1552,7 @@
 
             const opt = {
                 margin: [10, 10, 10, 10],
-                filename: `smm-audit-${safeName}-${date.replace(/\./g, '-')}.pdf`,
+                filename: `ai-audit-${safeName}-${date.replace(/\./g, '-')}.pdf`,
                 image: { type: 'jpeg', quality: 0.98 },
                 html2canvas: { scale: 2, useCORS: true, logging: false },
                 jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
@@ -1826,7 +1570,7 @@
                 if (ctaEl) ctaEl.style.display = '';
                 btn.innerHTML = originalText;
                 btn.disabled = false;
-                alert('Не удалось создать PDF. Попробуйте кнопку «Печать» и сохраните как PDF.');
+                alert('Не удалось создать PDF.');
             });
         }
 
@@ -1841,13 +1585,6 @@
                 .replace(/>/g, '&gt;')
                 .replace(/"/g, '&quot;')
                 .replace(/'/g, '&#39;');
-        }
-
-        function plural(n, forms) {
-            const n10 = n % 10, n100 = n % 100;
-            if (n10 === 1 && n100 !== 11) return forms[0];
-            if (n10 >= 2 && n10 <= 4 && (n100 < 10 || n100 >= 20)) return forms[1];
-            return forms[2];
         }
     </script>
 </body>
