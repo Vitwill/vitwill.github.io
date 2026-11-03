@@ -25,7 +25,6 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
         
-        /* Прижимаем футер к низу */
         body { 
             font-family: var(--f-text); font-size: 15px; line-height: 1.6; color: var(--ink); background: var(--paper); 
             -webkit-font-smoothing: antialiased; overflow-x: hidden;
@@ -163,12 +162,27 @@
         .strength-item p { font-size: 15px; color: var(--ink); line-height: 1.6; }
         .strength-item p::before { content: "✓ "; color: var(--success); font-weight: bold; }
         .results-actions { margin-top: 50px; padding-top: 40px; border-top: 1px solid var(--line); display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; }
-        .results-cta { margin-top: 60px; padding: 40px 44px; background: var(--ink); color: var(--paper); border-radius: 2px; text-align: center; }
-        .results-cta h3 { font-family: var(--f-display); font-size: 28px; font-weight: 500; margin-bottom: 12px; }
-        .results-cta h3 em { font-family: var(--f-serif); font-style: italic; color: var(--accent-soft); }
-        .results-cta p { color: rgba(245, 242, 236, .68); margin-bottom: 24px; max-width: 500px; margin: 0 auto 24px; }
-        .results-cta .btn-accent { background: var(--accent); border-color: var(--accent); }
-        .results-cta .btn-accent:hover { background: var(--paper); color: var(--ink); border-color: var(--paper); }
+        
+        /* ============================================================
+           ЧАТ С ВИКТОРОМ (Имитация)
+           ============================================================ */
+        .chat-cta-wrap { margin-top: 60px; background: var(--ink); border-radius: 2px; overflow: hidden; display: flex; flex-direction: column; }
+        .chat-header { padding: 24px 32px; background: rgba(255,255,255,0.05); border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; gap: 16px; }
+        .chat-avatar { width: 48px; height: 48px; border-radius: 50%; background: var(--accent); color: var(--paper); display: flex; align-items: center; justify-content: center; font-family: var(--f-display); font-weight: 600; font-size: 18px; }
+        .chat-header-info h3 { color: var(--paper); font-family: var(--f-display); font-size: 20px; font-weight: 500; margin: 0; line-height: 1.2; }
+        .chat-header-info p { color: rgba(245,242,236,.6); font-size: 13px; margin: 0; }
+        
+        .chat-messages { padding: 32px; display: flex; flex-direction: column; gap: 16px; max-height: 400px; overflow-y: auto; scroll-behavior: smooth; }
+        .chat-message { max-width: 80%; padding: 12px 18px; border-radius: 12px; font-size: 14px; line-height: 1.5; }
+        .chat-message.user { align-self: flex-end; background: var(--accent); color: var(--paper); border-bottom-right-radius: 2px; }
+        .chat-message.assistant { align-self: flex-start; background: rgba(255,255,255,0.1); color: var(--paper); border-bottom-left-radius: 2px; }
+        
+        .chat-input-wrap { padding: 20px 32px; background: rgba(0,0,0,0.2); display: flex; gap: 12px; }
+        .chat-input { flex: 1; padding: 12px 16px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.15); border-radius: 4px; color: var(--paper); font-family: var(--f-text); font-size: 14px; outline: none; transition: border-color 0.3s; }
+        .chat-input:focus { border-color: var(--accent-soft); }
+        .chat-input::placeholder { color: rgba(245,242,236,.3); }
+        .chat-send { background: var(--accent); border: none; padding: 0 20px; border-radius: 4px; color: var(--paper); cursor: pointer; transition: background 0.3s; display: flex; align-items: center; justify-content: center; }
+        .chat-send:hover { background: var(--accent-soft); }
         
         .site-footer { flex-shrink: 0; padding: 40px 0; background: var(--ink); color: rgba(245,242,236,.65); margin-top: 80px; }
         .site-footer .container { display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap; font-family: var(--f-mono); font-size: 11px; text-transform: uppercase; }
@@ -178,7 +192,7 @@
         .hidden { display: none !important; }
         
         @media (max-width: 900px) { .mode-grid, .strengths-list { grid-template-columns: 1fr; } }
-        @media (max-width: 720px) { .container, .container-narrow { padding: 0 20px; } .tool-hero { padding: 120px 0 50px; } .wizard-section { padding: 40px 0 70px; } .header-actions { gap: 8px; } .btn-tools { padding: 9px 12px; font-size: 9px; } .wizard-nav, .wizard-nav-actions, .results-actions { flex-direction: column; align-items: stretch; } .btn { justify-content: center; } }
+        @media (max-width: 720px) { .container, .container-narrow { padding: 0 20px; } .tool-hero { padding: 120px 0 50px; } .wizard-section { padding: 40px 0 70px; } .header-actions { gap: 8px; } .btn-tools { padding: 9px 12px; font-size: 9px; } .wizard-nav, .wizard-nav-actions, .results-actions { flex-direction: column; align-items: stretch; } .btn { justify-content: center; } .chat-messages { padding: 20px; } .chat-input-wrap { padding: 16px 20px; } }
     </style>
 </head>
 <body>
@@ -198,7 +212,7 @@
             <div class="container-narrow">
                 <span class="eyebrow">Инструмент · AI-Аудит SMM</span>
                 <h1>Проверьте продвижение <em>в соцсетях</em></h1>
-                <p class="lead">Ответьте на вопросы о вашем товаре или услуге — и получите персональный отчёт от нейросети: оценку, сильные стороны, зоны роста и конкретные рекомендации.</p>
+                <p class="lead">Ответьте на вопросы о вашем товаре или услуге — и получите персональный отчёт: оценку, сильные стороны, зоны роста и конкретные рекомендации.</p>
                 <div class="tool-meta">
                     <div class="tool-meta-item"><span>Время</span><span>5–7 минут</span></div>
                     <div class="tool-meta-item"><span>Вопросов</span><span>20</span></div>
@@ -315,7 +329,15 @@
             ]
         };
 
-        const state = { mode: null, step: 0, basic: { product: '', category: '', price: '', usp: '', ages: [], geo: '', btype: '', platforms: [] }, answers: {}, aiReport: null };
+        const state = { 
+            mode: null, 
+            step: 0, 
+            basic: { product: '', category: '', price: '', usp: '', ages: [], geo: '', btype: '', platforms: [] }, 
+            answers: {}, 
+            aiReport: null,
+            chatHistory: [] // Храним историю чата
+        };
+        
         const STEPS = ['basic', 'content', 'visual', 'engagement', 'ads', 'analytics', 'results'];
 
         const introSection = document.getElementById('intro-section');
@@ -329,7 +351,7 @@
         const navHint = document.getElementById('nav-hint');
         const startBtn = document.getElementById('start-btn');
         const modeHint = document.getElementById('mode-hint');
-        const wizardNav = document.getElementById('wizard-nav'); // Сохраняем ссылку на всю панель навигации
+        const wizardNav = document.getElementById('wizard-nav');
 
         document.querySelectorAll('.mode-card').forEach(card => {
             card.addEventListener('click', () => {
@@ -382,7 +404,6 @@
             progressLabel.textContent = `Шаг ${state.step + 1} из ${STEPS.length}`;
             progressFill.style.width = `${((state.step + 1) / STEPS.length) * 100}%`;
             
-            // Если это экран результатов, скрываем всю нижнюю навигацию полностью
             if (stepId === 'results') {
                 wizardNav.classList.add('hidden');
                 if (!state.aiReport) {
@@ -391,7 +412,6 @@
                 return;
             }
 
-            // Для остальных экранов показываем навигацию
             wizardNav.classList.remove('hidden');
             backBtn.textContent = state.step === 0 ? '← К выбору роли' : '← Назад';
             nextBtn.classList.remove('hidden');
@@ -517,7 +537,7 @@
                     <div class="strengths-list">${aiData.strengths.map(str => `<div class="strength-item"><p>${str}</p></div>`).join('')}</div>
                 </div>
                 <div class="report-section">
-                    <h3>Зоны роста <em>и рекомендации ИИ</em></h3>
+                    <h3>Зоны роста <em>и рекомендации</em></h3>
                     ${aiData.priorities.map(prio => `
                         <div class="rec-card">
                             <div class="rec-card-title">${prio.category}</div>
@@ -533,23 +553,113 @@
                     <button class="btn btn-accent" id="download-pdf-btn" type="button">Скачать PDF <span class="btn-arrow">↓</span></button>
                     <button class="btn btn-outline" id="restart-btn" type="button">Пройти заново</button>
                 </div>
-                <div class="results-cta">
-                    <h3>Нужна помощь <em>с внедрением?</em></h3>
-                    <p>Я делаю аудиты, стратегии и помогаю выстроить SMM-процессы с измеримым результатом. Обсудим ваш проект?</p>
-                    <a href="index.html#contact" class="btn btn-accent">Связаться со мной <span class="btn-arrow">→</span></a>
+                
+                <!-- ЧАТ С ВИКТОРОМ -->
+                <div class="chat-cta-wrap">
+                    <div class="chat-header">
+                        <div class="chat-avatar">VW</div>
+                        <div class="chat-header-info">
+                            <h3>Виктор Виллманн</h3>
+                            <p>SMM-стратег · Онлайн</p>
+                        </div>
+                    </div>
+                    <div class="chat-messages" id="chat-messages">
+                        <div class="chat-message assistant">
+                            Привет! Я изучил результаты вашего аудита. Остались вопросы по рекомендациям? Спрашивайте, разберемся вместе.
+                        </div>
+                    </div>
+                    <div class="chat-input-wrap">
+                        <input type="text" id="chat-input" class="chat-input" placeholder="Задайте вопрос Виктору...">
+                        <button class="chat-send" id="chat-send" type="button">↑</button>
+                    </div>
                 </div>
             `;
+            
             document.getElementById('download-pdf-btn').addEventListener('click', downloadPDF);
             document.getElementById('restart-btn').addEventListener('click', resetApp);
+            
+            // Логика чата
+            const chatInput = document.getElementById('chat-input');
+            const chatSend = document.getElementById('chat-send');
+            
+            chatSend.addEventListener('click', sendChatMessage);
+            chatInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') sendChatMessage();
+            });
+        }
+
+        async function sendChatMessage() {
+            const input = document.getElementById('chat-input');
+            const message = input.value.trim();
+            if (!message) return;
+            
+            // Очищаем поле
+            input.value = '';
+            
+            const messagesContainer = document.getElementById('chat-messages');
+            
+            // Добавляем сообщение пользователя
+            const userMsgEl = document.createElement('div');
+            userMsgEl.className = 'chat-message user';
+            userMsgEl.textContent = message;
+            messagesContainer.appendChild(userMsgEl);
+            
+            // Сохраняем в историю
+            state.chatHistory.push({ role: 'user', text: message });
+            
+            // Скроллим вниз
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            
+            // Добавляем индикатор печати
+            const typingEl = document.createElement('div');
+            typingEl.className = 'chat-message assistant';
+            typingEl.textContent = 'Печатает...';
+            typingEl.id = 'typing-indicator';
+            messagesContainer.appendChild(typingEl);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
+            try {
+                const response = await fetch(WORKER_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 
+                        action: 'chat',
+                        message: message,
+                        history: state.chatHistory.slice(-6), // Берем последние 6 сообщений для контекста
+                        context: state.aiReport // Передаем отчет, чтобы Виктор знал, о чем речь
+                    })
+                });
+
+                if (!response.ok) throw new Error('Network error');
+                
+                const data = await response.json();
+                
+                // Удаляем индикатор печати
+                const typing = document.getElementById('typing-indicator');
+                if (typing) typing.remove();
+                
+                // Добавляем ответ
+                const aiMsgEl = document.createElement('div');
+                aiMsgEl.className = 'chat-message assistant';
+                aiMsgEl.textContent = data.reply;
+                messagesContainer.appendChild(aiMsgEl);
+                
+                // Сохраняем в историю
+                state.chatHistory.push({ role: 'assistant', text: data.reply });
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
+            } catch (error) {
+                const typing = document.getElementById('typing-indicator');
+                if (typing) typing.textContent = 'Ошибка соединения. Попробуйте еще раз.';
+            }
         }
 
         function resetApp() {
-            state.step = 0; state.answers = {}; state.mode = null; state.aiReport = null;
+            state.step = 0; state.answers = {}; state.mode = null; state.aiReport = null; state.chatHistory = [];
             state.basic = { product: '', category: '', price: '', usp: '', ages: [], geo: '', btype: '', platforms: [] };
             document.querySelectorAll('.mode-card').forEach(c => c.classList.remove('active'));
             startBtn.disabled = true; modeHint.textContent = 'Сначала выберите роль';
             wizardSection.classList.add('hidden'); modeSection.classList.remove('hidden'); introSection.classList.remove('hidden');
-            // Показываем навигацию обратно на случай, если пользователь вернется
             wizardNav.classList.remove('hidden'); 
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
@@ -560,19 +670,20 @@
             btn.innerHTML = 'Готовим PDF...'; btn.disabled = true;
             const element = document.querySelector('.wizard-section .container-narrow');
             const actionsEl = element.querySelector('.results-actions');
-            const ctaEl = element.querySelector('.results-cta');
+            const chatEl = element.querySelector('.chat-cta-wrap');
             if (actionsEl) actionsEl.style.display = 'none';
-            if (ctaEl) ctaEl.style.display = 'none';
+            if (chatEl) chatEl.style.display = 'none';
+            
             const safeName = (state.basic.product || 'smm-audit').toLowerCase().replace(/[^a-zа-я0-9]+/gi, '-').slice(0, 40) || 'smm-audit';
             html2pdf().set({
                 margin: [10, 10, 10, 10], filename: `ai-audit-${safeName}.pdf`,
                 image: { type: 'jpeg', quality: 0.98 }, html2canvas: { scale: 2, useCORS: true },
                 jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }, pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
             }).from(element).save().then(() => {
-                if (actionsEl) actionsEl.style.display = ''; if (ctaEl) ctaEl.style.display = '';
+                if (actionsEl) actionsEl.style.display = ''; if (chatEl) chatEl.style.display = '';
                 btn.innerHTML = originalText; btn.disabled = false;
             }).catch(err => {
-                if (actionsEl) actionsEl.style.display = ''; if (ctaEl) ctaEl.style.display = '';
+                if (actionsEl) actionsEl.style.display = ''; if (chatEl) chatEl.style.display = '';
                 btn.innerHTML = originalText; btn.disabled = false;
                 alert('Не удалось создать PDF.');
             });
