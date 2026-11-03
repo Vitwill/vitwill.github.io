@@ -8,7 +8,6 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" defer></script>
 
     <style>
         :root {
@@ -118,7 +117,6 @@
         .question-block:last-child { border-bottom: none; }
         .question-text { font-family: var(--f-display); font-size: 19px; font-weight: 500; line-height: 1.35; margin-bottom: 10px; display: flex; gap: 14px; }
         .question-num { font-family: var(--f-mono); font-size: 11px; color: var(--accent); padding-top: 4px; flex-shrink: 0; }
-        
         .question-hint { font-size: 13px; color: var(--muted); line-height: 1.5; margin-bottom: 18px; padding-left: 26px; font-style: italic; }
         
         .option-list { display: flex; flex-direction: column; gap: 8px; padding-left: 26px; }
@@ -193,6 +191,27 @@
         
         @media (max-width: 900px) { .mode-grid, .strengths-list { grid-template-columns: 1fr; } }
         @media (max-width: 720px) { .container, .container-narrow { padding: 0 20px; } .tool-hero { padding: 120px 0 50px; } .wizard-section { padding: 40px 0 70px; } .header-actions { gap: 8px; } .btn-tools { padding: 9px 12px; font-size: 9px; } .wizard-nav, .wizard-nav-actions, .results-actions { flex-direction: column; align-items: stretch; } .btn { justify-content: center; } .chat-messages { padding: 20px; } .chat-input-wrap { padding: 16px 20px; } }
+
+        /* ============================================================
+           ПЕЧАТЬ (Скачивание PDF через браузер)
+           ============================================================ */
+        @media print {
+            /* Скрываем всё лишнее */
+            .site-header, .site-footer, .mode-section, .tool-hero, .wizard-nav, 
+            .results-actions, .chat-cta-wrap { 
+                display: none !important; 
+            }
+            /* Настраиваем страницу */
+            body { background: #fff; font-size: 14px; }
+            .wizard-section { padding: 0; min-height: auto; }
+            .main-content { display: block; }
+            
+            /* Убираем разрывы в карточках */
+            .results-hero { page-break-after: avoid; }
+            .report-section { page-break-inside: avoid; }
+            .rec-card { page-break-inside: avoid; }
+            .strength-item { page-break-inside: avoid; }
+        }
     </style>
 </head>
 <body>
@@ -335,7 +354,7 @@
             basic: { product: '', category: '', price: '', usp: '', ages: [], geo: '', btype: '', platforms: [] }, 
             answers: {}, 
             aiReport: null,
-            chatHistory: [] // Храним историю чата
+            chatHistory: [] 
         };
         
         const STEPS = ['basic', 'content', 'visual', 'engagement', 'ads', 'analytics', 'results'];
@@ -593,9 +612,7 @@
             const message = input.value.trim();
             if (!message) return;
             
-            // Очищаем поле
             input.value = '';
-            
             const messagesContainer = document.getElementById('chat-messages');
             
             // Добавляем сообщение пользователя
@@ -604,10 +621,9 @@
             userMsgEl.textContent = message;
             messagesContainer.appendChild(userMsgEl);
             
-            // Сохраняем в историю
+            // Сохраняем в историю (сразу)
             state.chatHistory.push({ role: 'user', text: message });
             
-            // Скроллим вниз
             messagesContainer.scrollTop = messagesContainer.scrollHeight;
             
             // Добавляем индикатор печати
@@ -624,9 +640,8 @@
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ 
                         action: 'chat',
-                        message: message,
-                        history: state.chatHistory.slice(-6), // Берем последние 6 сообщений для контекста
-                        context: state.aiReport // Передаем отчет, чтобы Виктор знал, о чем речь
+                        history: state.chatHistory.slice(-6), // Отправляем историю
+                        context: state.aiReport
                     })
                 });
 
@@ -634,17 +649,14 @@
                 
                 const data = await response.json();
                 
-                // Удаляем индикатор печати
                 const typing = document.getElementById('typing-indicator');
                 if (typing) typing.remove();
                 
-                // Добавляем ответ
                 const aiMsgEl = document.createElement('div');
                 aiMsgEl.className = 'chat-message assistant';
                 aiMsgEl.textContent = data.reply;
                 messagesContainer.appendChild(aiMsgEl);
                 
-                // Сохраняем в историю
                 state.chatHistory.push({ role: 'assistant', text: data.reply });
                 messagesContainer.scrollTop = messagesContainer.scrollHeight;
 
@@ -664,29 +676,11 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
+        // ============================================================
+        // СКАЧИВАНИЕ PDF (ЧЕРЕЗ ПЕЧАТЬ БРАУЗЕРА)
+        // ============================================================
         function downloadPDF() {
-            const btn = document.getElementById('download-pdf-btn');
-            const originalText = btn.innerHTML;
-            btn.innerHTML = 'Готовим PDF...'; btn.disabled = true;
-            const element = document.querySelector('.wizard-section .container-narrow');
-            const actionsEl = element.querySelector('.results-actions');
-            const chatEl = element.querySelector('.chat-cta-wrap');
-            if (actionsEl) actionsEl.style.display = 'none';
-            if (chatEl) chatEl.style.display = 'none';
-            
-            const safeName = (state.basic.product || 'smm-audit').toLowerCase().replace(/[^a-zа-я0-9]+/gi, '-').slice(0, 40) || 'smm-audit';
-            html2pdf().set({
-                margin: [10, 10, 10, 10], filename: `ai-audit-${safeName}.pdf`,
-                image: { type: 'jpeg', quality: 0.98 }, html2canvas: { scale: 2, useCORS: true },
-                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }, pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
-            }).from(element).save().then(() => {
-                if (actionsEl) actionsEl.style.display = ''; if (chatEl) chatEl.style.display = '';
-                btn.innerHTML = originalText; btn.disabled = false;
-            }).catch(err => {
-                if (actionsEl) actionsEl.style.display = ''; if (chatEl) chatEl.style.display = '';
-                btn.innerHTML = originalText; btn.disabled = false;
-                alert('Не удалось создать PDF.');
-            });
+            window.print();
         }
 
         function escapeHtml(str) {
