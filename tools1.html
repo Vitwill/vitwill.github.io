@@ -329,6 +329,7 @@
         const navHint = document.getElementById('nav-hint');
         const startBtn = document.getElementById('start-btn');
         const modeHint = document.getElementById('mode-hint');
+        const wizardNav = document.getElementById('wizard-nav'); // Сохраняем ссылку на всю панель навигации
 
         document.querySelectorAll('.mode-card').forEach(card => {
             card.addEventListener('click', () => {
@@ -380,18 +381,19 @@
             const stepId = STEPS[state.step];
             progressLabel.textContent = `Шаг ${state.step + 1} из ${STEPS.length}`;
             progressFill.style.width = `${((state.step + 1) / STEPS.length) * 100}%`;
-            backBtn.textContent = state.step === 0 ? '← К выбору роли' : '← Назад';
-
+            
+            // Если это экран результатов, скрываем всю нижнюю навигацию полностью
             if (stepId === 'results') {
-                nextBtn.classList.add('hidden');
-                navHint.textContent = '';
+                wizardNav.classList.add('hidden');
                 if (!state.aiReport) {
-                    // Обновленный текст
                     wizardContent.innerHTML = `<div class="ai-loader"><div class="spinner"></div><h3>Анализируем ваши ответы...</h3><p>Нейросеть подбирает для Вас персональные рекомендации.</p></div>`;
                 }
                 return;
             }
 
+            // Для остальных экранов показываем навигацию
+            wizardNav.classList.remove('hidden');
+            backBtn.textContent = state.step === 0 ? '← К выбору роли' : '← Назад';
             nextBtn.classList.remove('hidden');
             nextBtn.disabled = true;
             navHint.textContent = stepId === 'basic' ? 'Заполните информацию' : 'Ответьте на все вопросы';
@@ -547,6 +549,8 @@
             document.querySelectorAll('.mode-card').forEach(c => c.classList.remove('active'));
             startBtn.disabled = true; modeHint.textContent = 'Сначала выберите роль';
             wizardSection.classList.add('hidden'); modeSection.classList.remove('hidden'); introSection.classList.remove('hidden');
+            // Показываем навигацию обратно на случай, если пользователь вернется
+            wizardNav.classList.remove('hidden'); 
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
