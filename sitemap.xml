@@ -7,7 +7,7 @@
          ============================================================ -->
     <url>
         <loc>https://vitwill.github.io/</loc>
-        <lastmod>2026-09-22</lastmod>
+        <lastmod>2026-11-09</lastmod>
         <xhtml:link rel="alternate" hreflang="ru" href="https://vitwill.github.io/"/>
         <xhtml:link rel="alternate" hreflang="en" href="https://vitwill.github.io/index-en.html"/>
         <xhtml:link rel="alternate" hreflang="x-default" href="https://vitwill.github.io/"/>
@@ -15,162 +15,110 @@
 
     <url>
         <loc>https://vitwill.github.io/index-en.html</loc>
-        <lastmod>2026-09-22</lastmod>
+        <lastmod>2026-11-09</lastmod>
         <xhtml:link rel="alternate" hreflang="ru" href="https://vitwill.github.io/"/>
         <xhtml:link rel="alternate" hreflang="en" href="https://vitwill.github.io/index-en.html"/>
         <xhtml:link rel="alternate" hreflang="x-default" href="https://vitwill.github.io/"/>
     </url>
 
     <!-- ============================================================
-         КЕЙСЫ (6)
+         КЕЙСЫ (6) — только на русском
          ============================================================ -->
-
-    <!-- 01 · Get Full Care -->
     <url>
         <loc>https://vitwill.github.io/project1-getfullcare.html</loc>
-        <lastmod>2026-09-22</lastmod>
-        <xhtml:link rel="alternate" hreflang="ru" href="https://vitwill.github.io/project1-getfullcare.html"/>
-        <xhtml:link rel="alternate" hreflang="en" href="https://vitwill.github.io/project1-getfullcare-en.html"/>
-        <xhtml:link rel="alternate" hreflang="x-default" href="https://vitwill.github.io/project1-getfullcare.html"/>
+        <lastmod>2026-11-09</lastmod>
     </url>
-    <url>
-        <loc>https://vitwill.github.io/project1-getfullcare-en.html</loc>
-        <lastmod>2026-09-22</lastmod>
-        <xhtml:link rel="alternate" hreflang="ru" href="https://vitwill.github.io/project1-getfullcare.html"/>
-        <xhtml:link rel="alternate" hreflang="en" href="https://vitwill.github.io/project1-getfullcare-en.html"/>
-        <xhtml:link rel="alternate" hreflang="x-default" href="https://vitwill.github.io/project1-getfullcare.html"/>
-    </url>
-
-    <!-- 02 · Bio Planète -->
     <url>
         <loc>https://vitwill.github.io/project2-bioplanete.html</loc>
-        <lastmod>2026-09-22</lastmod>
-        <xhtml:link rel="alternate" hreflang="ru" href="https://vitwill.github.io/project2-bioplanete.html"/>
-        <xhtml:link rel="alternate" hreflang="en" href="https://vitwill.github.io/project2-bioplanete-en.html"/>
-        <xhtml:link rel="alternate" hreflang="x-default" href="https://vitwill.github.io/project2-bioplanete.html"/>
+        <lastmod>2026-11-09</lastmod>
     </url>
-    <url>
-        <loc>https://vitwill.github.io/project2-bioplanete-en.html</loc>
-        <lastmod>2026-09-22</lastmod>
-        <xhtml:link rel="alternate" hreflang="ru" href="https://vitwill.github.io/project2-bioplanete.html"/>
-        <xhtml:link rel="alternate" hreflang="en" href="https://vitwill.github.io/project2-bioplanete-en.html"/>
-        <xhtml:link rel="alternate" hreflang="x-default" href="https://vitwill.github.io/project2-bioplanete.html"/>
-    </url>
-
-    <!-- 03 · Pocketful of Dreams -->
     <url>
         <loc>https://vitwill.github.io/project3-pocketful.html</loc>
-        <lastmod>2026-09-22</lastmod>
-        <xhtml:link rel="alternate" hreflang="ru" href="https://vitwill.github.io/project3-pocketful.html"/>
-        <xhtml:link rel="alternate" hreflang="en" href="https://vitwill.github.io/project3-pocketful-en.html"/>
-        <xhtml:link rel="alternate" hreflang="x-default" href="https://vitwill.github.io/project3-pocketful.html"/>
+        <lastmod>2026-11-09</lastmod>
     </url>
-    <url>
-        <loc>https://vitwill.github.io/project3-pocketful-en.html</loc>
-        <lastmod>2026-09-22</lastmod>
-        <xhtml:link rel="alternate" hreflang="ru" href="https://vitwill.github.io/project3-pocketful.html"/>
-        <xhtml:link rel="alternate" hreflang="en" href="https://vitwill.github.io/project3-pocketful-en.html"/>
-        <xhtml:link rel="alternate" hreflang="x-default" href="https://vitwill.github.io/project3-pocketful.html"/>
-    </url>
-
-    <!-- 04 · The Blonde Abroad -->
     <url>
         <loc>https://vitwill.github.io/project4-blondeabroad.html</loc>
-        <lastmod>2026-09-22</lastmod>
-        <xhtml:link rel="alternate" hreflang="ru" href="https://vitwill.github.io/project4-blondeabroad.html"/>
-        <xhtml:link rel="alternate" hreflang="en" href="https://vitwill.github.io/project4-blondeabroad-en.html"/>
-        <xhtml:link rel="alternate" hreflang="x-default" href="https://vitwill.github.io/project4-blondeabroad.html"/>
+        <lastmod>2026-11-09</lastmod>
     </url>
-    <url>
-        <loc>https://vitwill.github.io/project4-blondeabroad-en.html</loc>
-        <lastmod>2026-09-22</lastmod>
-        <xhtml:link rel="alternate" hreflang="ru" href="https://vitwill.github.io/project4-blondeabroad.html"/>
-        <xhtml:link rel="alternate" hreflang="en" href="https://vitwill.github.io/project4-blondeabroad-en.html"/>
-        <xhtml:link rel="alternate" hreflang="x-default" href="https://vitwill.github.io/project4-blondeabroad.html"/>
-    </url>
-
-    <!-- 05 · Silver Circle / Серебряный круг -->
     <url>
         <loc>https://vitwill.github.io/project5-serebryanyikrug.html</loc>
-        <lastmod>2026-09-22</lastmod>
-        <xhtml:link rel="alternate" hreflang="ru" href="https://vitwill.github.io/project5-serebryanyikrug.html"/>
-        <xhtml:link rel="alternate" hreflang="en" href="https://vitwill.github.io/project5-serebryanyikrug-en.html"/>
-        <xhtml:link rel="alternate" hreflang="x-default" href="https://vitwill.github.io/project5-serebryanyikrug.html"/>
+        <lastmod>2026-11-09</lastmod>
     </url>
-    <url>
-        <loc>https://vitwill.github.io/project5-serebryanyikrug-en.html</loc>
-        <lastmod>2026-09-22</lastmod>
-        <xhtml:link rel="alternate" hreflang="ru" href="https://vitwill.github.io/project5-serebryanyikrug.html"/>
-        <xhtml:link rel="alternate" hreflang="en" href="https://vitwill.github.io/project5-serebryanyikrug-en.html"/>
-        <xhtml:link rel="alternate" hreflang="x-default" href="https://vitwill.github.io/project5-serebryanyikrug.html"/>
-    </url>
-
-    <!-- 06 · Kanzlei Vees -->
     <url>
         <loc>https://vitwill.github.io/project6-kanzlei.html</loc>
-        <lastmod>2026-09-22</lastmod>
-        <xhtml:link rel="alternate" hreflang="ru" href="https://vitwill.github.io/project6-kanzlei.html"/>
-        <xhtml:link rel="alternate" hreflang="en" href="https://vitwill.github.io/project6-kanzlei-en.html"/>
-        <xhtml:link rel="alternate" hreflang="x-default" href="https://vitwill.github.io/project6-kanzlei.html"/>
-    </url>
-    <url>
-        <loc>https://vitwill.github.io/project6-kanzlei-en.html</loc>
-        <lastmod>2026-09-22</lastmod>
-        <xhtml:link rel="alternate" hreflang="ru" href="https://vitwill.github.io/project6-kanzlei.html"/>
-        <xhtml:link rel="alternate" hreflang="en" href="https://vitwill.github.io/project6-kanzlei-en.html"/>
-        <xhtml:link rel="alternate" hreflang="x-default" href="https://vitwill.github.io/project6-kanzlei.html"/>
+        <lastmod>2026-11-09</lastmod>
     </url>
 
     <!-- ============================================================
-         ПРОГРАММЫ (3)
+         ПРОГРАММЫ (3) — RU + EN
          ============================================================ -->
-
-    <!-- DashBook -->
     <url>
         <loc>https://vitwill.github.io/software-dashbook.html</loc>
-        <lastmod>2026-09-22</lastmod>
+        <lastmod>2026-11-09</lastmod>
         <xhtml:link rel="alternate" hreflang="ru" href="https://vitwill.github.io/software-dashbook.html"/>
         <xhtml:link rel="alternate" hreflang="en" href="https://vitwill.github.io/software-dashbook-en.html"/>
         <xhtml:link rel="alternate" hreflang="x-default" href="https://vitwill.github.io/software-dashbook.html"/>
     </url>
     <url>
         <loc>https://vitwill.github.io/software-dashbook-en.html</loc>
-        <lastmod>2026-09-22</lastmod>
+        <lastmod>2026-11-09</lastmod>
         <xhtml:link rel="alternate" hreflang="ru" href="https://vitwill.github.io/software-dashbook.html"/>
         <xhtml:link rel="alternate" hreflang="en" href="https://vitwill.github.io/software-dashbook-en.html"/>
         <xhtml:link rel="alternate" hreflang="x-default" href="https://vitwill.github.io/software-dashbook.html"/>
     </url>
 
-    <!-- FB Leads -->
     <url>
         <loc>https://vitwill.github.io/software-fb-leads.html</loc>
-        <lastmod>2026-09-22</lastmod>
+        <lastmod>2026-11-09</lastmod>
         <xhtml:link rel="alternate" hreflang="ru" href="https://vitwill.github.io/software-fb-leads.html"/>
         <xhtml:link rel="alternate" hreflang="en" href="https://vitwill.github.io/software-fb-leads-en.html"/>
         <xhtml:link rel="alternate" hreflang="x-default" href="https://vitwill.github.io/software-fb-leads.html"/>
     </url>
     <url>
         <loc>https://vitwill.github.io/software-fb-leads-en.html</loc>
-        <lastmod>2026-09-22</lastmod>
+        <lastmod>2026-11-09</lastmod>
         <xhtml:link rel="alternate" hreflang="ru" href="https://vitwill.github.io/software-fb-leads.html"/>
         <xhtml:link rel="alternate" hreflang="en" href="https://vitwill.github.io/software-fb-leads-en.html"/>
         <xhtml:link rel="alternate" hreflang="x-default" href="https://vitwill.github.io/software-fb-leads.html"/>
     </url>
 
-    <!-- YouTube Analyzer -->
     <url>
         <loc>https://vitwill.github.io/software-youtube-analyzer.html</loc>
-        <lastmod>2026-09-22</lastmod>
+        <lastmod>2026-11-09</lastmod>
         <xhtml:link rel="alternate" hreflang="ru" href="https://vitwill.github.io/software-youtube-analyzer.html"/>
         <xhtml:link rel="alternate" hreflang="en" href="https://vitwill.github.io/software-youtube-analyzer-en.html"/>
         <xhtml:link rel="alternate" hreflang="x-default" href="https://vitwill.github.io/software-youtube-analyzer.html"/>
     </url>
     <url>
         <loc>https://vitwill.github.io/software-youtube-analyzer-en.html</loc>
-        <lastmod>2026-09-22</lastmod>
+        <lastmod>2026-11-09</lastmod>
         <xhtml:link rel="alternate" hreflang="ru" href="https://vitwill.github.io/software-youtube-analyzer.html"/>
         <xhtml:link rel="alternate" hreflang="en" href="https://vitwill.github.io/software-youtube-analyzer-en.html"/>
         <xhtml:link rel="alternate" hreflang="x-default" href="https://vitwill.github.io/software-youtube-analyzer.html"/>
+    </url>
+
+    <!-- ============================================================
+         ИНСТРУМЕНТЫ (2)
+         ============================================================ -->
+    <url>
+        <loc>https://vitwill.github.io/tools.html</loc>
+        <lastmod>2026-11-09</lastmod>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://vitwill.github.io/tools.html"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://vitwill.github.io/tools-en.html"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://vitwill.github.io/tools.html"/>
+    </url>
+    <url>
+        <loc>https://vitwill.github.io/tools-en.html</loc>
+        <lastmod>2026-11-09</lastmod>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://vitwill.github.io/tools.html"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://vitwill.github.io/tools-en.html"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://vitwill.github.io/tools.html"/>
+    </url>
+
+    <!-- AI-аудит SMM (только RU, EN версии нет) -->
+    <url>
+        <loc>https://vitwill.github.io/tools1.html</loc>
+        <lastmod>2026-11-09</lastmod>
     </url>
 
 </urlset>
