@@ -83,7 +83,9 @@
             background: var(--accent);
         }
 
-        /* ХЕДЕР */
+        /* ============================================================
+           ХЕДЕР (единый)
+           ============================================================ */
         .site-header {
             position: fixed; top: 0; left: 0; right: 0; z-index: 100;
             background: rgba(245, 242, 236, .85);
@@ -93,7 +95,10 @@
             transition: padding .3s var(--ease);
         }
         .site-header .container {
-            display: flex; justify-content: space-between; align-items: center;
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            align-items: center;
+            gap: 20px;
             padding-top: 20px; padding-bottom: 20px;
             transition: padding .3s var(--ease);
         }
@@ -105,40 +110,92 @@
             letter-spacing: -.02em;
             text-decoration: none;
             color: var(--ink);
+            justify-self: start;
         }
         .logo em {
             font-family: var(--f-serif);
             font-style: italic; font-weight: 400;
             color: var(--accent);
         }
-        .main-nav ul { list-style: none; display: flex; gap: 30px; align-items: center; }
-        .main-nav a {
-            text-decoration: none; color: var(--muted);
-            font-size: 13px; letter-spacing: .01em;
-            transition: color .2s;
+
+        /* СОЦИАЛЬНЫЕ ССЫЛКИ (ХЕДЕР) */
+        .site-header .social-links {
+            justify-self: center;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            z-index: 2;
         }
-        .main-nav a:hover { color: var(--ink); }
-        .lang-switcher a {
+        .site-header .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 34px;
+            height: 34px;
             border: 1px solid var(--line-strong);
-            padding: 6px 12px;
+            border-radius: 2px;
+            color: var(--muted);
+            background: transparent;
+            transition: all .3s var(--ease);
+        }
+        .site-header .social-links a:hover {
+            background: var(--ink);
+            border-color: var(--ink);
+            color: var(--paper);
+            transform: translateY(-2px);
+        }
+        .site-header .social-links a svg {
+            width: 15px;
+            height: 15px;
+            display: block;
+            pointer-events: none;
+        }
+        .site-header .social-links a:focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 2px;
+        }
+
+        /* КНОПКИ В ХЕДЕРЕ */
+        .site-header .header-actions {
+            justify-self: end;
+            display: flex;
+            gap: 12px;
+            align-items: stretch;
+            z-index: 2;
+        }
+        .site-header .btn-back,
+        .site-header .btn-tools {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
             font-family: var(--f-mono);
             font-size: 11px;
-            letter-spacing: .1em;
+            letter-spacing: .16em;
+            text-transform: uppercase;
+            text-decoration: none;
+            padding: 12px 20px;
             border-radius: 2px;
+            white-space: nowrap;
+            transition: all .3s var(--ease);
+        }
+        .site-header .btn-back {
+            background: transparent;
             color: var(--ink);
+            border: 1px solid var(--line-strong);
         }
-        .lang-switcher a:hover {
-            background: rgba(14,14,14,.05);
-            border-color: rgba(14,14,14,.45);
+        .site-header .btn-back:hover {
+            background: var(--ink);
+            color: var(--paper);
+            border-color: var(--ink);
         }
-        .hamburger {
-            display: none; flex-direction: column; gap: 5px;
-            cursor: pointer; z-index: 1001;
-            background: none; border: none; padding: 5px;
+        .site-header .btn-tools {
+            background: var(--ink);
+            color: var(--paper);
+            border: 1px solid var(--ink);
         }
-        .hamburger span {
-            display: block; width: 26px; height: 2px;
-            background: var(--ink); transition: all .35s var(--ease);
+        .site-header .btn-tools:hover {
+            background: var(--accent);
+            border-color: var(--accent);
         }
 
         /* ХЛЕБНЫЕ КРОШКИ */
@@ -518,14 +575,29 @@
             .case-grid { grid-template-columns: 1fr; gap: 40px; }
             .case-label { position: static; }
             .case-cta-inner { grid-template-columns: 1fr; gap: 40px; align-items: start; }
+
+            .site-header .social-links { gap: 6px; }
+            .site-header .social-links a { width: 30px; height: 30px; }
+            .site-header .social-links a svg { width: 13px; height: 13px; }
+        }
+
+        @media (max-width: 900px) {
+            .site-header .header-actions { gap: 8px; }
+            .site-header .btn-back,
+            .site-header .btn-tools { padding: 10px 14px; }
         }
 
         @media (max-width: 720px) {
             .container { padding: 0 20px; }
-            .main-nav { display: none; }
-            .hamburger { display: flex; }
+            .site-header .header-actions { gap: 6px; }
+            .site-header .btn-back,
+            .site-header .btn-tools {
+                padding: 8px 10px;
+                font-size: 9px;
+                letter-spacing: .04em;
+            }
 
-            .breadcrumbs-wrap { padding: 100px 0 0; }
+            .breadcrumbs-wrap { padding: 120px 0 0; }
             .case-hero { padding: 30px 0 60px; }
             .case-title { font-size: clamp(40px, 11vw, 64px); }
             .case-subtitle { font-size: 18px; }
@@ -555,6 +627,28 @@
             .site-footer .container { flex-direction: column; text-align: center; }
         }
 
+        @media (max-width: 600px) {
+            .site-header .container {
+                display: flex;
+                flex-direction: column;
+                gap: 16px;
+                padding-top: 16px;
+                padding-bottom: 16px;
+            }
+            .site-header .header-actions {
+                flex-direction: column;
+                width: 100%;
+                gap: 8px;
+            }
+            .site-header .btn-back,
+            .site-header .btn-tools {
+                width: 100%;
+                padding: 12px 20px;
+                font-size: 11px;
+            }
+            .breadcrumbs-wrap { padding: 190px 0 0; }
+        }
+
         @media (prefers-reduced-motion: reduce) {
             *, *::before, *::after {
                 animation-duration: 0.01ms !important;
@@ -569,21 +663,27 @@
     <header class="site-header" id="main-header">
         <div class="container">
             <a href="index.html" class="logo">Viktor <em>Willmann</em></a>
-            <nav class="main-nav">
-                <ul>
-                    <li><a href="https://vitwill.github.io/web-audit" target="_blank">Аудит сайтов</a></li>
-                    <li><a href="index.html#portfolio">Работы</a></li>
-                    <li><a href="index.html#services">Услуги</a></li>
-                    <li><a href="index.html#about">Обо мне</a></li>
-                    <li><a href="index.html#contact">Контакты</a></li>
-                    <li class="lang-switcher"><a href="project2-bioplanete-en.html">EN</a></li>
-                </ul>
-            </nav>
-            <button class="hamburger" id="hamburger" aria-label="Меню">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
+
+            <div class="social-links">
+                <a href="https://www.facebook.com/v.willmann" target="_blank" rel="noopener" aria-label="Facebook" title="Facebook">
+                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M14.02 21v-8.2h2.76l.41-3.2h-3.17V7.55c0-.93.26-1.56 1.59-1.56h1.7V3.13c-.3-.04-1.31-.13-2.49-.13-2.46 0-4.15 1.5-4.15 4.26v2.34H7.9v3.2h2.77V21h3.35z"/></svg>
+                </a>
+                <a href="https://t.me/vitwill" target="_blank" rel="noopener" aria-label="Telegram" title="Telegram">
+                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21.94 4.3 18.9 18.68c-.23 1.02-.84 1.27-1.7.79l-4.7-3.47-2.27 2.19c-.25.25-.46.46-.95.46l.34-4.8 8.75-7.9c.38-.34-.08-.53-.59-.19L7.02 12.6l-4.6-1.44c-1-.31-1.02-1 .21-1.48L20.7 3.12c.83-.3 1.56.2 1.24 1.18z"/></svg>
+                </a>
+                <a href="https://vk.ru/vitwil" target="_blank" rel="noopener" aria-label="ВКонтакте" title="ВКонтакте">
+                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.16 17.8c-5.9 0-9.4-4.1-9.55-10.9h3c.1 5 2.35 7.13 4.1 7.56V6.9h2.83v4.31c1.74-.19 3.56-2.15 4.17-4.31h2.83c-.47 2.65-2.4 4.61-3.77 5.41 1.37.65 3.58 2.36 4.42 5.49h-3.11c-.65-2.02-2.27-3.58-4.54-3.8v3.8h-.38z"/></svg>
+                </a>
+                <a href="https://www.linkedin.com/in/viktor-willmann-b3ab60a5/" target="_blank" rel="noopener" aria-label="LinkedIn" title="LinkedIn">
+                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5.01 2.5 2.5 0 0 1 0-5.01zM3.2 9.75h3.56V21H3.2V9.75zm5.9 0h3.41v1.54h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.44V21h-3.56v-5.42c0-1.29-.02-2.96-1.8-2.96-1.8 0-2.08 1.41-2.08 2.86V21H9.1V9.75z"/></svg>
+                </a>
+            </div>
+
+            <div class="header-actions">
+                <a href="index.html" class="btn-back">← На главную</a>
+                <a href="tools.html" class="btn-tools">Инструменты заказчика</a>
+                <a href="tools1.html" class="btn-tools">Инструменты маркетолога</a>
+            </div>
         </div>
     </header>
 
