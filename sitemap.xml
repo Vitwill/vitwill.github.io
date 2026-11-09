@@ -3,26 +3,15 @@
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
 
     <!-- ============================================================
-         ГЛАВНАЯ
+         ГЛАВНАЯ (только RU)
          ============================================================ -->
     <url>
         <loc>https://vitwill.github.io/</loc>
         <lastmod>2026-11-09</lastmod>
-        <xhtml:link rel="alternate" hreflang="ru" href="https://vitwill.github.io/"/>
-        <xhtml:link rel="alternate" hreflang="en" href="https://vitwill.github.io/index-en.html"/>
-        <xhtml:link rel="alternate" hreflang="x-default" href="https://vitwill.github.io/"/>
-    </url>
-
-    <url>
-        <loc>https://vitwill.github.io/index-en.html</loc>
-        <lastmod>2026-11-09</lastmod>
-        <xhtml:link rel="alternate" hreflang="ru" href="https://vitwill.github.io/"/>
-        <xhtml:link rel="alternate" hreflang="en" href="https://vitwill.github.io/index-en.html"/>
-        <xhtml:link rel="alternate" hreflang="x-default" href="https://vitwill.github.io/"/>
     </url>
 
     <!-- ============================================================
-         КЕЙСЫ (6) — только на русском
+         КЕЙСЫ (6) — только RU
          ============================================================ -->
     <url>
         <loc>https://vitwill.github.io/project1-getfullcare.html</loc>
@@ -52,6 +41,7 @@
     <!-- ============================================================
          ПРОГРАММЫ (3) — RU + EN
          ============================================================ -->
+    <!-- DashBook -->
     <url>
         <loc>https://vitwill.github.io/software-dashbook.html</loc>
         <lastmod>2026-11-09</lastmod>
@@ -67,6 +57,7 @@
         <xhtml:link rel="alternate" hreflang="x-default" href="https://vitwill.github.io/software-dashbook.html"/>
     </url>
 
+    <!-- FB Leads -->
     <url>
         <loc>https://vitwill.github.io/software-fb-leads.html</loc>
         <lastmod>2026-11-09</lastmod>
@@ -82,6 +73,7 @@
         <xhtml:link rel="alternate" hreflang="x-default" href="https://vitwill.github.io/software-fb-leads.html"/>
     </url>
 
+    <!-- YouTube Analyzer -->
     <url>
         <loc>https://vitwill.github.io/software-youtube-analyzer.html</loc>
         <lastmod>2026-11-09</lastmod>
@@ -98,8 +90,9 @@
     </url>
 
     <!-- ============================================================
-         ИНСТРУМЕНТЫ (2)
+         ИНСТРУМЕНТЫ — RU + EN (tools) и только RU (tools1)
          ============================================================ -->
+    <!-- Инструменты заказчика -->
     <url>
         <loc>https://vitwill.github.io/tools.html</loc>
         <lastmod>2026-11-09</lastmod>
@@ -115,7 +108,7 @@
         <xhtml:link rel="alternate" hreflang="x-default" href="https://vitwill.github.io/tools.html"/>
     </url>
 
-    <!-- AI-аудит SMM (только RU, EN версии нет) -->
+    <!-- AI-Аудит SMM (только RU) -->
     <url>
         <loc>https://vitwill.github.io/tools1.html</loc>
         <lastmod>2026-11-09</lastmod>
