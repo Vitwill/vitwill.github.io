@@ -165,6 +165,7 @@
             align-items: stretch;
             z-index: 2;
         }
+        .site-header .btn-back,
         .site-header .btn-tools {
             display: inline-flex;
             align-items: center;
@@ -174,13 +175,25 @@
             letter-spacing: .16em;
             text-transform: uppercase;
             text-decoration: none;
-            background: var(--ink);
-            color: var(--paper);
-            border: 1px solid var(--ink);
             padding: 12px 20px;
             border-radius: 2px;
             white-space: nowrap;
             transition: all .3s var(--ease);
+        }
+        .site-header .btn-back {
+            background: transparent;
+            color: var(--ink);
+            border: 1px solid var(--line-strong);
+        }
+        .site-header .btn-back:hover {
+            background: var(--ink);
+            color: var(--paper);
+            border-color: var(--ink);
+        }
+        .site-header .btn-tools {
+            background: var(--ink);
+            color: var(--paper);
+            border: 1px solid var(--ink);
         }
         .site-header .btn-tools:hover {
             background: var(--accent);
@@ -580,14 +593,15 @@
 
         @media (max-width: 720px) {
             .container { padding: 0 20px; }
-            .site-header .header-actions { gap: 8px; }
+            .site-header .header-actions { gap: 6px; }
+            .site-header .btn-back,
             .site-header .btn-tools {
-                padding: 9px 12px;
+                padding: 8px 10px;
                 font-size: 9px;
-                letter-spacing: .06em;
+                letter-spacing: .04em;
             }
 
-            .breadcrumbs-wrap { padding: 100px 0 0; }
+            .breadcrumbs-wrap { padding: 110px 0 0; }
             .case-hero { padding: 30px 0 60px; }
             .case-title { font-size: clamp(44px, 12vw, 72px); }
             .case-subtitle { font-size: 18px; }
@@ -626,6 +640,7 @@
                 gap: 8px;
                 margin-top: 12px;
             }
+            .site-header .btn-back,
             .site-header .btn-tools {
                 padding: 10px 12px;
                 font-size: 10px;
@@ -666,6 +681,7 @@
             </div>
 
             <div class="header-actions">
+                <a href="index.html" class="btn-back">← На главную</a>
                 <a href="tools.html" class="btn-tools">Инструменты заказчика</a>
                 <a href="tools1.html" class="btn-tools">Инструменты маркетолога</a>
             </div>
