@@ -21,6 +21,8 @@
             --line-strong: rgba(14, 14, 14, .22);
             --accent: #C1440E;
             --accent-soft: #E8A87C;
+            --ok: #1e5c2a;
+            --err: #8b1f29;
             --f-display: 'Inter Tight', sans-serif;
             --f-text: 'Inter', sans-serif;
             --f-serif: 'Instrument Serif', serif;
@@ -189,7 +191,7 @@
             background: var(--paper-2); border-bottom: 1px solid var(--line);
         }
         .tabs-nav .container {
-            display: grid; grid-template-columns: repeat(3, 1fr); padding: 0 40px;
+            display: grid; grid-template-columns: repeat(4, 1fr); padding: 0 40px;
         }
         .tab-btn {
             flex-shrink: 0; padding: 22px 20px;
@@ -429,33 +431,236 @@
         .btn { display: inline-flex; align-items: center; gap: 12px; font-family: var(--f-mono); font-size: 12px; letter-spacing: .16em; text-transform: uppercase; text-decoration: none; padding: 16px 28px; border: 1px solid transparent; border-radius: 2px; cursor: pointer; transition: all .3s var(--ease); background: none; font-weight: 500; }
         .btn-dark { background: var(--ink); color: var(--paper); border-color: var(--ink); }
         .btn-dark:hover { background: var(--accent); border-color: var(--accent); }
+        .btn-outline { background: transparent; color: var(--ink); border-color: var(--line-strong); }
+        .btn-outline:hover:not(:disabled) { border-color: var(--ink); background: var(--paper-2); }
+        .btn:disabled { opacity: .5; cursor: wait; }
 
         .site-footer { padding: 40px 0; background: var(--ink); color: rgba(245,242,236,.65); }
         .site-footer .container { display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap; font-family: var(--f-mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; }
         .site-footer a { text-decoration: none; color: rgba(245,242,236,.65); transition: color .2s; }
         .site-footer a:hover { color: var(--paper); }
 
-        @media (max-width: 1100px) {
-            .container { padding: 0 30px; }
-            .calc-layout { grid-template-columns: 1fr; gap: 50px; }
-            .calc-result { position: static; }
-            .vs-grid { grid-template-columns: 1fr; }
-            .costs-grid { grid-template-columns: repeat(2, 1fr); }
-            .anatomy-row { grid-template-columns: 30px 1fr 60px; gap: 16px; }
-            .anatomy-bar { display: none; }
-            .step-nav { grid-template-columns: repeat(2, 1fr); }
-            .step-nav-item:nth-child(2), .step-nav-item:nth-child(4) { border-right: none; }
-            .step-nav-item { border-bottom: 1px solid var(--line); }
-            .summary-grid { grid-template-columns: 1fr; }
-            .tools-hero .container { flex-direction: column; align-items: flex-start; }
-            .hero-aside-nav { border-left: none; border-top: 1px solid var(--line-strong); padding-left: 0; padding-top: 30px; width: 100%; flex-direction: row; flex-wrap: wrap; gap: 20px; }
-            .aside-nav-label { width: 100%; margin-bottom: 0; }
-            .header-actions { gap: 10px; }
-            .btn-tools { padding: 10px 14px; font-size: 10px; letter-spacing: .1em; }
+        /* --------------------------------------------------------
+           BREAKEVEN CALCULATOR STYLES
+           -------------------------------------------------------- */
+        .params-row {
+            display: grid;
+            grid-template-columns: 1fr 200px;
+            gap: 12px;
+            padding: 18px 20px;
+            background: var(--paper-2);
+            border: 1px solid var(--line-strong);
+            border-radius: 2px;
+            margin-bottom: 20px;
+        }
+        .pricing-row {
+            display: grid;
+            grid-template-columns: 1fr 110px 100px 100px;
+            gap: 10px;
+            padding: 18px 20px;
+            background: var(--paper-2);
+            border: 1px solid var(--line-strong);
+            border-left: 3px solid var(--accent);
+            border-radius: 2px;
+            margin-bottom: 20px;
+        }
+        .accordion {
+            border: 1px solid var(--line-strong);
+            border-radius: 2px;
+            background: var(--paper);
+            overflow: hidden;
+            transition: border-color .2s;
+            margin-bottom: 20px;
+        }
+        .accordion.open { border-color: rgba(14,14,14,.3); }
+        .acc-header {
+            display: grid;
+            grid-template-columns: 28px 1fr auto 20px;
+            align-items: center;
+            gap: 10px;
+            width: 100%;
+            padding: 12px 16px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            text-align: left;
+            transition: background .2s;
+            color: inherit;
+            font-family: inherit;
+        }
+        .acc-header:hover { background: var(--paper-2); }
+        .accordion.open .acc-header { background: var(--paper-2); border-bottom: 1px solid var(--line); }
+        .acc-num { font-family: var(--f-mono); font-size: 10px; color: var(--accent); letter-spacing: .1em; font-weight: 500; }
+        .acc-title { font-family: var(--f-display); font-size: 14px; font-weight: 500; letter-spacing: -.005em; color: var(--ink); }
+        .acc-summary { font-family: var(--f-mono); font-size: 11px; color: var(--muted); letter-spacing: .02em; text-align: right; white-space: nowrap; }
+        .acc-summary.has-value { color: var(--ink); }
+        .acc-arrow { font-size: 10px; color: var(--muted-2); transition: transform .25s var(--ease); text-align: center; }
+        .accordion.open .acc-arrow { transform: rotate(180deg); }
+        .acc-body { display: none; padding: 14px 16px 16px; }
+        .accordion.open .acc-body { display: block; }
+        .acc-hint { font-size: 12px; line-height: 1.5; color: var(--muted-2); margin-bottom: 12px; padding-bottom: 10px; border-bottom: 1px dashed var(--line); }
 
-            .social-links { gap: 6px; }
-            .social-links a { width: 30px; height: 30px; }
-            .social-links a svg { width: 13px; height: 13px; }
+        .items { display: flex; flex-direction: column; gap: 6px; margin-bottom: 8px; }
+        .item-row { display: grid; gap: 6px; align-items: stretch; }
+        .item-row.rent  { grid-template-columns: 95px 1fr 90px 80px 70px 90px 28px; }
+        .item-row.salary { grid-template-columns: 1fr 1fr 100px 90px 90px 28px; }
+        .item-row.software { grid-template-columns: 1fr 110px 100px 90px 28px; }
+        .item-row.payment { grid-template-columns: 1fr 100px 100px 90px 28px; }
+        .item-row.marketing { grid-template-columns: 110px 1fr 100px 90px 28px; }
+        .item-row.cost { grid-template-columns: 1fr 100px 70px 90px 28px; }
+        .item-row.piecework { grid-template-columns: 1fr 100px 90px 28px; }
+        .item-row.sponsor { grid-template-columns: 1fr 110px 28px; }
+        .item-row.tax { grid-template-columns: 1fr 100px 100px 90px 28px; }
+        .item-row.custom { grid-template-columns: 1fr 100px 100px 100px 90px 28px; }
+        .item-input, .item-select {
+            padding: 7px 9px;
+            font-family: var(--f-text);
+            font-size: 13px;
+            color: var(--ink);
+            background: var(--paper);
+            border: 1px solid var(--line);
+            border-radius: 2px;
+            transition: border-color .2s, box-shadow .2s;
+            min-width: 0;
+            width: 100%;
+        }
+        .item-input:focus, .item-select:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 2px rgba(193,68,14,.08); }
+        .item-input::placeholder { color: var(--muted-2); }
+        .item-select {
+            cursor: pointer;
+            appearance: none;
+            -webkit-appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='5' viewBox='0 0 8 5'%3E%3Cpath d='M1 1l3 3 3-3' stroke='%230E0E0E' stroke-width='1.2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 8px center;
+            padding-right: 22px;
+        }
+        .item-total {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            font-family: var(--f-mono);
+            font-size: 11px;
+            color: var(--muted);
+            padding: 0 4px;
+            white-space: nowrap;
+            letter-spacing: .01em;
+            text-align: right;
+        }
+        .item-total b { color: var(--ink); font-weight: 500; }
+        .item-remove {
+            width: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            line-height: 1;
+            color: var(--muted-2);
+            background: transparent;
+            border: 1px solid var(--line);
+            border-radius: 2px;
+            cursor: pointer;
+            transition: all .2s;
+            padding: 0;
+        }
+        .item-remove:hover { color: var(--paper); background: var(--err); border-color: var(--err); }
+        .add-item-btn {
+            display: block;
+            width: 100%;
+            padding: 8px;
+            font-family: var(--f-mono);
+            font-size: 10px;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            color: var(--muted);
+            background: transparent;
+            border: 1px dashed var(--line-strong);
+            border-radius: 2px;
+            cursor: pointer;
+            transition: all .2s;
+        }
+        .add-item-btn:hover { color: var(--ink); border-color: var(--ink); background: var(--paper-2); }
+
+        .tax-regime { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 12px; }
+        .tax-pill { position: relative; cursor: pointer; flex: 1 1 auto; }
+        .tax-pill input { position: absolute; opacity: 0; pointer-events: none; }
+        .tax-pill span {
+            display: block;
+            padding: 7px 10px;
+            border: 1px solid var(--line);
+            border-radius: 2px;
+            font-size: 12px;
+            text-align: center;
+            background: var(--paper);
+            transition: all .2s;
+            line-height: 1.2;
+            white-space: nowrap;
+        }
+        .tax-pill:hover span { border-color: var(--ink); }
+        .tax-pill input:checked + span { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+        .rate-row { display: grid; grid-template-columns: 1fr 100px; gap: 10px; margin-bottom: 12px; }
+
+        .reset-row { display: flex; justify-content: flex-end; padding-top: 16px; border-top: 1px solid var(--line); margin-top: 20px; }
+
+        /* Breakeven Result Panel */
+        .be-result-panel {
+            position: sticky; top: calc(var(--header-height, 73px) + 90px);
+            background: var(--paper-2); border: 1px solid var(--line-strong);
+            border-radius: 2px; padding: 24px 24px 20px;
+        }
+        .be-result-header { display: flex; justify-content: space-between; align-items: center; padding-bottom: 14px; margin-bottom: 16px; border-bottom: 1px solid var(--line); }
+        
+        .coverage-block { margin-bottom: 18px; }
+        .coverage-label { display: flex; justify-content: space-between; font-family: var(--f-mono); font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+        .coverage-label span:last-child { color: var(--ink); font-weight: 500; }
+        .coverage-bar { height: 6px; background: var(--paper); border: 1px solid var(--line); border-radius: 3px; overflow: hidden; }
+        .coverage-fill { height: 100%; background: var(--accent); width: 0%; border-radius: 2px; transition: width .5s var(--ease), background .3s; }
+
+        .res-block { padding: 12px 0; border-bottom: 1px dashed var(--line); }
+        .res-block:last-of-type { border-bottom: none; padding-bottom: 4px; }
+        .res-label { font-family: var(--f-mono); font-size: 9px; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
+        .res-main { font-family: var(--f-display); font-size: 26px; font-weight: 500; letter-spacing: -.03em; line-height: 1.15; color: var(--ink); }
+        .res-secondary { font-family: var(--f-display); font-size: 16px; font-weight: 500; letter-spacing: -.01em; color: var(--ink); line-height: 1.2; margin-top: 4px; }
+        .res-note { font-family: var(--f-mono); font-size: 10px; color: var(--muted); margin-top: 6px; letter-spacing: .02em; line-height: 1.4; }
+
+        .breakdown { margin: 14px 0 12px; padding: 12px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+        .bd-title { font-family: var(--f-mono); font-size: 9px; letter-spacing: .16em; text-transform: uppercase; color: var(--muted-2); margin-bottom: 8px; }
+        .bd-row { display: flex; justify-content: space-between; gap: 10px; padding: 3px 0; font-size: 12px; color: var(--muted); }
+        .bd-row span:last-child { font-family: var(--f-mono); font-size: 11px; color: var(--ink); white-space: nowrap; }
+        .bd-row.total { border-top: 1px solid var(--line); margin-top: 6px; padding-top: 8px; color: var(--ink); }
+        .bd-row.total span { font-weight: 500; }
+
+        .status-block { padding: 12px 14px; border-radius: 2px; margin-top: 14px; border-left: 3px solid; }
+        .status-ok { background: rgba(30, 92, 42, .06); border-color: var(--ok); }
+        .status-warn { background: rgba(193, 68, 14, .06); border-color: var(--accent); }
+        .status-err { background: rgba(139, 31, 41, .06); border-color: var(--err); }
+        .status-title { font-family: var(--f-display); font-size: 13px; font-weight: 600; letter-spacing: -.005em; margin-bottom: 3px; }
+        .status-ok .status-title { color: var(--ok); }
+        .status-warn .status-title { color: var(--accent); }
+        .status-err .status-title { color: var(--err); }
+        .status-note { font-size: 12px; line-height: 1.5; color: var(--muted); }
+
+        .export-buttons { display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px; margin-top: 16px; }
+        .export-buttons .btn { padding: 10px 6px; font-size: 10px; letter-spacing: .1em; }
+
+        .hidden { display: none !important; }
+
+        /* Responsive additions for Breakeven */
+        @media (max-width: 1100px) {
+            .tabs-nav .container { grid-template-columns: repeat(2, 1fr); }
+            .tab-btn:nth-child(2) { border-right: none; }
+            .tab-btn:nth-child(3), .tab-btn:nth-child(4) { border-top: 1px solid var(--line); }
+            .be-result-panel { position: static; margin-top: 30px; }
+            .params-row { grid-template-columns: 1fr; }
+            .pricing-row { grid-template-columns: 1fr 1fr; }
+            .pricing-row .form-group:first-child { grid-column: 1 / -1; }
+            .item-row { grid-template-columns: 1fr !important; padding: 10px; border: 1px solid var(--line); border-radius: 2px; gap: 4px; }
+            .item-row .item-total { justify-content: flex-start; padding: 4px 0; border-top: 1px dashed var(--line); margin-top: 4px; }
+            .item-row .item-remove { width: 100%; padding: 6px; }
+            .acc-header { grid-template-columns: 22px 1fr 20px; }
+            .acc-summary { display: none; }
+            .acc-header.has-summary { grid-template-columns: 22px 1fr auto 20px; }
+            .acc-header.has-summary .acc-summary { display: block; font-size: 10px; }
         }
         @media (max-width: 720px) {
             .container { padding: 0 20px; }
@@ -464,7 +669,7 @@
             .tools-hero-loc { text-align: left; }
             .tab-panel { padding: 50px 0 70px; }
             .tabs-nav .container { display: flex; overflow-x: auto; padding: 0 20px; }
-            .tab-btn { flex: none; padding: 18px 20px; font-size: 10px; }
+            .tab-btn { flex: none; padding: 18px 20px; font-size: 10px; border-top: none !important; }
             .calc-result { padding: 26px 22px 24px; }
             .costs-grid { grid-template-columns: 1fr; }
             .anatomy-row { grid-template-columns: 1fr; gap: 4px; }
@@ -476,21 +681,12 @@
             .step-nav-item.active .step-nav-label { font-size: 14px; }
             .download-block { padding: 24px; }
             .site-footer .container { flex-direction: column; text-align: center; }
-
-            .site-header .container {
-                display: flex;
-                flex-wrap: wrap;
-                justify-content: space-between;
-                gap: 10px;
-            }
-            .social-links {
-                order: 3;
-                width: 100%;
-                justify-content: center;
-                margin-top: 4px;
-            }
+            .site-header .container { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px; }
+            .social-links { order: 3; width: 100%; justify-content: center; margin-top: 4px; }
             .header-actions { width: 100%; grid-auto-flow: row; grid-auto-columns: 1fr; gap: 8px; }
             .btn-tools { padding: 10px 12px; font-size: 10px; letter-spacing: .08em; }
+            .be-result-panel { padding: 18px 16px; }
+            .res-main { font-size: 22px; }
         }
         @media (prefers-reduced-motion: reduce) {
             *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
@@ -556,9 +752,10 @@
 
 <nav class="tabs-nav" id="tabs-nav">
     <div class="container">
-        <button class="tab-btn active" data-tab="calc">01 · Калькулятор</button>
+        <button class="tab-btn active" data-tab="calc">01 · Стоимость сайта</button>
         <a href="https://vitwill.github.io/web-audit/" class="tab-btn" target="_blank">02 · SEO-аудит ↗</a>
-        <button class="tab-btn" data-tab="tz">03 · Заявка / ТЗ</button>
+        <button class="tab-btn" data-tab="breakeven">03 · Безубыточность</button>
+        <button class="tab-btn" data-tab="tz">04 · Заявка / ТЗ</button>
     </div>
 </nav>
 
@@ -773,6 +970,375 @@
         <p class="anatomy-note">
             Если больше половины пунктов не отмечено — ТЗ пока сырое. Это нормально. Используйте эти вопросы как основу для брифа — и обсудите их с подрядчиком до старта работ.
         </p>
+    </div>
+</section>
+
+<!-- TAB: Точка безубыточности -->
+<section class="tab-panel" data-panel="breakeven">
+    <div class="container">
+        <div class="calc-layout">
+            <form class="calc-form" id="be-form" onsubmit="return false;">
+
+                <!-- Project parameters -->
+                <div class="params-row">
+                    <div class="form-group">
+                        <label for="project-name">Название проекта</label>
+                        <input type="text" id="project-name" placeholder="Например: онлайн-курс по дизайну" autocomplete="off">
+                    </div>
+                    <div class="form-group">
+                        <label for="duration">Длительность, мес</label>
+                        <input type="number" id="duration" value="12" min="1" max="120" step="1" inputmode="numeric">
+                        <div class="quick-pills">
+                            <button type="button" class="quick-pill" data-duration="3">3</button>
+                            <button type="button" class="quick-pill" data-duration="6">6</button>
+                            <button type="button" class="quick-pill" data-duration="12">12</button>
+                            <button type="button" class="quick-pill" data-duration="24">24</button>
+                            <button type="button" class="quick-pill" data-duration="36">36</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pricing -->
+                <div class="pricing-row">
+                    <div class="form-group">
+                        <label for="product-name">Продукт / услуга</label>
+                        <input type="text" id="product-name" placeholder="Например: подписка на курс" autocomplete="off">
+                    </div>
+                    <div class="form-group">
+                        <label for="price">Цена за ед.</label>
+                        <input type="number" id="price" placeholder="0" min="0" step="0.01" inputmode="decimal">
+                    </div>
+                    <div class="form-group">
+                        <label for="plan-units">План, ед./мес</label>
+                        <input type="number" id="plan-units" placeholder="0" min="0" step="1" inputmode="numeric">
+                    </div>
+                    <div class="form-group">
+                        <label for="fact-units">Факт, ед./мес</label>
+                        <input type="number" id="fact-units" placeholder="0" min="0" step="1" inputmode="numeric">
+                    </div>
+                </div>
+
+                <!-- 01 Rent -->
+                <div class="accordion" data-acc="rent">
+                    <button type="button" class="acc-header" aria-expanded="false">
+                        <span class="acc-num">01</span>
+                        <span class="acc-title">Аренда</span>
+                        <span class="acc-summary" data-summary="rent">—</span>
+                        <span class="acc-arrow">▾</span>
+                    </button>
+                    <div class="acc-body">
+                        <p class="acc-hint">Офис, склад, коворкинг, автомобиль, техника. Можно указать площадь × цену за м² или фиксированную сумму.</p>
+                        <div class="items" data-items="rent"></div>
+                        <button type="button" class="add-item-btn" data-add="rent">+ Добавить объект</button>
+                    </div>
+                </div>
+
+                <!-- 02 Salaries -->
+                <div class="accordion" data-acc="salaries">
+                    <button type="button" class="acc-header" aria-expanded="false">
+                        <span class="acc-num">02</span>
+                        <span class="acc-title">Зарплаты</span>
+                        <span class="acc-summary" data-summary="salaries">—</span>
+                        <span class="acc-arrow">▾</span>
+                    </button>
+                    <div class="acc-body">
+                        <p class="acc-hint">Каждый сотрудник отдельно: имя/роль, оклад и бонусы в месяц.</p>
+                        <div class="items" data-items="salaries"></div>
+                        <button type="button" class="add-item-btn" data-add="salaries">+ Добавить сотрудника</button>
+                    </div>
+                </div>
+
+                <!-- 03 Software -->
+                <div class="accordion" data-acc="software">
+                    <button type="button" class="acc-header" aria-expanded="false">
+                        <span class="acc-num">03</span>
+                        <span class="acc-title">Софт и подписки</span>
+                        <span class="acc-summary" data-summary="software">—</span>
+                        <span class="acc-arrow">▾</span>
+                    </button>
+                    <div class="acc-body">
+                        <p class="acc-hint">Подписки (Figma, Notion) — ежемесячная сумма. Покупки (лицензия Photoshop) — разово, делим на длительность проекта.</p>
+                        <div class="items" data-items="software"></div>
+                        <button type="button" class="add-item-btn" data-add="software">+ Добавить сервис</button>
+                    </div>
+                </div>
+
+                <!-- 04 Payments -->
+                <div class="accordion" data-acc="payments">
+                    <button type="button" class="acc-header" aria-expanded="false">
+                        <span class="acc-num">04</span>
+                        <span class="acc-title">Обязательные платежи</span>
+                        <span class="acc-summary" data-summary="payments">—</span>
+                        <span class="acc-arrow">▾</span>
+                    </button>
+                    <div class="acc-body">
+                        <p class="acc-hint">Банковское обслуживание, страховые взносы, фиксированные налоги, прочие регулярные платежи. Укажите сумму и периодичность — калькулятор приведёт всё к месяцу.</p>
+                        <div class="items" data-items="payments"></div>
+                        <button type="button" class="add-item-btn" data-add="payments">+ Добавить платёж</button>
+                    </div>
+                </div>
+
+                <!-- 05 Marketing -->
+                <div class="accordion" data-acc="marketing">
+                    <button type="button" class="acc-header" aria-expanded="false">
+                        <span class="acc-num">05</span>
+                        <span class="acc-title">Маркетинг</span>
+                        <span class="acc-summary" data-summary="marketing">—</span>
+                        <span class="acc-arrow">▾</span>
+                    </button>
+                    <div class="acc-body">
+                        <p class="acc-hint">По каналам: SEO, SMM, контекст, таргет, инфлюенсеры, брендинг. Отдельная строка — отдельный бюджет.</p>
+                        <div class="items" data-items="marketing"></div>
+                        <button type="button" class="add-item-btn" data-add="marketing">+ Добавить канал</button>
+                    </div>
+                </div>
+
+                <!-- 06 Cost components -->
+                <div class="accordion" data-acc="costComponents">
+                    <button type="button" class="acc-header" aria-expanded="false">
+                        <span class="acc-num">06</span>
+                        <span class="acc-title">Себестоимость (на единицу)</span>
+                        <span class="acc-summary" data-summary="costComponents">—</span>
+                        <span class="acc-arrow">▾</span>
+                    </button>
+                    <div class="acc-body">
+                        <p class="acc-hint">Что нужно, чтобы создать 1 единицу продукта или оказать 1 услугу: материалы, лицензии, часы подрядчиков. Стоимость × количество = вклад в себестоимость.</p>
+                        <div class="items" data-items="costComponents"></div>
+                        <button type="button" class="add-item-btn" data-add="costComponents">+ Добавить компонент</button>
+                    </div>
+                </div>
+
+                <!-- 07 Transactions -->
+                <div class="accordion" data-acc="transactions">
+                    <button type="button" class="acc-header" aria-expanded="false">
+                        <span class="acc-num">07</span>
+                        <span class="acc-title">Комиссии за приём платежей</span>
+                        <span class="acc-summary" data-summary="transactions">—</span>
+                        <span class="acc-arrow">▾</span>
+                    </button>
+                    <div class="acc-body">
+                        <p class="acc-hint">Эквайринг, ЮKassa, Stripe и другие платёжные системы. Процент от чека + фиксированная сумма за транзакцию. Считается автоматически от цены.</p>
+                        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+                            <div class="form-group">
+                                <label for="trans-percent">Процент от цены, %</label>
+                                <input type="number" id="trans-percent" placeholder="0" min="0" step="0.01" inputmode="decimal">
+                            </div>
+                            <div class="form-group">
+                                <label for="trans-fixed">Фикс. за транзакцию, <span class="curr-sym">₽</span></label>
+                                <input type="number" id="trans-fixed" placeholder="0" min="0" step="0.01" inputmode="decimal">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 08 Logistics -->
+                <div class="accordion" data-acc="logistics">
+                    <button type="button" class="acc-header" aria-expanded="false">
+                        <span class="acc-num">08</span>
+                        <span class="acc-title">Логистика (на единицу)</span>
+                        <span class="acc-summary" data-summary="logistics">—</span>
+                        <span class="acc-arrow">▾</span>
+                    </button>
+                    <div class="acc-body">
+                        <p class="acc-hint">Доставка и упаковка одного заказа. Для услуг — можно поставить 0.</p>
+                        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+                            <div class="form-group">
+                                <label for="log-delivery">Доставка, <span class="curr-sym">₽</span>/ед.</label>
+                                <input type="number" id="log-delivery" placeholder="0" min="0" step="0.01" inputmode="decimal">
+                            </div>
+                            <div class="form-group">
+                                <label for="log-packaging">Упаковка, <span class="curr-sym">₽</span>/ед.</label>
+                                <input type="number" id="log-packaging" placeholder="0" min="0" step="0.01" inputmode="decimal">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 09 Piecework -->
+                <div class="accordion" data-acc="piecework">
+                    <button type="button" class="acc-header" aria-expanded="false">
+                        <span class="acc-num">09</span>
+                        <span class="acc-title">Сдельная оплата (на единицу)</span>
+                        <span class="acc-summary" data-summary="piecework">—</span>
+                        <span class="acc-arrow">▾</span>
+                    </button>
+                    <div class="acc-body">
+                        <p class="acc-hint">Специалисты или подрядчики, которых вы оплачиваете за конкретную единицу работы: фотограф за съёмку товара, копирайтер за статью, сборщик за заказ.</p>
+                        <div class="items" data-items="piecework"></div>
+                        <button type="button" class="add-item-btn" data-add="piecework">+ Добавить специалиста</button>
+                    </div>
+                </div>
+
+                <!-- 10 Sponsors -->
+                <div class="accordion" data-acc="sponsors">
+                    <button type="button" class="acc-header" aria-expanded="false">
+                        <span class="acc-num">10</span>
+                        <span class="acc-title">Спонсорские вознаграждения</span>
+                        <span class="acc-summary" data-summary="sponsors">—</span>
+                        <span class="acc-arrow">▾</span>
+                    </button>
+                    <div class="acc-body">
+                        <p class="acc-hint">Регулярные поступления от спонсоров, грантов, партнёрских программ. Уменьшают сумму, которую нужно покрыть продажами.</p>
+                        <div class="items" data-items="sponsors"></div>
+                        <button type="button" class="add-item-btn" data-add="sponsors">+ Добавить спонсора</button>
+                    </div>
+                </div>
+
+                <!-- 11 Unexpected -->
+                <div class="accordion" data-acc="unexpected">
+                    <button type="button" class="acc-header" aria-expanded="false">
+                        <span class="acc-num">11</span>
+                        <span class="acc-title">Непредвиденные расходы</span>
+                        <span class="acc-summary" data-summary="unexpected">—</span>
+                        <span class="acc-arrow">▾</span>
+                    </button>
+                    <div class="acc-body">
+                        <p class="acc-hint">Резерв на случай отклонений: фиксированная сумма или процент от месячных расходов.</p>
+                        <div style="display:flex;gap:6px;margin-bottom:12px;">
+                            <label class="tax-pill" style="flex:1;">
+                                <input type="radio" name="unexpected-mode" value="fixed" checked>
+                                <span>Фиксированная сумма</span>
+                            </label>
+                            <label class="tax-pill" style="flex:1;">
+                                <input type="radio" name="unexpected-mode" value="percent">
+                                <span>% от расходов</span>
+                            </label>
+                        </div>
+                        <div id="unexpected-fixed-row">
+                            <div class="form-group">
+                                <label for="unexpected-fixed">Сумма, <span class="curr-sym">₽</span>/мес</label>
+                                <input type="number" id="unexpected-fixed" placeholder="0" min="0" step="0.01" inputmode="decimal">
+                            </div>
+                        </div>
+                        <div id="unexpected-percent-row" class="hidden">
+                            <div class="form-group">
+                                <label for="unexpected-percent">Процент от расходов, %</label>
+                                <input type="number" id="unexpected-percent" placeholder="10" min="0" max="100" step="0.1" inputmode="decimal">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 12 Taxes -->
+                <div class="accordion" data-acc="taxes">
+                    <button type="button" class="acc-header" aria-expanded="false">
+                        <span class="acc-num">12</span>
+                        <span class="acc-title">Налоги</span>
+                        <span class="acc-summary" data-summary="taxes">—</span>
+                        <span class="acc-arrow">▾</span>
+                    </button>
+                    <div class="acc-body">
+                        <p class="acc-hint">Основной режим + дополнительные налоги (НДС, транспортный и т.д.). Налог с выручки снижает эффективную цену для расчёта безубыточности.</p>
+
+                        <div class="tax-regime">
+                            <label class="tax-pill"><input type="radio" name="tax-regime" value="none" checked><span>Без налогов</span></label>
+                            <label class="tax-pill"><input type="radio" name="tax-regime" value="self"><span>Самозанятый</span></label>
+                            <label class="tax-pill"><input type="radio" name="tax-regime" value="ip6"><span>ИП УСН 6%</span></label>
+                            <label class="tax-pill"><input type="radio" name="tax-regime" value="ip15"><span>ИП УСН 15%</span></label>
+                            <label class="tax-pill"><input type="radio" name="tax-regime" value="ooo6"><span>ООО УСН 6%</span></label>
+                            <label class="tax-pill"><input type="radio" name="tax-regime" value="ooo15"><span>ООО УСН 15%</span></label>
+                            <label class="tax-pill"><input type="radio" name="tax-regime" value="custom"><span>Свой</span></label>
+                        </div>
+
+                        <div class="rate-row">
+                            <div class="form-group">
+                                <label for="tax-rate">Ставка основного налога, %</label>
+                                <input type="number" id="tax-rate" placeholder="0" min="0" max="100" step="0.01" inputmode="decimal">
+                            </div>
+                            <div class="form-group">
+                                <label for="tax-base">База</label>
+                                <select id="tax-base">
+                                    <option value="revenue">от выручки</option>
+                                    <option value="profit">от прибыли</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div style="margin-top:14px;padding-top:12px;border-top:1px dashed var(--line);">
+                            <div style="font-family:var(--f-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;">Дополнительные налоги</div>
+                            <div class="items" data-items="taxes"></div>
+                            <button type="button" class="add-item-btn" data-add="taxes">+ Добавить налог</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 13 Custom -->
+                <div class="accordion" data-acc="custom">
+                    <button type="button" class="acc-header" aria-expanded="false">
+                        <span class="acc-num">13</span>
+                        <span class="acc-title">Свои поля</span>
+                        <span class="acc-summary" data-summary="custom">—</span>
+                        <span class="acc-arrow">▾</span>
+                    </button>
+                    <div class="acc-body">
+                        <p class="acc-hint">Доходы и расходы, не вписавшиеся в другие блоки. Для разовых сумм — калькулятор сам разобьёт их на месяцы.</p>
+                        <div class="items" data-items="custom"></div>
+                        <button type="button" class="add-item-btn" data-add="custom">+ Добавить поле</button>
+                    </div>
+                </div>
+
+                <div class="reset-row">
+                    <button type="button" class="btn btn-outline" id="reset-btn">Сбросить всё</button>
+                </div>
+
+            </form>
+
+            <!-- Result panel -->
+            <aside class="be-result-panel" id="be-result-panel">
+                <div class="be-result-header">
+                    <span class="result-eyebrow">Результат</span>
+                    <div class="currency-switch" id="be-currency-switch">
+                        <button type="button" data-cur="rub" class="active" aria-pressed="true">₽</button>
+                        <button type="button" data-cur="usd" aria-pressed="false">$</button>
+                        <button type="button" data-cur="eur" aria-pressed="false">€</button>
+                    </div>
+                </div>
+
+                <div class="coverage-block">
+                    <div class="coverage-label">
+                        <span>Покрытие цели</span>
+                        <span id="coverage-pct">0%</span>
+                    </div>
+                    <div class="coverage-bar">
+                        <div class="coverage-fill" id="coverage-fill"></div>
+                    </div>
+                </div>
+
+                <div class="res-block">
+                    <div class="res-label">Точка безубыточности</div>
+                    <div class="res-main" id="be-revenue">—</div>
+                    <div class="res-secondary" id="be-units">—</div>
+                </div>
+
+                <div class="res-block">
+                    <div class="res-label">За весь проект</div>
+                    <div class="res-secondary" id="be-revenue-total">—</div>
+                    <div class="res-note" id="be-units-total">—</div>
+                </div>
+
+                <div class="res-block">
+                    <div class="res-label">Маржинальный доход</div>
+                    <div class="res-secondary" id="cm-value">—</div>
+                    <div class="res-note" id="cm-pct">Укажите цену и переменные</div>
+                </div>
+
+                <div class="res-block hidden" id="forecast-block">
+                    <div id="forecast-content"></div>
+                </div>
+
+                <div class="breakdown" id="breakdown"></div>
+
+                <div class="status-block status-warn" id="status-block">
+                    <div class="status-title">Смета пока пуста</div>
+                    <div class="status-note">Заполните блоки сверху, чтобы увидеть реальную точку безубыточности.</div>
+                </div>
+
+                <div class="export-buttons">
+                    <button type="button" class="btn btn-dark" data-export="docx">DOCX</button>
+                    <button type="button" class="btn btn-outline" data-export="csv">CSV</button>
+                </div>
+            </aside>
+        </div>
     </div>
 </section>
 
@@ -1293,7 +1859,6 @@
         if (window.ResizeObserver) {
             new ResizeObserver(updateHeaderHeight).observe(header);
         }
-        // также при загрузке шрифтов, чтобы высота пересчиталась
         if (document.fonts && document.fonts.ready) {
             document.fonts.ready.then(updateHeaderHeight);
         }
@@ -1337,7 +1902,7 @@
     })();
 
     /* ============================================================
-       КАЛЬКУЛЯТОР
+       КАЛЬКУЛЯТОР СТОИМОСТИ САЙТА
        ============================================================ */
     (function() {
         const PRICES = {
@@ -1564,7 +2129,6 @@
             btn.addEventListener('click', () => showStep(btn.dataset.prev));
         });
 
-        // Delegate checkbox (доверяю исполнителю)
         document.querySelectorAll('.delegate-checkbox').forEach(cb => {
             cb.addEventListener('change', () => {
                 const target = cb.dataset.target;
@@ -1576,7 +2140,6 @@
             });
         });
 
-        // Дата запуска
         const deadlineRadios = document.querySelectorAll('input[name="s4-deadline"]');
         const dateRow = document.getElementById('s4-date-row');
         function syncDateRow() {
@@ -1602,7 +2165,6 @@
             ).join('');
         }
 
-        // Генерация DOCX
         const { Document, Packer, Paragraph, TextRun, AlignmentType, Table, TableRow, TableCell, WidthType, BorderStyle } = docx;
 
         function sectionTitle(num, text) {
@@ -1807,6 +2369,1164 @@
                 }
             });
         }
+    })();
+
+    /* ============================================================
+       ТОЧКА БЕЗУБЫТОЧНОСТИ (BREAKEVEN)
+       ============================================================ */
+    (function() {
+        const CURRENCIES = {
+            rub: { symbol: '₽', rate: 1,      locale: 'ru-RU', decimals: 0 },
+            usd: { symbol: '$', rate: 1 / 90, locale: 'en-US', decimals: 2 },
+            eur: { symbol: '€', rate: 1 / 100, locale: 'de-DE', decimals: 2 }
+        };
+
+        function getSym() {
+            return CURRENCIES[state.currency].symbol;
+        }
+
+        const state = {
+            currency: 'rub',
+            projectName: '',
+            duration: 12,
+            productName: '',
+            price: 0,
+            planUnits: 0,
+            factUnits: 0,
+            rent: [],
+            salaries: [],
+            software: [],
+            payments: [],
+            marketing: [],
+            costComponents: [],
+            transactions: { percent: 0, fixed: 0 },
+            logistics: { delivery: 0, packaging: 0 },
+            piecework: [],
+            sponsors: [],
+            unexpectedMode: 'fixed',
+            unexpectedFixed: 0,
+            unexpectedPercent: 10,
+            taxRegime: 'none',
+            taxRate: 0,
+            taxBase: 'revenue',
+            additionalTaxes: [],
+            custom: []
+        };
+
+        function toDisplay(rubValue) { return (Number(rubValue) || 0) * CURRENCIES[state.currency].rate; }
+        function toBase(displayValue) { return (Number(displayValue) || 0) / CURRENCIES[state.currency].rate; }
+        function fmt(rubValue) {
+            const c = CURRENCIES[state.currency];
+            const v = Math.round((Number(rubValue) || 0) * c.rate);
+            let s;
+            if (c.decimals === 0) {
+                s = v.toLocaleString(c.locale);
+            } else {
+                s = (Math.round(v * 100) / 100).toLocaleString(c.locale, {
+                    minimumFractionDigits: 0,
+                    maximumFractionDigits: 2
+                });
+            }
+            return s.replace(/\u00A0/g, ' ').replace(/,/g, ' ').replace(/\.(?=\d{3})/g, ' ') + ' ' + c.symbol;
+        }
+        function fmtUnits(n) { return (Math.round(Number(n) || 0)).toLocaleString('ru-RU').replace(/\u00A0/g, ' '); }
+        function fmtNum(v, decimals) {
+            const n = Number(v) || 0;
+            if (decimals === 0) return Math.round(n).toLocaleString('ru-RU').replace(/\u00A0/g, ' ');
+            return (Math.round(n * 10) / 10).toLocaleString('ru-RU').replace(/\u00A0/g, ' ');
+        }
+
+        function calcRent() { return state.rent.reduce((sum, r) => { if (r.mode === 'area') return sum + (r.pricePerSqm || 0) * (r.sqm || 0); return sum + (r.amount || 0); }, 0); }
+        function calcSalaries() { return state.salaries.reduce((sum, s) => sum + (s.salary || 0) + (s.bonus || 0), 0); }
+        function calcSoftware() { const D = Math.max(1, state.duration); return state.software.reduce((sum, s) => { if (s.mode === 'purchase') return sum + (s.amount || 0) / D; return sum + (s.amount || 0); }, 0); }
+        function calcPayments() { return state.payments.reduce((sum, p) => { let monthly = p.amount || 0; if (p.period === 'quarter') monthly = (p.amount || 0) / 3; else if (p.period === 'year') monthly = (p.amount || 0) / 12; return sum + monthly; }, 0); }
+        function calcMarketing() { return state.marketing.reduce((sum, m) => sum + (m.amount || 0), 0); }
+        function calcCostComponents() { return state.costComponents.reduce((sum, c) => sum + (c.price || 0) * (c.qty || 0), 0); }
+        function calcTransactions() { const P = state.price || 0; const pct = (state.transactions.percent || 0) / 100; return P * pct + (state.transactions.fixed || 0); }
+        function calcLogistics() { return (state.logistics.delivery || 0) + (state.logistics.packaging || 0); }
+        function calcPiecework() { return state.piecework.reduce((sum, p) => sum + (p.amount || 0), 0); }
+        function calcSponsors() { return state.sponsors.reduce((sum, s) => sum + (s.amount || 0), 0); }
+        function calcCustomIncome() { const D = Math.max(1, state.duration); return state.custom.reduce((sum, c) => { if (c.type !== 'income') return sum; const monthly = c.period === 'onetime' ? (c.amount || 0) / D : (c.amount || 0); return sum + monthly; }, 0); }
+        function calcCustomExpense() { const D = Math.max(1, state.duration); return state.custom.reduce((sum, c) => { if (c.type !== 'expense') return sum; const monthly = c.period === 'onetime' ? (c.amount || 0) / D : (c.amount || 0); return sum + monthly; }, 0); }
+
+        function calcAdditionalTaxes() {
+            let revenueRate = 0;
+            let profitRate = 0;
+            let fixed = 0;
+            state.additionalTaxes.forEach(t => {
+                if (t.type === 'revenue') revenueRate += (t.value || 0) / 100;
+                else if (t.type === 'profit') profitRate += (t.value || 0) / 100;
+                else fixed += (t.value || 0);
+            });
+            return { revenueRate, profitRate, fixed };
+        }
+
+        function calcAll() {
+            const D = Math.max(1, state.duration);
+            const P = state.price || 0;
+            const planU = state.planUnits || 0;
+            const factU = state.factUnits || 0;
+
+            const rent = calcRent();
+            const salaries = calcSalaries();
+            const software = calcSoftware();
+            const payments = calcPayments();
+            const marketing = calcMarketing();
+            const customExpense = calcCustomExpense();
+
+            const addTaxes = calcAdditionalTaxes();
+
+            let mainRevRate = 0;
+            let mainProfitRate = 0;
+            if (state.taxRegime !== 'none') {
+                const rate = (state.taxRate || 0) / 100;
+                if (state.taxBase === 'revenue') mainRevRate = rate;
+                else mainProfitRate = rate;
+            }
+
+            const totalRevRate = mainRevRate + addTaxes.revenueRate;
+            const totalProfitRate = mainProfitRate + addTaxes.profitRate;
+
+            const costC = calcCostComponents();
+            const trans = calcTransactions();
+            const log = calcLogistics();
+            const piece = calcPiecework();
+            const V = costC + trans + log + piece;
+
+            const sponsors = calcSponsors();
+            const customIncome = calcCustomIncome();
+            const S = sponsors + customIncome;
+
+            const baseFixed = rent + salaries + software + payments + marketing + customExpense + addTaxes.fixed;
+            let unexpected = 0;
+            if (state.unexpectedMode === 'fixed') {
+                unexpected = state.unexpectedFixed || 0;
+            } else {
+                const base = baseFixed + V * planU;
+                unexpected = base * (state.unexpectedPercent || 0) / 100;
+            }
+
+            const F = baseFixed + unexpected;
+
+            const CM = P - V;
+            const CMpct = P > 0 ? (CM / P) * 100 : 0;
+            const CMeff = P * (1 - totalRevRate) - V;
+
+            let beUnits = 0;
+            let beRevenue = 0;
+            let canBreakEven = true;
+            let statusKind = 'empty';
+            let statusTitle = '';
+            let statusNote = '';
+
+            const gap = F - S;
+
+            if (P <= 0) {
+                statusKind = 'noprice';
+                canBreakEven = false;
+                statusTitle = 'Осталось указать цену';
+                statusNote = 'Цена за единицу продукта или услуги — финальный шаг к расчёту. Как только она появится, калькулятор покажет, сколько нужно продавать, чтобы проект вышел в плюс.';
+            } else if (CMeff <= 0 && gap > 0) {
+                statusKind = 'impossible';
+                canBreakEven = false;
+                statusTitle = 'Убыточно при любом объёме';
+                statusNote = 'Эффективная цена (после налога с выручки) не покрывает переменные расходы. Нужно поднять цену или снизить переменные затраты.';
+            } else if (gap <= 0) {
+                if (F === 0 && S === 0) {
+                    statusKind = 'empty';
+                    canBreakEven = false;
+                    statusTitle = 'Смета пока пуста';
+                    statusNote = 'Вы ещё не добавили ни одной статьи расходов. Заполните блоки сверху, чтобы увидеть реальную точку безубыточности.';
+                } else {
+                    statusKind = 'covered';
+                    beUnits = 0;
+                    beRevenue = 0;
+                    statusTitle = 'Расходы покрыты доходами';
+                    statusNote = 'Доходы от спонсоров и своих полей покрывают все постоянные расходы. Продажи для выхода в ноль не требуются.';
+                }
+            } else {
+                beUnits = Math.ceil(gap / CMeff);
+                beRevenue = beUnits * P;
+                statusKind = 'ok';
+            }
+
+            const beUnitsTotal = beUnits * D;
+            const beRevenueTotal = beRevenue * D;
+
+            let forecastProfit = null;
+            let factProfit = null;
+            let mos = null;
+
+            if (planU > 0 && P > 0 && CMeff > 0) {
+                const revenue = planU * P;
+                const revTax = revenue * totalRevRate;
+                const varCost = planU * V;
+                const profitBefore = revenue - revTax - F - varCost + S;
+                const profitTax = Math.max(0, profitBefore) * totalProfitRate;
+                forecastProfit = profitBefore - profitTax;
+                mos = beUnits > 0 ? ((planU - beUnits) / planU) * 100 : 100;
+            }
+
+            if (factU > 0 && P > 0 && CMeff > 0) {
+                const revenue = factU * P;
+                const revTax = revenue * totalRevRate;
+                const varCost = factU * V;
+                const profitBefore = revenue - revTax - F - varCost + S;
+                const profitTax = Math.max(0, profitBefore) * totalProfitRate;
+                factProfit = profitBefore - profitTax;
+            }
+
+            let coverage = 0;
+            const coverageUnits = factU > 0 ? factU : planU;
+            if (canBreakEven) {
+                if (beUnits === 0) coverage = 100;
+                else if (coverageUnits > 0) coverage = Math.min(100, (coverageUnits / beUnits) * 100);
+            } else if (statusKind === 'empty') {
+                coverage = 0;
+            }
+
+            if (statusKind === 'ok') {
+                if (factProfit !== null) {
+                    if (factProfit > 0) {
+                        statusTitle = 'Прибыль по факту';
+                        statusNote = 'Фактические продажи (' + fmtUnits(factU) + ' ед./мес) приносят ' + fmt(factProfit) + ' в месяц.';
+                    } else if (factProfit < 0) {
+                        statusKind = 'loss';
+                        statusTitle = 'Убыток по факту';
+                        const deficit = Math.max(0, beUnits - factU);
+                        statusNote = 'Фактические продажи (' + fmtUnits(factU) + ' ед./мес) приносят дефицит ' + fmt(-factProfit) + ' в месяц. До безубыточности не хватает ' + fmtUnits(deficit) + ' ед./мес.';
+                    } else {
+                        statusKind = 'breakeven';
+                        statusTitle = 'Безубыточность по факту';
+                        statusNote = 'Проект работает ровно в ноль.';
+                    }
+                } else if (forecastProfit !== null) {
+                    if (forecastProfit > 0) {
+                        statusTitle = 'Прибыль (по плану)';
+                        statusNote = 'При плане ' + fmtUnits(planU) + ' ед./мес прибыль составит ' + fmt(forecastProfit) + ' в месяц.';
+                    } else if (forecastProfit < 0) {
+                        statusKind = 'loss';
+                        statusTitle = 'Убыток (по плану)';
+                        const deficit = Math.max(0, beUnits - planU);
+                        statusNote = 'При плане ' + fmtUnits(planU) + ' ед./мес дефицит ' + fmt(-forecastProfit) + ' в месяц. До безубыточности не хватает ' + fmtUnits(deficit) + ' ед./мес.';
+                    } else {
+                        statusKind = 'breakeven';
+                        statusTitle = 'Безубыточность (по плану)';
+                        statusNote = 'Проект работает ровно в ноль.';
+                    }
+                } else {
+                    statusTitle = 'Безубыточность возможна';
+                    statusNote = 'Для выхода в ноль нужно продавать ' + fmtUnits(beUnits) + ' ед./мес. Укажите план или факт продаж для прогноза прибыли.';
+                }
+            }
+
+            return {
+                D, P, planU, factU,
+                rent, salaries, software, payments, marketing,
+                customExpense, customIncome,
+                additionalFixed: addTaxes.fixed,
+                unexpected,
+                F, S,
+                costC, trans, log, piece, V,
+                CM, CMpct, CMeff,
+                mainRevRate, mainProfitRate, totalRevRate, totalProfitRate,
+                beUnits, beRevenue, beUnitsTotal, beRevenueTotal,
+                canBreakEven, statusKind, statusTitle, statusNote,
+                forecastProfit, factProfit, mos, coverage
+            };
+        }
+
+        function createInput(type, value, placeholder, onchange, opts) {
+            opts = opts || {};
+            const el = document.createElement('input');
+            el.type = type;
+            el.className = 'item-input';
+            el.placeholder = placeholder || '';
+            if (opts.min !== undefined) el.min = opts.min;
+            if (opts.max !== undefined) el.max = opts.max;
+            if (opts.step !== undefined) el.step = opts.step;
+            if (opts.inputmode) el.inputMode = opts.inputmode;
+            el.value = value === 0 && opts.emptyZero ? '' : value;
+            if (opts.emptyZero && value === 0) el.value = '';
+            el.addEventListener('input', () => {
+                const v = type === 'text' ? el.value : (parseFloat(el.value) || 0);
+                onchange(v);
+                updateSummaries();
+                calc();
+            });
+            return el;
+        }
+
+        function createSelect(value, options, onchange) {
+            const el = document.createElement('select');
+            el.className = 'item-select';
+            options.forEach(o => {
+                const opt = document.createElement('option');
+                opt.value = o.value;
+                opt.textContent = o.label;
+                el.appendChild(opt);
+            });
+            el.value = value;
+            el.addEventListener('change', () => {
+                onchange(el.value);
+                updateSummaries();
+                calc();
+            });
+            return el;
+        }
+
+        function createTotal(text) {
+            const el = document.createElement('div');
+            el.className = 'item-total';
+            el.innerHTML = text;
+            return el;
+        }
+
+        function createRemove(onclick) {
+            const el = document.createElement('button');
+            el.type = 'button';
+            el.className = 'item-remove';
+            el.textContent = '×';
+            el.setAttribute('aria-label', 'Удалить');
+            el.addEventListener('click', onclick);
+            return el;
+        }
+
+        function displayValue(rub) {
+            const v = toDisplay(rub);
+            if (v === 0) return '';
+            const decimals = CURRENCIES[state.currency].decimals;
+            return decimals === 0 ? Math.round(v) : Math.round(v * 100) / 100;
+        }
+
+        function renderRent() {
+            const box = document.querySelector('[data-items="rent"]');
+            if (!box) return;
+            box.innerHTML = '';
+            state.rent.forEach((r, idx) => {
+                const row = document.createElement('div');
+                row.className = 'item-row rent';
+                row.appendChild(createSelect(r.type, [{ value: 'office', label: 'Офис' }, { value: 'warehouse', label: 'Склад' }, { value: 'coworking', label: 'Коворкинг' }, { value: 'car', label: 'Авто' }, { value: 'equipment', label: 'Техника' }, { value: 'other', label: 'Другое' }], v => { r.type = v; }));
+                row.appendChild(createInput('text', r.name, 'Название', v => { r.name = v; }));
+                row.appendChild(createSelect(r.mode, [{ value: 'area', label: 'По площади' }, { value: 'fixed', label: 'Фикс' }], v => { r.mode = v; renderRent(); }));
+                if (r.mode === 'area') {
+                    row.appendChild(createInput('number', displayValue(r.pricePerSqm), getSym() + '/м²', v => { r.pricePerSqm = toBase(v); }, { min: 0, step: 1, inputmode: 'decimal', emptyZero: true }));
+                    row.appendChild(createInput('number', displayValue(r.sqm), 'м²', v => { r.sqm = v; }, { min: 0, step: 1, inputmode: 'decimal', emptyZero: true }));
+                    row.appendChild(createTotal('<b>' + fmt((r.pricePerSqm || 0) * (r.sqm || 0)) + '</b>/мес'));
+                } else {
+                    row.appendChild(createInput('number', displayValue(r.amount), getSym() + '/мес', v => { r.amount = toBase(v); }, { min: 0, step: 1, inputmode: 'decimal', emptyZero: true }));
+                    row.appendChild(createTotal('<b>' + fmt(r.amount || 0) + '</b>/мес'));
+                }
+                row.appendChild(createRemove(() => { state.rent.splice(idx, 1); renderRent(); updateSummaries(); calc(); }));
+                box.appendChild(row);
+            });
+        }
+
+        function renderSalaries() {
+            const box = document.querySelector('[data-items="salaries"]');
+            if (!box) return;
+            box.innerHTML = '';
+            state.salaries.forEach((s, idx) => {
+                const row = document.createElement('div');
+                row.className = 'item-row salary';
+                row.appendChild(createInput('text', s.name, 'Имя', v => { s.name = v; }));
+                row.appendChild(createInput('text', s.role, 'Роль', v => { s.role = v; }));
+                row.appendChild(createInput('number', displayValue(s.salary), 'Оклад, ' + getSym(), v => { s.salary = toBase(v); }, { min: 0, step: 1, inputmode: 'decimal', emptyZero: true }));
+                row.appendChild(createInput('number', displayValue(s.bonus), 'Бонусы, ' + getSym(), v => { s.bonus = toBase(v); }, { min: 0, step: 1, inputmode: 'decimal', emptyZero: true }));
+                row.appendChild(createTotal('<b>' + fmt((s.salary || 0) + (s.bonus || 0)) + '</b>/мес'));
+                row.appendChild(createRemove(() => { state.salaries.splice(idx, 1); renderSalaries(); updateSummaries(); calc(); }));
+                box.appendChild(row);
+            });
+        }
+
+        function renderSoftware() {
+            const box = document.querySelector('[data-items="software"]');
+            if (!box) return;
+            box.innerHTML = '';
+            const D = Math.max(1, state.duration);
+            state.software.forEach((s, idx) => {
+                const row = document.createElement('div');
+                row.className = 'item-row software';
+                row.appendChild(createInput('text', s.name, 'Название', v => { s.name = v; }));
+                row.appendChild(createSelect(s.mode, [{ value: 'subscription', label: 'Подписка' }, { value: 'purchase', label: 'Покупка' }], v => { s.mode = v; renderSoftware(); updateSummaries(); }));
+                if (s.mode === 'purchase') {
+                    row.appendChild(createInput('number', displayValue(s.amount), getSym() + '/мес', v => { s.amount = toBase(v); }, { min: 0, step: 1, inputmode: 'decimal', emptyZero: true }));
+                    row.appendChild(createTotal('<b>' + fmt((s.amount || 0) / D) + '</b>/мес'));
+                } else {
+                    row.appendChild(createInput('number', displayValue(s.amount), getSym() + '/мес', v => { s.amount = toBase(v); }, { min: 0, step: 1, inputmode: 'decimal', emptyZero: true }));
+                    row.appendChild(createTotal('<b>' + fmt(s.amount || 0) + '</b>/мес'));
+                }
+                row.appendChild(createRemove(() => { state.software.splice(idx, 1); renderSoftware(); updateSummaries(); calc(); }));
+                box.appendChild(row);
+            });
+        }
+
+        function renderPayments() {
+            const box = document.querySelector('[data-items="payments"]');
+            if (!box) return;
+            box.innerHTML = '';
+            state.payments.forEach((p, idx) => {
+                const row = document.createElement('div');
+                row.className = 'item-row payment';
+                row.appendChild(createInput('text', p.name, 'Название', v => { p.name = v; }));
+                row.appendChild(createInput('number', displayValue(p.amount), 'Сумма, ' + getSym(), v => { p.amount = toBase(v); }, { min: 0, step: 1, inputmode: 'decimal', emptyZero: true }));
+                row.appendChild(createSelect(p.period, [{ value: 'month', label: 'в мес' }, { value: 'quarter', label: 'в квартал' }, { value: 'year', label: 'в год' }], v => { p.period = v; renderPayments(); updateSummaries(); }));
+                let monthly = p.amount || 0;
+                if (p.period === 'quarter') monthly = (p.amount || 0) / 3;
+                else if (p.period === 'year') monthly = (p.amount || 0) / 12;
+                row.appendChild(createTotal('<b>' + fmt(monthly) + '</b>/мес'));
+                row.appendChild(createRemove(() => { state.payments.splice(idx, 1); renderPayments(); updateSummaries(); calc(); }));
+                box.appendChild(row);
+            });
+        }
+
+        function renderMarketing() {
+            const box = document.querySelector('[data-items="marketing"]');
+            if (!box) return;
+            box.innerHTML = '';
+            state.marketing.forEach((m, idx) => {
+                const row = document.createElement('div');
+                row.className = 'item-row marketing';
+                row.appendChild(createSelect(m.channel, [{ value: 'seo', label: 'SEO' }, { value: 'smm', label: 'SMM' }, { value: 'context', label: 'Контекст' }, { value: 'target', label: 'Таргет' }, { value: 'influencer', label: 'Инфлюенсеры' }, { value: 'branding', label: 'Брендинг' }, { value: 'other', label: 'Другое' }], v => { m.channel = v; }));
+                row.appendChild(createInput('text', m.name, 'Описание / канал', v => { m.name = v; }));
+                row.appendChild(createInput('number', displayValue(m.amount), 'Сумма, ' + getSym(), v => { m.amount = toBase(v); }, { min: 0, step: 1, inputmode: 'decimal', emptyZero: true }));
+                row.appendChild(createTotal('<b>' + fmt(m.amount || 0) + '</b>/мес'));
+                row.appendChild(createRemove(() => { state.marketing.splice(idx, 1); renderMarketing(); updateSummaries(); calc(); }));
+                box.appendChild(row);
+            });
+        }
+
+        function renderCostComponents() {
+            const box = document.querySelector('[data-items="costComponents"]');
+            if (!box) return;
+            box.innerHTML = '';
+            state.costComponents.forEach((c, idx) => {
+                const row = document.createElement('div');
+                row.className = 'item-row cost';
+                row.appendChild(createInput('text', c.name, 'Компонент', v => { c.name = v; }));
+                row.appendChild(createInput('number', displayValue(c.price), 'Цена, ' + getSym(), v => { c.price = toBase(v); }, { min: 0, step: 0.01, inputmode: 'decimal', emptyZero: true }));
+                row.appendChild(createInput('number', c.qty, 'Кол-во', v => { c.qty = v; }, { min: 0, step: 1, inputmode: 'decimal' }));
+                row.appendChild(createTotal('<b>' + fmt((c.price || 0) * (c.qty || 0)) + '</b>/ед'));
+                row.appendChild(createRemove(() => { state.costComponents.splice(idx, 1); renderCostComponents(); updateSummaries(); calc(); }));
+                box.appendChild(row);
+            });
+        }
+
+        function renderPiecework() {
+            const box = document.querySelector('[data-items="piecework"]');
+            if (!box) return;
+            box.innerHTML = '';
+            state.piecework.forEach((p, idx) => {
+                const row = document.createElement('div');
+                row.className = 'item-row piecework';
+                row.appendChild(createInput('text', p.name, 'Специалист / работа', v => { p.name = v; }));
+                row.appendChild(createInput('number', displayValue(p.amount), 'Сумма, ' + getSym(), v => { p.amount = toBase(v); }, { min: 0, step: 1, inputmode: 'decimal', emptyZero: true }));
+                row.appendChild(createTotal('<b>' + fmt(p.amount || 0) + '</b>/ед'));
+                row.appendChild(createRemove(() => { state.piecework.splice(idx, 1); renderPiecework(); updateSummaries(); calc(); }));
+                box.appendChild(row);
+            });
+        }
+
+        function renderSponsors() {
+            const box = document.querySelector('[data-items="sponsors"]');
+            if (!box) return;
+            box.innerHTML = '';
+            state.sponsors.forEach((s, idx) => {
+                const row = document.createElement('div');
+                row.className = 'item-row sponsor';
+                row.appendChild(createInput('text', s.name, 'Спонсор / источник', v => { s.name = v; }));
+                row.appendChild(createInput('number', displayValue(s.amount), 'Сумма, ' + getSym(), v => { s.amount = toBase(v); }, { min: 0, step: 1, inputmode: 'decimal', emptyZero: true }));
+                row.appendChild(createRemove(() => { state.sponsors.splice(idx, 1); renderSponsors(); updateSummaries(); calc(); }));
+                box.appendChild(row);
+            });
+        }
+
+        function renderTaxes() {
+            const box = document.querySelector('[data-items="taxes"]');
+            if (!box) return;
+            box.innerHTML = '';
+            state.additionalTaxes.forEach((t, idx) => {
+                const row = document.createElement('div');
+                row.className = 'item-row tax';
+                row.appendChild(createInput('text', t.name, 'Название налога', v => { t.name = v; }));
+                row.appendChild(createSelect(t.type, [{ value: 'fixed', label: 'Фикс/мес' }, { value: 'revenue', label: '% выручки' }, { value: 'profit', label: '% прибыли' }], v => { t.type = v; renderTaxes(); updateSummaries(); }));
+                row.appendChild(createInput('number', t.type === 'fixed' ? displayValue(t.value) : t.value, t.type === 'fixed' ? 'Сумма, ' + getSym() : '%', v => { t.value = t.type === 'fixed' ? toBase(v) : v; }, { min: 0, step: 0.01, inputmode: 'decimal', emptyZero: true }));
+                row.appendChild(createTotal(t.type === 'fixed' ? '<b>' + fmt(t.value || 0) + '</b>/мес' : '<b>' + fmtNum(t.value || 0, 1) + '</b>%'));
+                row.appendChild(createRemove(() => { state.additionalTaxes.splice(idx, 1); renderTaxes(); updateSummaries(); calc(); }));
+                box.appendChild(row);
+            });
+        }
+
+        function renderCustom() {
+            const box = document.querySelector('[data-items="custom"]');
+            if (!box) return;
+            box.innerHTML = '';
+            const D = Math.max(1, state.duration);
+            state.custom.forEach((c, idx) => {
+                const row = document.createElement('div');
+                row.className = 'item-row custom';
+                row.appendChild(createInput('text', c.name, 'Название', v => { c.name = v; }));
+                row.appendChild(createInput('number', displayValue(c.amount), 'Сумма, ' + getSym(), v => { c.amount = toBase(v); }, { min: 0, step: 1, inputmode: 'decimal', emptyZero: true }));
+                row.appendChild(createSelect(c.type, [{ value: 'expense', label: 'Расход' }, { value: 'income', label: 'Доход' }], v => { c.type = v; updateSummaries(); }));
+                row.appendChild(createSelect(c.period, [{ value: 'monthly', label: 'в мес' }, { value: 'onetime', label: 'разово' }], v => { c.period = v; renderCustom(); updateSummaries(); }));
+                const monthly = c.period === 'onetime' ? (c.amount || 0) / D : (c.amount || 0);
+                row.appendChild(createTotal((c.type === 'income' ? '+' : '−') + '<b>' + fmt(monthly) + '</b>/мес'));
+                row.appendChild(createRemove(() => { state.custom.splice(idx, 1); renderCustom(); updateSummaries(); calc(); }));
+                box.appendChild(row);
+            });
+        }
+
+        function renderAllLists() {
+            renderRent(); renderSalaries(); renderSoftware(); renderPayments(); renderMarketing();
+            renderCostComponents(); renderPiecework(); renderSponsors(); renderTaxes(); renderCustom();
+        }
+
+        function updateSummaries() {
+            const sums = {
+                rent: { val: calcRent(), unit: '/мес' },
+                salaries: { val: calcSalaries(), unit: '/мес' },
+                software: { val: calcSoftware(), unit: '/мес' },
+                payments: { val: calcPayments(), unit: '/мес' },
+                marketing: { val: calcMarketing(), unit: '/мес' },
+                costComponents: { val: calcCostComponents(), unit: '/ед' },
+                transactions: { val: calcTransactions(), unit: '/ед' },
+                logistics: { val: calcLogistics(), unit: '/ед' },
+                piecework: { val: calcPiecework(), unit: '/ед' },
+                sponsors: { val: calcSponsors(), unit: '/мес' },
+                unexpected: { val: (state.unexpectedMode === 'fixed' ? (state.unexpectedFixed || 0) : 0), unit: '/мес' },
+                taxes: { val: 0, unit: '/мес' },
+                custom: { val: 0, unit: '/мес' }
+            };
+
+            if (state.unexpectedMode === 'percent') {
+                sums.unexpected.display = '~' + fmtNum(state.unexpectedPercent || 0, 1) + '%';
+            }
+
+            let taxSummary = '';
+            if (state.taxRegime !== 'none' && state.taxRate > 0) {
+                taxSummary = fmtNum(state.taxRate, 1) + '%';
+            } else if (state.additionalTaxes.length) {
+                taxSummary = state.additionalTaxes.length + ' доп.';
+            }
+            sums.taxes.display = taxSummary;
+
+            const customIn = calcCustomIncome();
+            const customOut = calcCustomExpense();
+            const net = customIn - customOut;
+            if (Math.abs(net) < 0.01 && state.custom.length) {
+                sums.custom.display = '—';
+            } else if (net > 0) {
+                sums.custom.display = '+' + fmt(net) + '/мес';
+            } else if (net < 0) {
+                sums.custom.display = '−' + fmt(-net) + '/мес';
+            }
+
+            Object.keys(sums).forEach(key => {
+                const el = document.querySelector('[data-summary="' + key + '"]');
+                if (!el) return;
+                let text;
+                if (sums[key].display !== undefined) {
+                    text = sums[key].display;
+                } else if (sums[key].val > 0.5) {
+                    text = fmt(sums[key].val) + sums[key].unit;
+                } else {
+                    text = '—';
+                }
+                el.textContent = text;
+                el.classList.toggle('has-value', text !== '—');
+            });
+        }
+
+        function renderFormValues() {
+            document.querySelectorAll('.curr-sym').forEach(el => el.textContent = getSym());
+
+            document.getElementById('project-name').value = state.projectName;
+            document.getElementById('duration').value = state.duration;
+            document.getElementById('product-name').value = state.productName;
+            document.getElementById('price').value = state.price ? displayValue(state.price) : '';
+            document.getElementById('plan-units').value = state.planUnits || '';
+            document.getElementById('fact-units').value = state.factUnits || '';
+
+            document.getElementById('trans-percent').value = state.transactions.percent || '';
+            document.getElementById('trans-fixed').value = state.transactions.fixed ? displayValue(state.transactions.fixed) : '';
+            document.getElementById('log-delivery').value = state.logistics.delivery ? displayValue(state.logistics.delivery) : '';
+            document.getElementById('log-packaging').value = state.logistics.packaging ? displayValue(state.logistics.packaging) : '';
+
+            document.getElementById('unexpected-fixed').value = state.unexpectedFixed ? displayValue(state.unexpectedFixed) : '';
+            document.getElementById('unexpected-percent').value = state.unexpectedPercent || '';
+
+            document.querySelectorAll('input[name="unexpected-mode"]').forEach(r => {
+                r.checked = r.value === state.unexpectedMode;
+            });
+            document.getElementById('unexpected-fixed-row').classList.toggle('hidden', state.unexpectedMode !== 'fixed');
+            document.getElementById('unexpected-percent-row').classList.toggle('hidden', state.unexpectedMode !== 'percent');
+
+            document.querySelectorAll('input[name="tax-regime"]').forEach(r => {
+                r.checked = r.value === state.taxRegime;
+            });
+            document.getElementById('tax-rate').value = state.taxRate || '';
+            document.getElementById('tax-base').value = state.taxBase;
+
+            renderAllLists();
+            updateSummaries();
+        }
+
+        function renderResult() {
+            const d = calcAll();
+
+            const coveragePct = document.getElementById('coverage-pct');
+            const coverageFill = document.getElementById('coverage-fill');
+            coveragePct.textContent = Math.round(d.coverage) + '%';
+            coverageFill.style.width = d.coverage + '%';
+            if (d.coverage >= 100) coverageFill.style.background = 'var(--accent)';
+            else if (d.coverage >= 70) coverageFill.style.background = 'var(--accent-soft)';
+            else coverageFill.style.background = 'rgba(14,14,14,.3)';
+
+            const beRev = document.getElementById('be-revenue');
+            const beUn = document.getElementById('be-units');
+            if (d.statusKind === 'noprice') {
+                beRev.textContent = '—';
+                beUn.textContent = 'Осталось указать цену';
+            } else if (d.statusKind === 'impossible') {
+                beRev.textContent = '—';
+                beUn.textContent = 'Убыточно';
+            } else if (d.statusKind === 'empty') {
+                beRev.textContent = '—';
+                beUn.textContent = 'Нет расходов';
+            } else if (d.beUnits === 0) {
+                beRev.textContent = '0';
+                beUn.textContent = 'Продажи не требуются';
+            } else {
+                beRev.textContent = fmt(d.beRevenue) + ' / мес';
+                beUn.textContent = fmtUnits(d.beUnits) + ' ед./мес';
+            }
+
+            const beRevT = document.getElementById('be-revenue-total');
+            const beUnT = document.getElementById('be-units-total');
+            if (d.statusKind === 'noprice' || d.statusKind === 'impossible' || d.statusKind === 'empty') {
+                beRevT.textContent = '—';
+                beUnT.textContent = 'за ' + d.D + ' мес.';
+            } else if (d.beUnits === 0) {
+                beRevT.textContent = '0';
+                beUnT.textContent = 'за ' + d.D + ' мес.';
+            } else {
+                beRevT.textContent = fmt(d.beRevenueTotal) + ' за ' + d.D + ' мес.';
+                beUnT.textContent = fmtUnits(d.beUnitsTotal) + ' ед. за весь период';
+            }
+
+            document.getElementById('cm-value').textContent = fmt(d.CM) + ' / ед.';
+            document.getElementById('cm-pct').textContent = d.P > 0
+                ? 'Маржинальность ' + fmtNum(d.CMpct, 1) + '%' + (d.totalRevRate > 0 ? ' · после налога ' + fmt(d.CMeff) : '')
+                : 'Укажите цену';
+
+            const forecastBlock = document.getElementById('forecast-block');
+            const forecastContent = document.getElementById('forecast-content');
+
+            let forecastHtml = '';
+
+            if (d.factU > 0 && d.factProfit !== null) {
+                forecastHtml += `
+                    <div class="res-label" style="color:var(--accent); font-weight:600;">Факт при ${fmtUnits(d.factU)} ед./мес</div>
+                    <div class="res-main" style="color: ${d.factProfit > 0 ? 'var(--ok)' : (d.factProfit < 0 ? 'var(--err)' : 'var(--ink)')}">
+                        ${d.factProfit >= 0 ? '+' : ''}${fmt(d.factProfit)} / мес
+                    </div>
+                `;
+                if (d.planU > 0 && d.forecastProfit !== null) {
+                    forecastHtml += `
+                        <div class="res-label" style="margin-top: 16px;">План при ${fmtUnits(d.planU)} ед./мес</div>
+                        <div class="res-secondary" style="color: ${d.forecastProfit > 0 ? 'var(--ok)' : (d.forecastProfit < 0 ? 'var(--err)' : 'var(--ink)')}">
+                            ${d.forecastProfit >= 0 ? '+' : ''}${fmt(d.forecastProfit)} / мес
+                        </div>
+                        <div class="res-note">Запас прочности: ${fmtNum(d.mos, 1)}%</div>
+                    `;
+                }
+            } else if (d.planU > 0 && d.forecastProfit !== null) {
+                forecastHtml += `
+                    <div class="res-label">Прогноз при плане ${fmtUnits(d.planU)} ед./мес</div>
+                    <div class="res-main" style="color: ${d.forecastProfit > 0 ? 'var(--ok)' : (d.forecastProfit < 0 ? 'var(--err)' : 'var(--ink)')}">
+                        ${d.forecastProfit >= 0 ? '+' : ''}${fmt(d.forecastProfit)} / мес
+                    </div>
+                    <div class="res-note">Запас прочности: ${fmtNum(d.mos, 1)}%</div>
+                `;
+            }
+
+            if (forecastHtml) {
+                forecastBlock.classList.remove('hidden');
+                forecastContent.innerHTML = forecastHtml;
+            } else {
+                forecastBlock.classList.add('hidden');
+            }
+
+            const br = document.getElementById('breakdown');
+            let html = '<div class="bd-title">Структура</div>';
+            if (d.rent > 0) html += '<div class="bd-row"><span>Аренда</span><span>' + fmt(d.rent) + '</span></div>';
+            if (d.salaries > 0) html += '<div class="bd-row"><span>Зарплаты</span><span>' + fmt(d.salaries) + '</span></div>';
+            if (d.software > 0) html += '<div class="bd-row"><span>Софт</span><span>' + fmt(d.software) + '</span></div>';
+            if (d.payments > 0) html += '<div class="bd-row"><span>Платежи</span><span>' + fmt(d.payments) + '</span></div>';
+            if (d.marketing > 0) html += '<div class="bd-row"><span>Маркетинг</span><span>' + fmt(d.marketing) + '</span></div>';
+            if (d.customExpense > 0) html += '<div class="bd-row"><span>Свои расходы</span><span>' + fmt(d.customExpense) + '</span></div>';
+            if (d.additionalFixed > 0) html += '<div class="bd-row"><span>Фикс. налоги</span><span>' + fmt(d.additionalFixed) + '</span></div>';
+            if (d.unexpected > 0) html += '<div class="bd-row"><span>Непредвиденные</span><span>' + fmt(d.unexpected) + '</span></div>';
+            if (d.S > 0) html += '<div class="bd-row"><span>Внепродажные доходы</span><span>−' + fmt(d.S) + '</span></div>';
+            html += '<div class="bd-row total"><span>К покрытию/мес</span><span>' + fmt(Math.max(0, d.F - d.S)) + '</span></div>';
+            if (d.V > 0) html += '<div class="bd-row"><span>Переменные/ед.</span><span>' + fmt(d.V) + '</span></div>';
+            if (d.P > 0) html += '<div class="bd-row"><span>Цена/ед.</span><span>' + fmt(d.P) + '</span></div>';
+            br.innerHTML = html;
+
+            const statusEl = document.getElementById('status-block');
+            let cls = 'status-warn';
+            if (d.statusKind === 'ok' || d.statusKind === 'covered') cls = 'status-ok';
+            if (d.statusKind === 'impossible' || d.statusKind === 'loss') cls = 'status-err';
+            if (d.statusKind === 'empty' || d.statusKind === 'noprice') cls = 'status-warn';
+            if (d.statusKind === 'breakeven') cls = 'status-warn';
+            statusEl.className = 'status-block ' + cls;
+            statusEl.innerHTML = '<div class="status-title">' + esc(d.statusTitle || 'Смета пока пуста') + '</div><div class="status-note">' + esc(d.statusNote || 'Заполните блоки сверху, чтобы увидеть реальную точку безубыточности.') + '</div>';
+        }
+
+        function esc(s) {
+            return String(s == null ? '' : s)
+                .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+        }
+
+        function calc() {
+            updateSummaries();
+            renderResult();
+        }
+
+        function bindEvents() {
+            document.getElementById('be-currency-switch').addEventListener('click', e => {
+                const btn = e.target.closest('button[data-cur]');
+                if (!btn) return;
+                state.currency = btn.dataset.cur;
+                document.querySelectorAll('#be-currency-switch button').forEach(b => {
+                    const isActive = b === btn;
+                    b.classList.toggle('active', isActive);
+                    b.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+                });
+                renderFormValues();
+                calc();
+            });
+
+            document.querySelectorAll('.accordion .acc-header').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const acc = btn.closest('.accordion');
+                    acc.classList.toggle('open');
+                    btn.setAttribute('aria-expanded', acc.classList.contains('open') ? 'true' : 'false');
+                });
+            });
+
+            document.getElementById('project-name').addEventListener('input', e => { state.projectName = e.target.value; });
+            document.getElementById('duration').addEventListener('input', e => {
+                const v = parseInt(e.target.value, 10);
+                state.duration = Math.max(1, v || 1);
+                renderSoftware(); renderCustom(); calc();
+            });
+            document.querySelectorAll('.quick-pill[data-duration]').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    state.duration = parseInt(btn.dataset.duration, 10);
+                    document.getElementById('duration').value = state.duration;
+                    renderSoftware(); renderCustom(); calc();
+                });
+            });
+
+            document.getElementById('product-name').addEventListener('input', e => { state.productName = e.target.value; });
+            document.getElementById('price').addEventListener('input', e => { state.price = toBase(parseFloat(e.target.value) || 0); calc(); });
+            document.getElementById('plan-units').addEventListener('input', e => { state.planUnits = parseFloat(e.target.value) || 0; calc(); });
+            document.getElementById('fact-units').addEventListener('input', e => { state.factUnits = parseFloat(e.target.value) || 0; calc(); });
+
+            document.getElementById('trans-percent').addEventListener('input', e => { state.transactions.percent = parseFloat(e.target.value) || 0; calc(); });
+            document.getElementById('trans-fixed').addEventListener('input', e => { state.transactions.fixed = toBase(parseFloat(e.target.value) || 0); calc(); });
+
+            document.getElementById('log-delivery').addEventListener('input', e => { state.logistics.delivery = toBase(parseFloat(e.target.value) || 0); calc(); });
+            document.getElementById('log-packaging').addEventListener('input', e => { state.logistics.packaging = toBase(parseFloat(e.target.value) || 0); calc(); });
+
+            document.querySelectorAll('input[name="unexpected-mode"]').forEach(r => {
+                r.addEventListener('change', () => {
+                    state.unexpectedMode = r.value;
+                    document.getElementById('unexpected-fixed-row').classList.toggle('hidden', r.value !== 'fixed');
+                    document.getElementById('unexpected-percent-row').classList.toggle('hidden', r.value !== 'percent');
+                    calc();
+                });
+            });
+            document.getElementById('unexpected-fixed').addEventListener('input', e => { state.unexpectedFixed = toBase(parseFloat(e.target.value) || 0); calc(); });
+            document.getElementById('unexpected-percent').addEventListener('input', e => { state.unexpectedPercent = parseFloat(e.target.value) || 0; calc(); });
+
+            document.querySelectorAll('input[name="tax-regime"]').forEach(r => {
+                r.addEventListener('change', () => {
+                    state.taxRegime = r.value;
+                    const presets = {
+                        none: { rate: 0, base: 'revenue' }, self: { rate: 6, base: 'revenue' }, ip6: { rate: 6, base: 'revenue' },
+                        ip15: { rate: 15, base: 'profit' }, ooo6: { rate: 6, base: 'revenue' }, ooo15: { rate: 15, base: 'profit' }, custom: { rate: 0, base: 'revenue' }
+                    };
+                    const p = presets[r.value] || presets.none;
+                    state.taxRate = p.rate;
+                    state.taxBase = p.base;
+                    document.getElementById('tax-rate').value = state.taxRate || '';
+                    document.getElementById('tax-base').value = state.taxBase;
+                    calc();
+                });
+            });
+            document.getElementById('tax-rate').addEventListener('input', e => { state.taxRate = parseFloat(e.target.value) || 0; calc(); });
+            document.getElementById('tax-base').addEventListener('change', e => { state.taxBase = e.target.value; calc(); });
+
+            document.querySelector('[data-add="rent"]').addEventListener('click', () => { state.rent.push({ type: 'office', name: '', mode: 'area', pricePerSqm: 0, sqm: 0, amount: 0 }); renderRent(); updateSummaries(); calc(); });
+            document.querySelector('[data-add="salaries"]').addEventListener('click', () => { state.salaries.push({ name: '', role: '', salary: 0, bonus: 0 }); renderSalaries(); updateSummaries(); calc(); });
+            document.querySelector('[data-add="software"]').addEventListener('click', () => { state.software.push({ name: '', mode: 'subscription', amount: 0 }); renderSoftware(); updateSummaries(); calc(); });
+            document.querySelector('[data-add="payments"]').addEventListener('click', () => { state.payments.push({ name: '', amount: 0, period: 'month' }); renderPayments(); updateSummaries(); calc(); });
+            document.querySelector('[data-add="marketing"]').addEventListener('click', () => { state.marketing.push({ channel: 'seo', name: '', amount: 0 }); renderMarketing(); updateSummaries(); calc(); });
+            document.querySelector('[data-add="costComponents"]').addEventListener('click', () => { state.costComponents.push({ name: '', price: 0, qty: 1 }); renderCostComponents(); updateSummaries(); calc(); });
+            document.querySelector('[data-add="piecework"]').addEventListener('click', () => { state.piecework.push({ name: '', amount: 0 }); renderPiecework(); updateSummaries(); calc(); });
+            document.querySelector('[data-add="sponsors"]').addEventListener('click', () => { state.sponsors.push({ name: '', amount: 0 }); renderSponsors(); updateSummaries(); calc(); });
+            document.querySelector('[data-add="taxes"]').addEventListener('click', () => { state.additionalTaxes.push({ name: '', type: 'fixed', value: 0 }); renderTaxes(); updateSummaries(); calc(); });
+            document.querySelector('[data-add="custom"]').addEventListener('click', () => { state.custom.push({ name: '', amount: 0, type: 'expense', period: 'monthly' }); renderCustom(); updateSummaries(); calc(); });
+
+            document.getElementById('reset-btn').addEventListener('click', () => {
+                if (!confirm('Сбросить все поля и вернуть значения по умолчанию?')) return;
+                resetState(); renderFormValues(); calc();
+            });
+
+            document.querySelectorAll('[data-export]').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const t = btn.dataset.export;
+                    if (t === 'docx') exportDocx(btn);
+                    else if (t === 'csv') exportCsv(btn);
+                });
+            });
+        }
+
+        function resetState() {
+            state.projectName = ''; state.duration = 12; state.productName = ''; state.price = 0; state.planUnits = 0; state.factUnits = 0;
+            state.rent = [{ type: 'office', name: '', mode: 'area', pricePerSqm: 0, sqm: 0, amount: 0 }];
+            state.salaries = [{ name: '', role: '', salary: 0, bonus: 0 }];
+            state.software = [{ name: '', mode: 'subscription', amount: 0 }];
+            state.payments = [{ name: '', amount: 0, period: 'month' }];
+            state.marketing = [{ channel: 'seo', name: '', amount: 0 }];
+            state.costComponents = [{ name: '', price: 0, qty: 1 }];
+            state.transactions = { percent: 0, fixed: 0 };
+            state.logistics = { delivery: 0, packaging: 0 };
+            state.piecework = [{ name: '', amount: 0 }];
+            state.sponsors = [{ name: '', amount: 0 }];
+            state.unexpectedMode = 'fixed'; state.unexpectedFixed = 0; state.unexpectedPercent = 10;
+            state.taxRegime = 'none'; state.taxRate = 0; state.taxBase = 'revenue'; state.additionalTaxes = [];
+            state.custom = [];
+        }
+
+        async function exportDocx(btn) {
+            if (!window.docx) { alert('Библиотека DOCX не загружена.'); return; }
+            const oldText = btn.textContent;
+            btn.disabled = true; btn.textContent = '...';
+
+            try {
+                const d = calcAll();
+                const { Document, Packer, Paragraph, TextRun, AlignmentType, BorderStyle } = window.docx;
+
+                const sectionTitle = (num, text) => new Paragraph({
+                    spacing: { before: 360, after: 160 },
+                    border: { bottom: { style: BorderStyle.SINGLE, size: 6, color: 'C1440E', space: 6 } },
+                    children: [new TextRun({ text: num + '  ', bold: true, color: 'C1440E', size: 22 }), new TextRun({ text: text, bold: true, size: 26, color: '0E0E0E' })]
+                });
+                const kv = (key, value) => new Paragraph({
+                    spacing: { after: 100 },
+                    children: [new TextRun({ text: key + ': ', bold: true, color: '0E0E0E' }), new TextRun({ text: String(value || '—'), color: '333333' })]
+                });
+                const bullet = (text) => new Paragraph({
+                    bullet: { level: 0 },
+                    spacing: { after: 60 },
+                    children: [new TextRun({ text, color: '333333', size: 20 })]
+                });
+                const note = (text) => new Paragraph({
+                    spacing: { before: 160, after: 80 },
+                    children: [new TextRun({ text, italics: true, color: '666666', size: 20 })]
+                });
+
+                const today = new Date().toLocaleDateString('ru-RU', { day: '2-digit', month: 'long', year: 'numeric' });
+                const children = [];
+
+                children.push(new Paragraph({
+                    spacing: { after: 80 },
+                    children: [new TextRun({ text: 'РАСЧЁТ ТОЧКИ БЕЗУБЫТОЧНОСТИ', bold: true, size: 16, color: 'C1440E', characterSpacing: 40 })]
+                }));
+                children.push(new Paragraph({
+                    spacing: { after: 120 },
+                    children: [new TextRun({ text: (state.projectName || 'Проект') + (state.productName ? ' · ' + state.productName : ''), bold: true, size: 36, color: '0E0E0E' })]
+                }));
+                children.push(new Paragraph({
+                    spacing: { after: 320 },
+                    border: { bottom: { style: BorderStyle.SINGLE, size: 6, color: '0E0E0E', space: 8 } },
+                    children: [new TextRun({ text: 'Дата: ' + today + '  ·  Длительность: ' + d.D + ' мес.', size: 20, color: '666666' })]
+                }));
+
+                children.push(sectionTitle('01', 'Аренда (' + getSym() + '/мес)'));
+                if (state.rent.length) {
+                    state.rent.forEach(r => {
+                        const sum = r.mode === 'area' ? (r.pricePerSqm || 0) * (r.sqm || 0) : (r.amount || 0);
+                        let desc = r.name || r.type;
+                        if (r.mode === 'area') desc += ' (' + fmtNum(r.sqm || 0, 0) + ' м² × ' + fmt(r.pricePerSqm || 0) + ')';
+                        children.push(bullet(desc + ': ' + fmt(sum)));
+                    });
+                } else children.push(note('Не указано'));
+                children.push(kv('Итого аренда', fmt(d.rent) + '/мес'));
+
+                children.push(sectionTitle('02', 'Зарплаты (' + getSym() + '/мес)'));
+                if (state.salaries.length) {
+                    state.salaries.forEach(s => {
+                        const desc = [s.name, s.role].filter(Boolean).join(' — ') || 'Сотрудник';
+                        const detail = (s.salary || 0) + (s.bonus || 0);
+                        children.push(bullet(desc + ': ' + fmt(detail)));
+                    });
+                } else children.push(note('Не указано'));
+                children.push(kv('Итого зарплаты', fmt(d.salaries) + '/мес'));
+
+                children.push(sectionTitle('03', 'Софт и подписки (' + getSym() + '/мес)'));
+                if (state.software.length) {
+                    state.software.forEach(s => {
+                        children.push(bullet((s.name || 'Сервис') + ' (' + (s.mode === 'purchase' ? 'покупка' : 'подписка') + '): ' + fmt(s.amount || 0)));
+                    });
+                } else children.push(note('Не указано'));
+                children.push(kv('Итого софт (в месяц)', fmt(d.software) + '/мес'));
+
+                children.push(sectionTitle('04', 'Обязательные платежи (' + getSym() + '/мес)'));
+                if (state.payments.length) {
+                    state.payments.forEach(p => {
+                        const periodLabel = p.period === 'month' ? 'мес' : p.period === 'quarter' ? 'квартал' : 'год';
+                        children.push(bullet((p.name || 'Платёж') + ': ' + fmt(p.amount || 0) + ' / ' + periodLabel));
+                    });
+                } else children.push(note('Не указано'));
+                children.push(kv('Итого (в месяц)', fmt(d.payments) + '/мес'));
+
+                children.push(sectionTitle('05', 'Маркетинг (' + getSym() + '/мес)'));
+                if (state.marketing.length) {
+                    state.marketing.forEach(m => {
+                        children.push(bullet(m.channel + (m.name ? ' — ' + m.name : '') + ': ' + fmt(m.amount || 0)));
+                    });
+                } else children.push(note('Не указано'));
+                children.push(kv('Итого маркетинг', fmt(d.marketing) + '/мес'));
+
+                children.push(sectionTitle('06', 'Себестоимость единицы (' + getSym() + '/ед)'));
+                if (state.costComponents.length) {
+                    state.costComponents.forEach(c => {
+                        children.push(bullet((c.name || 'Компонент') + ': ' + fmt(c.price || 0) + ' × ' + (c.qty || 0) + ' = ' + fmt((c.price || 0) * (c.qty || 0))));
+                    });
+                } else children.push(note('Не указано'));
+                children.push(kv('Итого себестоимость', fmt(d.costC) + '/ед'));
+
+                children.push(sectionTitle('07', 'Комиссии за приём платежей'));
+                children.push(kv('Процент от цены', (state.transactions.percent || 0) + '%'));
+                children.push(kv('Фикс. за транзакцию', fmt(state.transactions.fixed || 0)));
+                children.push(kv('Итого на единицу', fmt(d.trans) + '/ед'));
+
+                children.push(sectionTitle('08', 'Логистика'));
+                children.push(kv('Доставка', fmt(state.logistics.delivery || 0) + '/ед'));
+                children.push(kv('Упаковка', fmt(state.logistics.packaging || 0) + '/ед'));
+                children.push(kv('Итого', fmt(d.log) + '/ед'));
+
+                children.push(sectionTitle('09', 'Сдельная оплата (' + getSym() + '/ед)'));
+                if (state.piecework.length) {
+                    state.piecework.forEach(p => children.push(bullet((p.name || 'Работа') + ': ' + fmt(p.amount || 0))));
+                } else children.push(note('Не указано'));
+                children.push(kv('Итого сдельная', fmt(d.piece) + '/ед'));
+
+                children.push(sectionTitle('10', 'Спонсорские вознаграждения (' + getSym() + '/мес)'));
+                if (state.sponsors.length) {
+                    state.sponsors.forEach(s => children.push(bullet((s.name || 'Спонсор') + ': ' + fmt(s.amount || 0))));
+                } else children.push(note('Не указано'));
+                children.push(kv('Итого спонсоры', fmt(d.S) + '/мес'));
+
+                children.push(sectionTitle('11', 'Непредвиденные расходы'));
+                children.push(kv('Режим', state.unexpectedMode === 'fixed' ? 'Фиксированная сумма' : 'Процент от расходов'));
+                children.push(kv('Сумма', fmt(d.unexpected) + '/мес'));
+
+                children.push(sectionTitle('12', 'Налоги'));
+                children.push(kv('Режим', state.taxRegime));
+                if (state.taxRegime !== 'none') {
+                    children.push(kv('Основная ставка', state.taxRate + '% (' + (state.taxBase === 'revenue' ? 'от выручки' : 'от прибыли') + ')'));
+                }
+                if (state.additionalTaxes.length) {
+                    state.additionalTaxes.forEach(t => {
+                        const typeLabel = t.type === 'fixed' ? 'фикс/мес' : (t.type === 'revenue' ? '% выручки' : '% прибыли');
+                        children.push(bullet((t.name || 'Налог') + ': ' + (t.type === 'fixed' ? fmt(t.value || 0) : t.value + '%') + ' (' + typeLabel + ')'));
+                    });
+                } else if (state.taxRegime === 'none') children.push(note('Не учитываются'));
+
+                if (state.custom.length) {
+                    children.push(sectionTitle('13', 'Свои поля'));
+                    state.custom.forEach(c => {
+                        const typeLabel = c.type === 'income' ? 'Доход' : 'Расход';
+                        const periodLabel = c.period === 'monthly' ? 'в мес' : 'разово';
+                        children.push(bullet((c.name || 'Поле') + ': ' + fmt(c.amount || 0) + ' (' + typeLabel + ', ' + periodLabel + ')'));
+                    });
+                }
+
+                children.push(sectionTitle('14', 'Результаты расчёта'));
+                children.push(kv('Цена за единицу', fmt(d.P)));
+                children.push(kv('Переменные на единицу', fmt(d.V)));
+                children.push(kv('Маржинальный доход', fmt(d.CM) + ' (' + fmtNum(d.CMpct, 1) + '%)'));
+                if (d.totalRevRate > 0) children.push(kv('Эффективная цена (после налога)', fmt(d.CMeff)));
+                children.push(kv('Совокупные расходы/мес', fmt(d.F)));
+                children.push(kv('Внепродажные доходы/мес', fmt(d.S)));
+
+                if (d.statusKind === 'noprice') {
+                    children.push(kv('Точка безубыточности', 'Укажите цену'));
+                } else if (d.statusKind === 'impossible') {
+                    children.push(kv('Точка безубыточности', 'Невозможна: цена ниже переменных'));
+                } else if (d.statusKind === 'empty') {
+                    children.push(kv('Точка безубыточности', 'Нет расходов'));
+                } else if (d.beUnits === 0) {
+                    children.push(kv('Точка безубыточности', '0 — продажи не требуются'));
+                } else {
+                    children.push(kv('Точка безубыточности (мес.)', fmtUnits(d.beUnits) + ' ед. = ' + fmt(d.beRevenue)));
+                    children.push(kv('Точка безубыточности (проект)', fmtUnits(d.beUnitsTotal) + ' ед. = ' + fmt(d.beRevenueTotal) + ' за ' + d.D + ' мес.'));
+                }
+
+                if (d.factProfit !== null) {
+                    children.push(kv('Факт прибыли/мес', (d.factProfit >= 0 ? '+' : '') + fmt(d.factProfit)));
+                }
+                if (d.forecastProfit !== null) {
+                    children.push(kv('Прогноз прибыли/мес (план)', (d.forecastProfit >= 0 ? '+' : '') + fmt(d.forecastProfit)));
+                    children.push(kv('Запас прочности', fmtNum(d.mos, 1) + '%'));
+                }
+                children.push(kv('Статус', d.statusTitle));
+                if (d.statusNote) children.push(note(d.statusNote));
+
+                children.push(new Paragraph({
+                    spacing: { before: 480 },
+                    alignment: AlignmentType.CENTER,
+                    border: { top: { style: BorderStyle.SINGLE, size: 4, color: 'CCCCCC', space: 8 } },
+                    children: [new TextRun({ text: 'Сгенерировано на vitwill.github.io · ' + today, size: 16, color: '999999' })]
+                }));
+
+                const doc = new Document({
+                    creator: 'Viktor Willmann',
+                    title: 'Точка безубыточности',
+                    description: 'Расчёт точки безубыточности проекта',
+                    styles: {
+                        default: {
+                            document: { run: { font: 'Calibri', size: 22, color: '333333' }, paragraph: { spacing: { line: 300 } } }
+                        }
+                    },
+                    sections: [{
+                        properties: { page: { margin: { top: 1134, bottom: 1134, left: 1134, right: 1134 } } },
+                        children
+                    }]
+                });
+
+                const blob = await Packer.toBlob(doc);
+                const dateStr = new Date().toISOString().slice(0, 10);
+                downloadBlob(blob, 'Точка_безубыточности_' + dateStr + '.docx');
+            } catch (err) {
+                console.error(err);
+                alert('Ошибка DOCX: ' + err.message);
+            } finally {
+                btn.disabled = false; btn.textContent = oldText;
+            }
+        }
+
+        function exportCsv() {
+            try {
+                const d = calcAll();
+                const rows = [['Раздел', 'Статья', 'Значение', 'Единица']];
+
+                rows.push(['Параметры', 'Проект', state.projectName || '—', '']);
+                rows.push(['Параметры', 'Продукт', state.productName || '—', '']);
+                rows.push(['Параметры', 'Длительность', d.D, 'мес']);
+
+                state.rent.forEach(r => { const sum = r.mode === 'area' ? (r.pricePerSqm || 0) * (r.sqm || 0) : (r.amount || 0); rows.push(['Аренда', r.name || r.type, Math.round(sum), getSym() + '/мес']); });
+                rows.push(['Аренда', 'ИТОГО', Math.round(d.rent), getSym() + '/мес']);
+
+                state.salaries.forEach(s => { rows.push(['Зарплаты', (s.name || 'Сотрудник') + (s.role ? ' (' + s.role + ')' : ''), Math.round((s.salary || 0) + (s.bonus || 0)), getSym() + '/мес']); });
+                rows.push(['Зарплаты', 'ИТОГО', Math.round(d.salaries), getSym() + '/мес']);
+
+                state.software.forEach(s => { rows.push(['Софт', (s.name || 'Сервис') + ' (' + s.mode + ')', Math.round(s.amount || 0), getSym()]); });
+                rows.push(['Софт', 'ИТОГО в мес', Math.round(d.software), getSym() + '/мес']);
+
+                state.payments.forEach(p => { rows.push(['Платежи', (p.name || 'Платёж') + ' (' + p.period + ')', Math.round(p.amount || 0), getSym()]); });
+                rows.push(['Платежи', 'ИТОГО в мес', Math.round(d.payments), getSym() + '/мес']);
+
+                state.marketing.forEach(m => { rows.push(['Маркетинг', m.channel + (m.name ? ' ' + m.name : ''), Math.round(m.amount || 0), getSym() + '/мес']); });
+                rows.push(['Маркетинг', 'ИТОГО', Math.round(d.marketing), getSym() + '/мес']);
+
+                state.costComponents.forEach(c => { rows.push(['Себестоимость', c.name || 'Компонент', Math.round((c.price || 0) * (c.qty || 0)), getSym() + '/ед']); });
+                rows.push(['Себестоимость', 'ИТОГО', Math.round(d.costC), getSym() + '/ед']);
+
+                rows.push(['Комиссии', 'Процент', state.transactions.percent || 0, '%']);
+                rows.push(['Комиссии', 'Фикс', Math.round(state.transactions.fixed || 0), getSym()]);
+                rows.push(['Комиссии', 'ИТОГО на ед.', Math.round(d.trans), getSym() + '/ед']);
+
+                rows.push(['Логистика', 'Доставка', Math.round(state.logistics.delivery || 0), getSym() + '/ед']);
+                rows.push(['Логистика', 'Упаковка', Math.round(state.logistics.packaging || 0), getSym() + '/ед']);
+                rows.push(['Логистика', 'ИТОГО на ед.', Math.round(d.log), getSym() + '/ед']);
+
+                state.piecework.forEach(p => { rows.push(['Сдельная оплата', p.name || 'Работа', Math.round(p.amount || 0), getSym() + '/ед']); });
+                rows.push(['Сдельная оплата', 'ИТОГО', Math.round(d.piece), getSym() + '/ед']);
+
+                state.sponsors.forEach(s => { rows.push(['Спонсоры', s.name || 'Спонсор', Math.round(s.amount || 0), getSym() + '/мес']); });
+                rows.push(['Спонсоры', 'ИТОГО', Math.round(d.S), getSym() + '/мес']);
+
+                rows.push(['Непредвиденные', 'Режим', state.unexpectedMode, '']);
+                rows.push(['Непредвиденные', 'Сумма', Math.round(d.unexpected), getSym() + '/мес']);
+
+                rows.push(['Налоги', 'Режим', state.taxRegime, '']);
+                rows.push(['Налоги', 'Основная ставка', state.taxRate, '%']);
+                state.additionalTaxes.forEach(t => { rows.push(['Налоги', t.name || 'Налог', t.value || 0, t.type]); });
+
+                state.custom.forEach(c => { rows.push(['Свои поля', (c.name || 'Поле') + ' (' + c.type + ', ' + c.period + ')', Math.round(c.amount || 0), getSym()]); });
+
+                rows.push(['Результат', 'Цена', Math.round(d.P), getSym()]);
+                rows.push(['Результат', 'Переменные на ед.', Math.round(d.V), getSym() + '/ед']);
+                rows.push(['Результат', 'Маржинальный доход', Math.round(d.CM), getSym() + '/ед']);
+                rows.push(['Результат', 'Маржинальность', d.CMpct.toFixed(1), '%']);
+                rows.push(['Результат', 'Совокупные расходы/мес', Math.round(d.F), getSym() + '/мес']);
+                rows.push(['Результат', 'Внепродажные доходы/мес', Math.round(d.S), getSym() + '/мес']);
+
+                if (d.statusKind === 'noprice') rows.push(['Результат', 'Точка безубыточности', 'Укажите цену', '']);
+                else if (d.statusKind === 'impossible') rows.push(['Результат', 'Точка безубыточности', 'Невозможна', '']);
+                else if (d.statusKind === 'empty') rows.push(['Результат', 'Точка безубыточности', 'Нет расходов', '']);
+                else {
+                    rows.push(['Результат', 'BE ед./мес', d.beUnits, 'ед']);
+                    rows.push(['Результат', 'BE ' + getSym() + '/мес', Math.round(d.beRevenue), getSym()]);
+                    rows.push(['Результат', 'BE за проект ед.', d.beUnitsTotal, 'ед']);
+                    rows.push(['Результат', 'BE за проект ' + getSym(), Math.round(d.beRevenueTotal), getSym()]);
+                }
+                if (d.factProfit !== null) {
+                    rows.push(['Результат', 'Факт прибыли/мес', Math.round(d.factProfit), getSym()]);
+                }
+                if (d.forecastProfit !== null) {
+                    rows.push(['Результат', 'Прогноз прибыли/мес', Math.round(d.forecastProfit), getSym()]);
+                    rows.push(['Результат', 'Запас прочности', d.mos.toFixed(1), '%']);
+                }
+                rows.push(['Результат', 'Статус', d.statusTitle, '']);
+
+                const csv = '\uFEFF' + rows.map(r => r.map(c => '"' + String(c).replace(/"/g, '""') + '"').join(';')).join('\r\n');
+                const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+                downloadBlob(blob, 'Точка_безубыточности_' + new Date().toISOString().slice(0, 10) + '.csv');
+            } catch (err) {
+                console.error(err);
+                alert('Ошибка CSV: ' + err.message);
+            }
+        }
+
+        function downloadBlob(blob, filename) {
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url; a.download = filename;
+            document.body.appendChild(a); a.click(); document.body.removeChild(a);
+            setTimeout(() => URL.revokeObjectURL(url), 1500);
+        }
+
+        function init() {
+            resetState();
+            renderFormValues();
+            bindEvents();
+            const first = document.querySelector('.accordion[data-acc="rent"]');
+            if (first) {
+                first.classList.add('open');
+                first.querySelector('.acc-header').setAttribute('aria-expanded', 'true');
+            }
+            calc();
+        }
+
+        init();
     })();
 </script>
 
